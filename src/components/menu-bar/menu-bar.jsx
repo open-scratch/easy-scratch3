@@ -157,6 +157,7 @@ class MenuBar extends React.Component {
             'getSaveToComputerHandler',
             'restoreOptionMessage'
         ]);
+        window.scratchConfig = window.scratchConfig || {}
     }
     componentDidMount () {
         document.addEventListener('keydown', this.handleKeyPress);
@@ -317,20 +318,23 @@ class MenuBar extends React.Component {
                     this.props.className,
                     styles.menuBar
                 )}
+                style={(window.scratchConfig && window.scratchConfig.menuBar && window.scratchConfig.menuBar.color) && {backgroundColor: window.scratchConfig.menuBar.color}}
             >
                 <div className={styles.mainMenu}>
                     <div className={styles.fileGroup}>
-                        <div className={classNames(styles.menuBarItem)}>
+                        {(window.scratchConfig.logo && window.scratchConfig.logo.show) && (
+                            <div className={classNames(styles.menuBarItem)}>
                             <img
                                 alt="Scratch"
                                 className={classNames(styles.scratchLogo, {
                                     [styles.clickable]: typeof this.props.onClickLogo !== 'undefined'
                                 })}
                                 draggable={false}
-                                src={this.props.logo}
-                                onClick={this.props.onClickLogo}
+                                src={window.scratchConfig.logo.url || this.props.logo}
+                                onClick={window.scratchConfig.logo.handleClickLogo}
                             />
                         </div>
+                        )}
                         {(this.props.canChangeLanguage) && (<div
                             className={classNames(styles.menuBarItem, styles.hoverable, styles.languageMenu)}
                         >
@@ -507,8 +511,8 @@ class MenuBar extends React.Component {
                         />
                     ) : null)}
                     <div className={classNames(styles.menuBarItem)}>
-                        {this.props.canShare ? (
-                            (this.props.isShowingProject || this.props.isUpdating) && (
+                        {
+                            (window.scratchConfig && window.scratchConfig.shareButton && window.scratchConfig.shareButton.show) && (
                                 <ProjectWatcher onDoneUpdating={this.props.onSeeCommunity}>
                                     {
                                         waitForUpdate => (
@@ -517,7 +521,8 @@ class MenuBar extends React.Component {
                                                 isShared={this.props.isShared}
                                                 /* eslint-disable react/jsx-no-bind */
                                                 onClick={() => {
-                                                    this.handleClickShare(waitForUpdate);
+                                                    window.scratchConfig.shareButton.handleClickShare()
+                                                    // this.handleClickShare(waitForUpdate);
                                                 }}
                                                 /* eslint-enable react/jsx-no-bind */
                                             />
@@ -525,28 +530,20 @@ class MenuBar extends React.Component {
                                     }
                                 </ProjectWatcher>
                             )
-                        ) : (
-                            this.props.showComingSoon ? (
-                                <MenuBarItemTooltip id="share-button">
-                                    <ShareButton className={styles.menuBarButton} />
-                                </MenuBarItemTooltip>
-                            ) : []
-                        )}
+                        }
                         {this.props.canRemix ? remixButton : []}
                     </div>
                     <div className={classNames(styles.menuBarItem, styles.communityButtonWrapper)}>
-                        {this.props.enableCommunity ? (
+                        {/*this.props.enableCommunity ? (
                             (this.props.isShowingProject || this.props.isUpdating) && (
                                 <ProjectWatcher onDoneUpdating={this.props.onSeeCommunity}>
                                     {
                                         waitForUpdate => (
                                             <CommunityButton
                                                 className={styles.menuBarButton}
-                                                /* eslint-disable react/jsx-no-bind */
                                                 onClick={() => {
                                                     this.handleClickSeeCommunity(waitForUpdate);
                                                 }}
-                                                /* eslint-enable react/jsx-no-bind */
                                             />
                                         )
                                     }
@@ -556,12 +553,13 @@ class MenuBar extends React.Component {
                             <MenuBarItemTooltip id="community-button">
                                 <CommunityButton className={styles.menuBarButton} />
                             </MenuBarItemTooltip>
-                        ) : [])}
+                        ) : []) */}
                     </div>
                 </div>
 
                 {/* show the proper UI in the account menu, given whether the user is
                 logged in, and whether a session is available to log in with */}
+                {/*
                 <div className={styles.accountInfoGroup}>
                     <div className={styles.menuBarItem}>
                         {this.props.canSave && (
@@ -689,6 +687,7 @@ class MenuBar extends React.Component {
                         </React.Fragment>
                     )}
                 </div>
+                                            */}
             </Box>
         );
     }

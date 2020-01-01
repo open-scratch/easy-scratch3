@@ -26,7 +26,8 @@ const vmListenerHOC = function (WrappedComponent) {
                 'handleKeyDown',
                 'handleKeyUp',
                 'handleProjectChanged',
-                'handleTargetsUpdate'
+                'handleTargetsUpdate',
+                'handleRuntimeStarted'
             ]);
             // We have to start listening to the vm here rather than in
             // componentDidMount because the HOC mounts the wrapped component,
@@ -43,6 +44,7 @@ const vmListenerHOC = function (WrappedComponent) {
             this.props.vm.on('PROJECT_RUN_STOP', this.props.onProjectRunStop);
             this.props.vm.on('PROJECT_CHANGED', this.handleProjectChanged);
             this.props.vm.on('RUNTIME_STARTED', this.props.onRuntimeStarted);
+            this.props.vm.on('RUNTIME_STARTED', this.handleRuntimeStarted);
             this.props.vm.on('PROJECT_START', this.props.onGreenFlag);
             this.props.vm.on('PERIPHERAL_CONNECTION_LOST_ERROR', this.props.onShowExtensionAlert);
             this.props.vm.on('MIC_LISTENING', this.props.onMicListeningUpdate);
@@ -72,6 +74,10 @@ const vmListenerHOC = function (WrappedComponent) {
                 document.removeEventListener('keydown', this.handleKeyDown);
                 document.removeEventListener('keyup', this.handleKeyUp);
             }
+        }
+        handleRuntimeStarted (){
+            window.props = this.props;
+            window.vm = this.props.vm;
         }
         handleProjectChanged () {
             if (this.props.shouldUpdateProjectChanged && !this.props.projectChanged) {

@@ -1,198 +1,212 @@
-# scratch-gui
-#### Scratch GUI is a set of React components that comprise the interface for creating and running Scratch 3.0 projects
+# 项目介绍
 
-[![Build Status](https://travis-ci.com/LLK/scratch-gui.svg?token=Yfq2ryN1BwaxDME69Lnc&branch=master)](https://travis-ci.com/LLK/scratch-gui)
-[![Greenkeeper badge](https://badges.greenkeeper.io/LLK/scratch-gui.svg)](https://greenkeeper.io/)
+使用本项目，不需要关注Scratch3.0功能的具体实现，只需要简单的js基础即可调用Scratch的相关功能，助力项目快速开发。
 
-## Installation
-This requires you to have Git and Node.js installed.
+- 以最小的改动量实现功能，方便合并官方最新scratch
 
-In your own node environment/application:
-```bash
-npm install https://github.com/LLK/scratch-gui.git
+- 功能封装并对外提供调用接口， 不需要改动scratch本身代码
+
+
+## 使用方法
+### 直接使用
+demo见index.html
+
+### 二次开发
+建议在Linux环境下编译开发，windows下编译可参见：
+https://www.213.name/archives/1739
+
+
+### 参与本项目
+本项目接受PR，如果大佬有更好的实现方法和更好的创意，欢迎提交PR！
+
+同时也欢迎提出Issue，BUG建议均可
+
+# API参考
+
+## 全局对象
+
+### winodws.vm对象
+scratch-vm实例化的对象，可以从外部操作部分vm功能
+
+#### vm对象常用API列表：
+
+- vm.toJSON() 获取JSON格式的项目
+- vm.saveProjectSb3() 获取SB3格式项目
+- vm.loadProject(file) 加载SB3项目
+- vm.greenFlag() 点击小绿旗
+- vm.stopAll() 停止运行项目
+- ……
+- 其他请自行在控制台查看
+
+### window.props对象
+
+- props.onUpdateProjectTitle 修改作品名称
+- 其他自行探索
+
+## scratch配置
+
+
+`window.scratchConfig`
+
+注意，需要在引入lib.min.js之前就加入改代码
+
+### LOGO
+
+属性：
+`window.scratchConfig.logo`
+
+|参数名|描述|
+|----|----|
+|show|是否显示|
+|url|logo地址|
+|handleClickShare|处理LOGO点击事件|
+
+支持图片URL和base64，建议使用PNG半透明图片
+
+
+### 菜单栏
+
+`window.scratchConfig.menuBar`
+
+|参数名|描述|
+|----|----|
+|color|菜单栏颜色|
+
+
+### 分享按钮
+
+`window.scratchConfig.shareButton`
+
+|参数名|描述|
+|----|----|
+|show|是否显示|
+|handleClickShare|处理按钮点击事件|
+
+### VM初始换完毕
+window.scratchConfig.handleVmInitialized
+
+示例
 ```
-If you want to edit/play yourself:
-```bash
-git clone https://github.com/LLK/scratch-gui.git
-cd scratch-gui
-npm install
-```
-
-## Getting started
-Running the project requires Node.js to be installed.
-
-## Running
-Open a Command Prompt or Terminal in the repository and run:
-```bash
-npm start
-```
-Then go to [http://localhost:8601/](http://localhost:8601/) - the playground outputs the default GUI component
-
-## Developing alongside other Scratch repositories
-
-### Getting another repo to point to this code
-
-
-If you wish to develop `scratch-gui` alongside other scratch repositories that depend on it, you may wish
-to have the other repositories use your local `scratch-gui` build instead of fetching the current production
-version of the scratch-gui that is found by default using `npm install`.
-
-Here's how to link your local `scratch-gui` code to another project's `node_modules/scratch-gui`.
-
-#### Configuration
-
-1. In your local `scratch-gui` repository's top level:
-    1. Make sure you have run `npm install`
-    2. Build the `dist` directory by running `BUILD_MODE=dist npm run build`
-    3. Establish a link to this repository by running `npm link`
-
-2. From the top level of each repository (such as `scratch-www`) that depends on `scratch-gui`:
-    1. Make sure you have run `npm install`
-    2. Run `npm link scratch-gui`
-    3. Build or run the repositoriy
-
-#### Using `npm run watch`
-
-Instead of `BUILD_MODE=dist npm run build`, you can use `BUILD_MODE=dist npm run watch` instead. This will watch for changes to your `scratch-gui` code, and automatically rebuild when there are changes. Sometimes this has been unreliable; if you are having problems, try going back to `BUILD_MODE=dist npm run build` until you resolve them.
-
-#### Oh no! It didn't work!
-
-If you can't get linking to work right, try:
-* Follow the recipe above step by step and don't change the order. It is especially important to run `npm install` _before_ `npm link`, because installing after the linking will reset the linking.
-* Make sure the repositories are siblings on your machine's file tree, like `.../.../MY_SCRATCH_DEV_DIRECTORY/scratch-gui/` and `.../.../MY_SCRATCH_DEV_DIRECTORY/scratch-www/`.
-* Consistent node.js version: If you have multiple Terminal tabs or windows open for the different Scratch repositories, make sure to use the same node version in all of them.
-* If nothing else works, unlink the repositories by running `npm unlink` in both, and start over.
-
-## Testing
-### Documentation
-
-You may want to review the documentation for [Jest](https://facebook.github.io/jest/docs/en/api.html) and [Enzyme](http://airbnb.io/enzyme/docs/api/) as you write your tests.
-
-See [jest cli docs](https://facebook.github.io/jest/docs/en/cli.html#content) for more options.
-
-### Running tests
-
-*NOTE: If you're a windows user, please run these scripts in Windows `cmd.exe`  instead of Git Bash/MINGW64.*
-
-Before running any test, make sure you have run `npm install` from this (scratch-gui) repository's top level.
-
-#### Main testing command
-
-To run linter, unit tests, build, and integration tests, all at once:
-```bash
-npm test
-```
-
-#### Running unit tests
-
-To run unit tests in isolation:
-```bash
-npm run test:unit
-```
-
-To run unit tests in watch mode (watches for code changes and continuously runs tests):
-```bash
-npm run test:unit -- --watch
+window.scratchConfig.handleVmInitialized = ()=>{
+    //scratch vm初始换完毕后的代码
+}
 ```
 
-You can run a single file of integration tests (in this example, the `button` tests):
 
-```bash
-$(npm bin)/jest --runInBand test/unit/components/button.test.jsx
+### 完整配置示例：
+```
+window.scratchConfig = {
+    logo: {
+        show: true,
+        url: '/images/logo.png',
+        handleClickLogo: ()=>{
+            console.log('点击LOGO')
+            //跳转
+        }
+    },
+    menuBar:{
+        color: '#000',
+    },
+    shareButton:{
+        show: true,
+        handleClickShare: ()=>{
+            console.log('分享按钮')
+            //获取项目
+            //活动截图
+            //上传
+        }
+    }
+    
+}
 ```
 
-#### Running integration tests
+## 项目相关API
 
-Integration tests use a headless browser to manipulate the actual html and javascript that the repo
-produces. You will not see this activity (though you can hear it when sounds are played!).
+### 加载项目
 
-Note that integration tests require you to first create a build that can be loaded in a browser:
+`window.scratch.loadPorject(url, projectName, callback)`
 
-```bash
-npm run build
+也可以使用vm对象的loadProject方法
+
+#### 示例
+```
+window.scratch.loadPorject(url, projectName, ()=>{
+    //加载文件完成后的操作
+})
+
 ```
 
-Then, you can run all integration tests:
+### 获取项目
 
-```bash
-npm run test:integration
+`window.scratch.getProjectFile(callback)`
+
+也可以使用vm对象的saveProjectSb3方法
+
+例
+```
+window.scratch.getProjectFile((file)=>{
+    console.log(file)
+    //上传file文件
+})
 ```
 
-Or, you can run a single file of integration tests (in this example, the `backpack` tests):
+### 获取项目截图
 
-```bash
-$(npm bin)/jest --runInBand test/integration/backpack.test.js
+`window.scratch.getProjectCover(callback)`
+
+示例
+```
+window.scratch.getProjectCover((file)=>{
+    console.log(file)
+    //上传截图文件
+})
 ```
 
-If you want to watch the browser as it runs the test, rather than running headless, use:
+## UI相关API
 
-```bash
-USE_HEADLESS=no $(npm bin)/jest --runInBand test/integration/backpack.test.js
+### 设置为播放模式
+
+window.scratch.setPlayerOnly(isPlayerOnly)
+
+#### 参数
+
+|参数名|描述|
+|----|----|
+|isPlayerOnly|是否播放模式|
+
+#### 示例
+```
+window.scratch.setPlayerOnly(true)
 ```
 
-## Troubleshooting
+### 设置为全屏
+window.scratch.setFullScreen(isFullScreen)
 
-### Ignoring optional dependencies
+#### 参数
+|参数名|描述|
+|----|----|
+|isFullScreen|是否全屏|
 
-When running `npm install`, you can get warnings about optionsl dependencies:
-
+#### 示例
 ```
-npm WARN optional Skipping failed optional dependency /chokidar/fsevents:
-npm WARN notsup Not compatible with your operating system or architecture: fsevents@1.2.7
-```
-
-You can suppress them by adding the `no-optional` switch:
-
-```
-npm install --no-optional
+window.scratch.setFullScreen(true)
 ```
 
-Further reading: [Stack Overflow](https://stackoverflow.com/questions/36725181/not-compatible-with-your-operating-system-or-architecture-fsevents1-0-11)
+## 适用于移动端的API
 
-### Resolving dependencies
-
-When installing for the first time, you can get warnings which need to be resolved:
+### 向Scratch发送按键等事件
 
 ```
-npm WARN eslint-config-scratch@5.0.0 requires a peer of babel-eslint@^8.0.1 but none was installed.
-npm WARN eslint-config-scratch@5.0.0 requires a peer of eslint@^4.0 but none was installed.
-npm WARN scratch-paint@0.2.0-prerelease.20190318170811 requires a peer of react-intl-redux@^0.7 but none was installed.
-npm WARN scratch-paint@0.2.0-prerelease.20190318170811 requires a peer of react-responsive@^4 but none was installed.
+//按下按键
+vm.postIOData("keyboard", {
+    keyCode: keyCode,
+    key: key,
+    isDown: true,
+});
+//松开按键
+vm.postIOData("keyboard", {
+    keyCode: keyCode,
+    key: key,
+    isDown: false,
+});
 ```
-
-You can check which versions are available:
-
-```
-npm view react-intl-redux@0.* version
-```
-
-You will neet do install the required version:
-
-```
-npm install  --no-optional --save-dev react-intl-redux@^0.7
-```
-
-The dependency itself might have more missing dependencies, which will show up like this:
-
-```
-user@machine:~/sources/scratch/scratch-gui (491-translatable-library-objects)$ npm install  --no-optional --save-dev react-intl-redux@^0.7
-scratch-gui@0.1.0 /media/cuideigin/Linux/sources/scratch/scratch-gui
-├── react-intl-redux@0.7.0
-└── UNMET PEER DEPENDENCY react-responsive@5.0.0
-```
-
-You will need to install those as well:
-
-```
-npm install  --no-optional --save-dev react-responsive@^5.0.0
-```
-
-Further reading: [Stack Overflow](https://stackoverflow.com/questions/46602286/npm-requires-a-peer-of-but-all-peers-are-in-package-json-and-node-modules)
-
-
-## Publishing to GitHub Pages
-You can publish the GUI to github.io so that others on the Internet can view it.
-[Read the wiki for a step-by-step guide.](https://github.com/LLK/scratch-gui/wiki/Publishing-to-GitHub-Pages)
-
-## Donate
-We provide [Scratch](https://scratch.mit.edu) free of charge, and want to keep it that way! Please consider making a [donation](https://secure.donationpay.org/scratchfoundation/) to support our continued engineering, design, community, and resource development efforts. Donations of any size are appreciated. Thank you!

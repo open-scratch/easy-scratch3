@@ -84,6 +84,26 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
                 enhancer
             );
         }
+        componentDidMount () {
+            var that = this
+            document.addEventListener("setPlayerOnly",function(e){    
+                that.store.dispatch(setPlayer(e.detail.isPlayerOnly))
+            })
+            document.addEventListener("setFullScreen",function(e){
+                console.log(e.detail)
+                that.store.dispatch(setFullScreen(e.detail.isFullScreen))
+            })
+            
+            window.scratch = window.scratch || {}
+            window.scratch.setPlayerOnly = (isPlayerOnly)=>{
+                var event = new CustomEvent('setPlayerOnly', {"detail": {isPlayerOnly: isPlayerOnly}});
+                document.dispatchEvent(event);
+            }
+            window.scratch.setFullScreen = (isFullScreen)=>{
+                var event = new CustomEvent('setFullScreen', {"detail": {isFullScreen: isFullScreen}});
+                document.dispatchEvent(event);
+            }
+        }
         componentDidUpdate (prevProps) {
             if (localesOnly) return;
             if (prevProps.isPlayerOnly !== this.props.isPlayerOnly) {
