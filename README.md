@@ -82,7 +82,19 @@ scratch-vm实例化的对象，可以从外部操作部分vm功能
 |show|是否显示|
 |handleClickShare|处理按钮点击事件|
 
-### VM初始换完毕
+### 素材库CDN
+
+`window.scratchConfig.assetCDN`
+
+将官方素材库换成自己的地址，加快国内用户访问速度。建议将素材文件上传至七牛、阿里云OSS等云存储上。
+
+若使用官方素材库请删除本配置项。
+
+> 附：[Scratch素材库采集和处理工具](https://github.com/open-scratch/scratch-asset-utils)
+
+
+
+### VM初始换完毕回调
 window.scratchConfig.handleVmInitialized
 
 示例
@@ -115,7 +127,10 @@ window.scratchConfig = {
             //活动截图
             //上传
         }
+    },
+    , handleVmInitialized: () => {
     }
+    assetCDN: ''
     
 }
 ```

@@ -54,8 +54,13 @@ class Storage extends ScratchStorage {
         this.assetHost = assetHost;
     }
     getAssetGetConfig (asset) {
-        return `${this.assetHost}/internalapi/asset/${asset.assetId}.${asset.dataFormat}/get/`;
+        if('assetCDN' in window.scratchConfig){
+            return `${this.assetHost}/internalapi/asset/${asset.assetId}.${asset.dataFormat}`;
+        }else{
+            return `${this.assetHost}/internalapi/asset/${asset.assetId}.${asset.dataFormat}/get/`;
+        }
     }
+        
     getAssetCreateConfig (asset) {
         return {
             // There is no such thing as updating assets, but storage assumes it
