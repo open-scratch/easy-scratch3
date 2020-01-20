@@ -9,7 +9,7 @@
 
 ## 使用方法
 ### 直接使用
-demo见index.html
+demo见编译的build/index.html文件
 
 ### 二次开发
 建议在Linux环境下编译开发，windows下编译可参见：
@@ -21,34 +21,113 @@ https://www.213.name/archives/1739
 
 同时也欢迎提出Issue，BUG建议均可
 
+
+
+# 项目分析
+
+
+
+## 各个模块
+
+## scratch-vm  虚拟机
+
+解析加载序列化项目文件、扩展功能实现、根据相应事件渲染舞台
+
+###  scratch-audio 声音引擎
+
+解析、播放声音
+
+### scratch-blocks 代码积木块
+
+创建积木操作块区域和每个积木对应的代码
+
+### scratch-l10n 国际化
+
+多语言支持
+
+### scratch-paint 画图引擎
+
+图片编辑器
+
+### scratch-render：
+
+舞台渲染
+
+### scratch-storage 存储引擎
+
+项目和对应素材的存储加载
+
+### scratch-svg-renderer 
+
+svg文件处理
+
+
+
+## 项目结构
+
+```
+├── build                    # 编译后的文件夹
+│   ├── static               # 静态资源
+│   ├── chunks               # scratch核心加载器
+│   ├── index.html           # scratch编辑器     
+│   ├── player.html          # scratch播放器
+│   ├── lib.min.js           # scratch核心                
+├── src
+│   ├── components           # UI组件
+│   ├── containers           # 容器组件，承载容器组件业务逻辑
+│   ├── css                  # 全局通用css
+│   ├── examples             # 集成测试用例
+│       ├── extensions       # 拓展案例
+│   ├── lib                  # 插件及高阶组件
+│       ├── audio            # 声音插件
+│       ├── backpack         # 背包插件
+│       ├── default-project  # 默认项目
+│       ├── libraries        # 素材库相关
+│       ├── video            # 视频模块
+│   ├── playground           # 编译后页面的模版
+│   ├── reducers             # 全局状态控制
+├── test                     # 测试用例
+├── translations             # 翻译库
+├── README.md
+├── README-RAW.md            # 
+└── package.json
+└── webpack.consig.js
+```
+
 # API参考
 
 ## 全局对象
 
-### winodws.vm对象
+### winodow.vm对象
 scratch-vm实例化的对象，可以从外部操作部分vm功能
 
-#### vm对象常用API列表：
+#### 对象常用API列表：
 
-- vm.toJSON() 获取JSON格式的项目
 - vm.saveProjectSb3() 获取SB3格式项目
 - vm.loadProject(file) 加载SB3项目
 - vm.greenFlag() 点击小绿旗
 - vm.stopAll() 停止运行项目
 - ……
-- 其他请自行在控制台查看
+
+[Scratch-vm介绍](./doc/scratch-vm.md)
+
+[Scratch-vm官方文档](./doc/scratch-vm/index.html)
+
+
 
 ### window.props对象
 
-- props.onUpdateProjectTitle 修改作品名称
-- 其他自行探索
-
-## scratch配置
+自行探索
 
 
-`window.scratchConfig`
 
-注意，需要在引入lib.min.js之前就加入改代码
+## scratch初始化配置
+
+
+
+初始化配置均通过`window.scratchConfig`对象完成
+
+需要注意的是，需要在引入lib.min.js之前就加入该代码
 
 ### LOGO
 
@@ -109,28 +188,28 @@ window.scratchConfig.handleVmInitialized = ()=>{
 ```
 window.scratchConfig = {
     logo: {
-        show: true,
-        url: '/images/logo.png',
+        show: true, //是否显示LOGO
+        url: '/images/logo.png', //LOGO地址
         handleClickLogo: ()=>{
-            console.log('点击LOGO')
-            //跳转
+            //点击LOGO
         }
     },
     menuBar:{
-        color: '#000',
+        color: '#000', //菜单栏颜色
     },
     shareButton:{
-        show: true,
+        show: true, //是否显示分享按钮
         handleClickShare: ()=>{
             console.log('分享按钮')
-            //获取项目
-            //活动截图
-            //上传
+            //TODO 获取项目
+            //TODO 获取截图
+            //TODO 上传项目
         }
     },
     , handleVmInitialized: () => {
+    	//scratch vm初始化完毕
     }
-    assetCDN: ''
+    assetCDN: '' //素材库地址
     
 }
 ```
@@ -141,7 +220,7 @@ window.scratchConfig = {
 
 `window.scratch.loadPorject(url, projectName, callback)`
 
-也可以使用vm对象的loadProject方法
+也可以使用vm对象的loadProject方法载入scratch项目
 
 #### 示例
 ```
@@ -207,21 +286,31 @@ window.scratch.setFullScreen(isFullScreen)
 window.scratch.setFullScreen(true)
 ```
 
-## 适用于移动端的API
+## 适用于移动端
 
-### 向Scratch发送按键等事件
+### 向Scratch发送按键事件
 
-```
-//按下按键
-vm.postIOData("keyboard", {
-    keyCode: keyCode,
-    key: key,
-    isDown: true,
-});
-//松开按键
-vm.postIOData("keyboard", {
-    keyCode: keyCode,
-    key: key,
-    isDown: false,
-});
+示例：绑定某个dom为移动端的虚拟键盘
+
+```js
+function regKeyEvent(selector, key, keyCode) {
+    console.log("注册按键事件:" + key)
+    $(selector).on("touchstart", function(event) {
+        vm.postIOData("keyboard", {
+          keyCode: keyCode,
+          key: key,
+          isDown: true,
+        });
+        event.preventDefault();
+      });
+      $(selector).on("touchend", function() {
+        vm.postIOData("keyboard", {
+          keyCode: keyCode,
+          key: key,
+          isDown: false,
+        });
+        event.preventDefault();
+      });
+  }
+
 ```
