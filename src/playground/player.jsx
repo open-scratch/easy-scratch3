@@ -21,7 +21,7 @@ import styles from './player.css';
 
 const Player = ({isPlayerOnly, onSeeInside, projectId}) => (
     <Box className={classNames(isPlayerOnly ? styles.stageOnly : styles.editor)}>
-        {isPlayerOnly && <button onClick={onSeeInside}>{'See inside'}</button>}
+        {/* {isPlayerOnly && <button onClick={onSeeInside}>{'See inside'}</button>} */}
         <GUI
             canEditTitle
             enableCommunity
@@ -58,7 +58,5 @@ const WrappedPlayer = compose(
     HashParserHOC
 )(ConnectedPlayer);
 
-const appTarget = document.createElement('div');
-document.body.appendChild(appTarget);
-
+const appTarget = document.getElementById('scratch');
 ReactDOM.render(<WrappedPlayer isPlayerOnly />, appTarget);

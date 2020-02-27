@@ -70,7 +70,7 @@ const vmManagerHOC = function (WrappedComponent) {
                 this.props.vm.start();
             }
             if(window.scratchConfig && 'handleVmInitialized' in window.scratchConfig){
-                window.scratchConfig.handleVmInitialized()
+                window.scratchConfig.handleVmInitialized(this.props.vm)
             }
 
         }

@@ -17,9 +17,9 @@ import styles from './index.css';
 // Register "base" page view
 analytics.pageview('/');
 
-const appTarget = document.createElement('div');
+const appTarget = document.getElementById('scratch');
 appTarget.className = styles.app;
-document.body.appendChild(appTarget);
+// document.body.appendChild(appTarget);
 
 if (supportedBrowser()) {
     // require needed here to avoid importing unsupported browser-crashing code

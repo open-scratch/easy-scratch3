@@ -6,6 +6,13 @@
 
 - 功能封装并对外提供调用接口， 不需要改动scratch本身代码
 
+## 可以实现的功能
+- 加载项目
+- 上传项目
+- 修改Logo等外观
+- 移动端虚拟键盘
+- 使用自己的素材库
+- And more……
 
 ## 使用方法
 ### 直接使用
@@ -176,9 +183,13 @@ scratch-vm实例化的对象，可以从外部操作部分vm功能
 ### VM初始换完毕回调
 window.scratchConfig.handleVmInitialized
 
+|参数名|描述|
+|----|----|
+|vm|scratch virtual machine|
+
 示例
 ```
-window.scratchConfig.handleVmInitialized = ()=>{
+window.scratchConfig.handleVmInitialized = (vm)=>{
     //scratch vm初始换完毕后的代码
 }
 ```
@@ -206,8 +217,9 @@ window.scratchConfig = {
             //TODO 上传项目
         }
     },
-    , handleVmInitialized: () => {
+    , handleVmInitialized: (vm) => {
     	//scratch vm初始化完毕
+        console.log(vm)
     }
     assetCDN: '' //素材库地址
     
@@ -290,7 +302,7 @@ window.scratch.setFullScreen(true)
 
 ### 向Scratch发送按键事件
 
-示例：绑定某个dom为移动端的虚拟键盘
+示例：绑定某个dom为移动端的虚拟键盘，要先引入jQuery
 
 ```js
 function regKeyEvent(selector, key, keyCode) {
@@ -312,5 +324,12 @@ function regKeyEvent(selector, key, keyCode) {
         event.preventDefault();
       });
   }
+
+//   绑定上下左右空格键
+//   regKeyEvent(".button_space", " ", 32)
+//   regKeyEvent(".button_down", "ArrowDown", 40)
+//   regKeyEvent(".button_up", "ArrowUp", 38)
+//   regKeyEvent(".button_left", "ArrowLeft", 37)
+//   regKeyEvent(".button_right", "ArrowRight", 39)
 
 ```
