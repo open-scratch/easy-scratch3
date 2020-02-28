@@ -22,6 +22,21 @@ const TitledHOC = function (WrappedComponent) {
     class TitledComponent extends React.Component {
         componentDidMount () {
             this.handleReceivedProjectTitle(this.props.projectTitle);
+
+            var that = this
+            document.addEventListener("setProjectName",function(e){
+                that.props.onChangedProjectTitle(e.detail.projectName);
+            })
+            
+            window.scratch.getProjectName = ()=>{
+                return this.props.reduxProjectTitle;
+            }
+
+            window.scratch.setProjectName = (projeceName)=>{
+                var event = new CustomEvent('setProjectName', {"detail": {projectName: projeceName}});
+                document.dispatchEvent(event);
+            }
+            
         }
         componentDidUpdate (prevProps) {
             if (this.props.projectTitle !== prevProps.projectTitle) {

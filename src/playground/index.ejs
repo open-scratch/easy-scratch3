@@ -41,15 +41,18 @@
             //TODO 获取到项目文件
             console.log(file)
           })
+          var projectName = window.scratch.getProjectName()
+          console.log(projectName);
         }
       }
       , handleVmInitialized: (vm) => {
         window.vm = vm
+        // window.scratch.setProjectName("默认项目")
         console.log("VM初始化完毕")
-        // window.scratch.loadProject("http://xxx", "默认项目", () => { 
-        //    console.log("项目加载完毕")
-        //   //TODO 加载完毕
-        // })
+        //  window.scratch.loadProject("/project.sb3", () => { 
+        //     console.log("项目加载完毕")
+        //     window.scratch.setProjectName("默认项目")
+        //  })
       },
       assetCDN: 'http://scratch.qiniu.xxx.com' //若使用官方素材库请删除本配置项
     }

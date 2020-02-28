@@ -34,7 +34,9 @@ const vmManagerHOC = function (WrappedComponent) {
         componentDidMount () {
             var that = this
             document.addEventListener("loadProject",function(e){
-                that.loadProjectByURL(e.detail.url, e.detail.projectName, e.detail.callback)
+                setTimeout(()=>{
+                    that.loadProjectByURL(e.detail.url, e.detail.projectName, e.detail.callback)
+                }, 800)
             })
             document.addEventListener("getProjectFile",function(e){
                 that.getProjectFile(e.detail.callback)
@@ -58,6 +60,8 @@ const vmManagerHOC = function (WrappedComponent) {
                 var event = new CustomEvent('loadProject', {"detail": {url: url,projectName:projectName,callback:callback }});
                  document.dispatchEvent(event);
             }
+
+            
 
             if (!this.props.vm.initialized) {
                 this.audioEngine = new AudioEngine();

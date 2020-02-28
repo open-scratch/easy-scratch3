@@ -121,13 +121,6 @@ scratch-vm实例化的对象，可以从外部操作部分vm功能
 [Scratch-vm官方文档](./doc/scratch-vm/index.html)
 
 
-
-### window.props对象
-
-自行探索
-
-
-
 ## scratch初始化配置
 
 
@@ -230,25 +223,25 @@ window.scratchConfig = {
 
 ### 加载项目
 
-`window.scratch.loadPorject(url, projectName, callback)`
+`window.scratch.loadPorject(url, callback)`
 
 也可以使用vm对象的loadProject方法载入scratch项目
 
 #### 示例
 ```
-window.scratch.loadPorject(url, projectName, ()=>{
+window.scratch.loadPorject(url, ()=>{
     //加载文件完成后的操作
 })
 
 ```
 
-### 获取项目
+### 获取项目文件
 
 `window.scratch.getProjectFile(callback)`
 
 也可以使用vm对象的saveProjectSb3方法
 
-例
+#### 示例
 ```
 window.scratch.getProjectFile((file)=>{
     console.log(file)
@@ -260,13 +253,21 @@ window.scratch.getProjectFile((file)=>{
 
 `window.scratch.getProjectCover(callback)`
 
-示例
+#### 示例
 ```
 window.scratch.getProjectCover((file)=>{
     console.log(file)
     //上传截图文件
 })
 ```
+
+### 获取项目名称
+
+`window.scratch.getProjectName()`
+
+### 设置项目名称
+
+`window.scratch.setProjectName(projectName)`
 
 ## UI相关API
 
