@@ -6,10 +6,6 @@ import {connect} from 'react-redux';
 import VM from 'scratch-vm';
 import AudioEngine from 'scratch-audio';
 
-import {
-    openLoadingProject,
-    closeLoadingProject
-} from '../reducers/modals';
 import {setProjectUnchanged} from '../reducers/project-changed';
 import {
     LoadingStates,
@@ -32,37 +28,6 @@ const vmManagerHOC = function (WrappedComponent) {
             ]);
         }
         componentDidMount () {
-            var that = this
-            document.addEventListener("loadProject",function(e){
-                setTimeout(()=>{
-                    that.loadProjectByURL(e.detail.url, e.detail.projectName, e.detail.callback)
-                }, 800)
-            })
-            document.addEventListener("getProjectFile",function(e){
-                that.getProjectFile(e.detail.callback)
-            })
-            document.addEventListener("getProjectCover",function(e){    
-                that.getProjectCover(e.detail.callback)
-            })
-            window.scratch = window.scratch || {}
-
-            window.scratch.getProjectCover = (callback)=>{
-                var event = new CustomEvent('getProjectCover', {"detail": {callback: callback}});
-                document.dispatchEvent(event);
-            }
-            
-            window.scratch.getProjectFile = (callback)=>{
-                var event = new CustomEvent('getProjectFile', {"detail": {callback: callback}});
-                document.dispatchEvent(event);
-            }
-
-            window.scratch.loadProject = (url, projectName, callback)=>{
-                var event = new CustomEvent('loadProject', {"detail": {url: url,projectName:projectName,callback:callback }});
-                 document.dispatchEvent(event);
-            }
-
-            
-
             if (!this.props.vm.initialized) {
                 this.audioEngine = new AudioEngine();
                 this.props.vm.attachAudioEngine(this.audioEngine);
@@ -73,10 +38,6 @@ const vmManagerHOC = function (WrappedComponent) {
             if (!this.props.isPlayerOnly && !this.props.isStarted) {
                 this.props.vm.start();
             }
-            if(window.scratchConfig && 'handleVmInitialized' in window.scratchConfig){
-                window.scratchConfig.handleVmInitialized(this.props.vm)
-            }
-
         }
         componentDidUpdate (prevProps) {
             // if project is in loading state, AND fonts are loaded,
@@ -89,59 +50,6 @@ const vmManagerHOC = function (WrappedComponent) {
             if (!this.props.isPlayerOnly && !this.props.isStarted) {
                 this.props.vm.start();
             }
-        }
-        getProjectFile(callback){
-            this.props.vm.saveProjectSb3().then(res=>{
-                callback(res)
-            })          
-        }
-        getProjectCover (callback) {
-            this.props.vm.postIOData('video', {forceTransparentPreview: true});
-            this.props.vm.renderer.requestSnapshot(dataURI => {
-                this.props.vm.postIOData('video', {forceTransparentPreview: false});
-                callback(dataURI);
-            });
-            this.props.vm.renderer.draw();
-        }
-        loadProjectByURL(url, projectName, callback){
-            console.log("从URL加载项目" + url)
-            // this.props.onLoadingStarted()
-            // this.props.vm.clear()
-            return fetch(url).then(r => r.blob()).then(blob => {
-                  const reader = new FileReader();
-                  reader.onload = () => {
-                      this.props.vm.loadProject(reader.result).then(()=>{
-                        // this.props.onUpdateProjectTitle(projectName)
-                        //   this.props.onLoadedProject(this.props.loadingState, this.props.canSave);
-                          setTimeout(() => this.props.onSetProjectUnchanged());
-                          if (!this.props.isStarted) {
-                            setTimeout(() => this.props.vm.renderer.draw());    
-                          }
-                          callback()
-                      })
-                      .catch(e => {
-                        this.props.onError(e);
-                      });
-                  };
-                  reader.readAsArrayBuffer(blob);
-            });
-        }
-        loadProjectByData(data, projectName, callback){
-            console.log("从文件加载项目:" + projectName)
-            console.log(this.props)
-            this.props.onLoadingStarted()
-            return this.props.vm.loadProject(data).then(()=>{
-                setProjectTitle(projectName)
-                setTimeout(() => this.props.onSetProjectUnchanged());
-                if (!this.props.isStarted) {
-                  setTimeout(() => this.props.vm.renderer.draw());    
-                }
-                this.props.closeLoadingProject();
-                this.props.onLoadedProject(this.props.loadingState, this.props.canSave);
-                callback()
-            }).catch(e => {
-                this.props.onError(e);
-            });
         }
         loadProject () {
             return this.props.vm.loadProject(this.props.projectData)
@@ -176,7 +84,6 @@ const vmManagerHOC = function (WrappedComponent) {
                 isStarted,
                 onError: onErrorProp,
                 onLoadedProject: onLoadedProjectProp,
-                onLoadingStarted,
                 onSetProjectUnchanged,
                 projectData,
                 /* eslint-enable no-unused-vars */
@@ -210,9 +117,7 @@ const vmManagerHOC = function (WrappedComponent) {
         projectData: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
         projectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         username: PropTypes.string,
-        vm: PropTypes.instanceOf(VM).isRequired,
-        onLoadingStarted: PropTypes.func,
-
+        vm: PropTypes.instanceOf(VM).isRequired
     };
 
     const mapStateToProps = state => {
@@ -232,16 +137,9 @@ const vmManagerHOC = function (WrappedComponent) {
 
     const mapDispatchToProps = dispatch => ({
         onError: error => dispatch(projectError(error)),
-        onLoadedProject: (loadingState, canSave) =>{
-            try{
-                dispatch(closeLoadingProject());
-                dispatch(onLoadedProject(loadingState, canSave, true))
-            }catch(e){
-
-            }
-        },
-        onSetProjectUnchanged: () => dispatch(setProjectUnchanged()),
-        onLoadingStarted: () => dispatch(openLoadingProject()),
+        onLoadedProject: (loadingState, canSave) =>
+            dispatch(onLoadedProject(loadingState, canSave, true)),
+        onSetProjectUnchanged: () => dispatch(setProjectUnchanged())
     });
 
     // Allow incoming props to override redux-provided props. Used to mock in tests.
