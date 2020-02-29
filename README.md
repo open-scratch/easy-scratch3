@@ -187,6 +187,15 @@ window.scratchConfig.handleVmInitialized = (vm)=>{
 }
 ```
 
+### 作品加载完毕的回调
+window.scratchConfig.handleProjectLoaded
+
+每当新建项目或载入项目完毕后调用此方法。
+
+### 默认项目加载完毕的回调
+window.scratchConfig.handleDefaultProjectLoaded
+
+默认小猫项目加载完毕后调用此方法。
 
 ### 完整配置示例：
 ```
@@ -213,7 +222,13 @@ window.scratchConfig = {
     , handleVmInitialized: (vm) => {
     	//scratch vm初始化完毕
         console.log(vm)
-    }
+    },
+    handleProjectLoaded:() => {
+        //作品加载完毕
+    },
+    handleDefaultProjectLoaded:() => {
+        //默认作品加载完毕
+    },
     assetCDN: '' //素材库地址
     
 }

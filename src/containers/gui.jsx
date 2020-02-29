@@ -44,6 +44,7 @@ class GUI extends React.Component {
         setIsScratchDesktop(this.props.isScratchDesktop);
         this.props.onStorageInit(storage);
         this.props.onVmInit(this.props.vm);
+        this.isDefaultProjectLoaded = false;
     }
     componentDidUpdate (prevProps) {
         if (this.props.projectId !== prevProps.projectId && this.props.projectId !== null) {
@@ -53,6 +54,17 @@ class GUI extends React.Component {
             // this only notifies container when a project changes from not yet loaded to loaded
             // At this time the project view in www doesn't need to know when a project is unloaded
             this.props.onProjectLoaded();
+
+            if(window.scratchConfig && 'handleProjectLoaded' in window.scratchConfig){
+                window.scratchConfig.handleProjectLoaded()
+            }
+            
+            if(!this.isDefaultProjectLoaded){
+                this.isDefaultProjectLoaded = true
+                if(window.scratchConfig && 'handleDefaultProjectLoaded' in window.scratchConfig){
+                    window.scratchConfig.handleDefaultProjectLoaded()
+                }
+            }
         }
     }
     render () {
@@ -120,7 +132,7 @@ GUI.defaultProps = {
     onStorageInit: storageInstance => storageInstance.addOfficialScratchWebStores(),
     onProjectLoaded: () => {},
     onUpdateProjectId: () => {},
-    onVmInit: (/* vm */) => {}
+    onVmInit: (/* vm */) => {},
 };
 
 const mapStateToProps = state => {

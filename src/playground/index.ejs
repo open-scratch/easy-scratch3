@@ -23,13 +23,10 @@
         , url: "https://scratch.mit.edu/images/logo_sm.png"
         , handleClickLogo: () => {
           console.log('点击LOGO')
-          //TODO 跳转
         }
-      }
-      , menuBar: {
+      }, menuBar: {
         color: 'hsla(215, 100%, 65%, 1)'
-      }
-      , shareButton: {
+      }, shareButton: {
         show: true,
         handleClickShare: () => {
           console.log('分享按钮')
@@ -44,17 +41,23 @@
           var projectName = window.scratch.getProjectName()
           console.log(projectName);
         }
-      }
-      , handleVmInitialized: (vm) => {
+      }, handleVmInitialized: (vm) => {
         window.vm = vm
-        // window.scratch.setProjectName("默认项目")
         console.log("VM初始化完毕")
+        
+      },handleProjectLoaded:() => {
+        //作品加载完毕
+
+      },handleDefaultProjectLoaded:() => {
+        //默认作品加载完毕
+        window.scratch.setProjectName("默认项目")
         //  window.scratch.loadProject("/project.sb3", () => { 
         //     console.log("项目加载完毕")
         //     window.scratch.setProjectName("默认项目")
         //  })
       },
-      assetCDN: 'http://scratch.qiniu.xxx.com' //若使用官方素材库请删除本配置项
+      //若使用官方素材库请删除本配置项
+      // assetCDN: 'http://scratch.qiniu.xxx.com' 
     }
 
 
