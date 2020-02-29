@@ -92,26 +92,21 @@ class LibraryItem extends React.PureComponent {
         this.setState({iconIndex: nextIconIndex});
     }
     curIconMd5 () {
+        const iconMd5Prop = this.props.iconMd5;
         if (this.props.icons &&
             this.state.isRotatingIcon &&
-            this.state.iconIndex < this.props.icons.length &&
-            this.props.icons[this.state.iconIndex] &&
-            this.props.icons[this.state.iconIndex].baseLayerMD5) {
-            return this.props.icons[this.state.iconIndex].baseLayerMD5;
+            this.state.iconIndex < this.props.icons.length) {
+            const icon = this.props.icons[this.state.iconIndex] || {};
+            return icon.md5ext || // 3.0 library format
+                icon.baseLayerMD5 || // 2.0 library format, TODO GH-5084
+                iconMd5Prop;
         }
-        return this.props.iconMd5;
+        return iconMd5Prop;
     }
     render () {
         const iconMd5 = this.curIconMd5();
-        let assetCDN
-        if('assetCDN' in window.scratchConfig){
-            assetCDN = window.scratchConfig.assetCDN+`/internalapi/asset/${iconMd5}`
-        }else{
-            assetCDN = `https://cdn.assets.scratch.mit.edu/internalapi/asset/${iconMd5}/get/`
-        }
-        
         const iconURL = iconMd5 ?
-            assetCDN :
+            `https://cdn.assets.scratch.mit.edu/internalapi/asset/${iconMd5}/get/` :
             this.props.iconRawURL;
         return (
             <LibraryItemComponent
@@ -158,7 +153,8 @@ LibraryItem.propTypes = {
     iconRawURL: PropTypes.string,
     icons: PropTypes.arrayOf(
         PropTypes.shape({
-            baseLayerMD5: PropTypes.string
+            baseLayerMD5: PropTypes.string, // 2.0 library format, TODO GH-5084
+            md5ext: PropTypes.string // 3.0 library format
         })
     ),
     id: PropTypes.number.isRequired,
