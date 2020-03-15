@@ -13,6 +13,7 @@ import Box from '../box/box.jsx';
 import Button from '../button/button.jsx';
 import CommunityButton from './community-button.jsx';
 import ShareButton from './share-button.jsx';
+import ProfileButton from './profile-button.jsx';
 import {ComingSoonTooltip} from '../coming-soon/coming-soon.jsx';
 import Divider from '../divider/divider.jsx';
 import LanguageSelector from '../../containers/language-selector.jsx';
@@ -521,9 +522,10 @@ class MenuBar extends React.Component {
                                                 isShared={this.props.isShared}
                                                 /* eslint-disable react/jsx-no-bind */
                                                 onClick={() => {
-                                                    window.scratchConfig.shareButton.handleClickShare()
+                                                    window.scratchConfig.shareButton.handleClick()
                                                     // this.handleClickShare(waitForUpdate);
                                                 }}
+                                                buttonName = {window.scratchConfig.shareButton.buttonName}
                                                 /* eslint-enable react/jsx-no-bind */
                                             />
                                         )
@@ -532,6 +534,20 @@ class MenuBar extends React.Component {
                             )
                         }
                         {this.props.canRemix ? remixButton : []}
+                    </div>
+                    
+                    <div className={classNames(styles.menuBarItem)}>
+                    {
+                    (window.scratchConfig && window.scratchConfig.profileButton && window.scratchConfig.profileButton.show) && (<ProfileButton
+                        className={styles.menuBarButton}
+                        onClick = {
+                            () => {
+                                window.scratchConfig.profileButton.handleClick();
+                            }
+                        }
+                        buttonName = {window.scratchConfig.profileButton.buttonName}
+                    />
+                    )}   
                     </div>
                     <div className={classNames(styles.menuBarItem, styles.communityButtonWrapper)}>
                         {/*this.props.enableCommunity ? (

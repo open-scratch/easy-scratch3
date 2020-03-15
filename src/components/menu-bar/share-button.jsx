@@ -9,7 +9,8 @@ import styles from './share-button.css';
 const ShareButton = ({
     className,
     isShared,
-    onClick
+    onClick,
+    buttonName
 }) => (
     <Button
         className={classNames(
@@ -19,7 +20,7 @@ const ShareButton = ({
         )}
         onClick={onClick}
     >
-        {isShared ? (
+        {/* {isShared ? (
             <FormattedMessage
                 defaultMessage="Shared"
                 description="Label for shared project"
@@ -31,14 +32,18 @@ const ShareButton = ({
                 description="Label for project share button"
                 id="gui.menuBar.share"
             />
-        )}
+        )} */
+        buttonName ? buttonName : "分享"
+        }
+
     </Button>
 );
 
 ShareButton.propTypes = {
     className: PropTypes.string,
     isShared: PropTypes.bool,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    buttonName: PropTypes.string
 };
 
 ShareButton.defaultProps = {

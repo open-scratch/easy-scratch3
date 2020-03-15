@@ -24,11 +24,15 @@
         , handleClickLogo: () => {
           console.log('点击LOGO')
         }
-      }, menuBar: {
+      }, 
+      menuBar: {
         color: 'hsla(215, 100%, 65%, 1)'
-      }, shareButton: {
+      }, 
+      shareButton: {
         show: true,
-        handleClickShare: () => {
+        buttonName: "分享",
+        handleClick: () => {
+          //点击分享按钮
           console.log('分享按钮')
           window.scratch.getProjectCover(cover => {
             //TODO 获取到作品截图
@@ -38,18 +42,29 @@
             //TODO 获取到项目文件
             console.log(file)
           })
+          // 获取到项目名
           var projectName = window.scratch.getProjectName()
           console.log(projectName);
         }
-      }, handleVmInitialized: (vm) => {
+      }, 
+      profileButton: {
+        show: true,
+        buttonName: "我的作品",
+        handleClick:()=>{
+          //点击profile按钮
+        }
+      }, 
+      handleVmInitialized: (vm) => {
         window.vm = vm
         console.log("VM初始化完毕")
         
-      },handleProjectLoaded:() => {
-        console.log("作品完毕")
+      },
+      handleProjectLoaded:() => {
+        console.log("作品载入完毕")
 
-      },handleDefaultProjectLoaded:() => {
-        //默认作品加载完毕
+      },
+      handleDefaultProjectLoaded:() => {
+        //默认作品加载完毕，一般在这里控制项目加载
         window.scratch.setProjectName("默认项目")
         //  window.scratch.loadProject("/project.sb3", () => { 
         //     console.log("项目加载完毕")
@@ -57,7 +72,7 @@
         //  })
       },
       //若使用官方素材库请删除本配置项
-      // assetCDN: 'http://scratch.qiniu.xxx.com' 
+      assetCDN: 'http://scratch.qiniu.xxx.com' 
     }
 
 

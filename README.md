@@ -159,7 +159,16 @@ scratch-vm实例化的对象，可以从外部操作部分vm功能
 |参数名|描述|
 |----|----|
 |show|是否显示|
-|handleClickShare|处理按钮点击事件|
+|handleClick|处理按钮点击事件|
+
+### 个人中心按钮
+
+`window.scratchConfig.profileButton`
+
+|参数名|描述|
+|----|----|
+|show|是否显示|
+|handleClick|处理按钮点击事件|
 
 ### 素材库CDN
 
@@ -198,41 +207,8 @@ window.scratchConfig.handleDefaultProjectLoaded
 默认小猫项目加载完毕后调用此方法。
 
 ### 完整配置示例：
-```
-window.scratchConfig = {
-    logo: {
-        show: true, //是否显示LOGO
-        url: '/images/logo.png', //LOGO地址
-        handleClickLogo: ()=>{
-            //点击LOGO
-        }
-    },
-    menuBar:{
-        color: '#000', //菜单栏颜色
-    },
-    shareButton:{
-        show: true, //是否显示分享按钮
-        handleClickShare: ()=>{
-            console.log('分享按钮')
-            //TODO 获取项目
-            //TODO 获取截图
-            //TODO 上传项目
-        }
-    },
-    , handleVmInitialized: (vm) => {
-    	//scratch vm初始化完毕
-        console.log(vm)
-    },
-    handleProjectLoaded:() => {
-        //作品加载完毕
-    },
-    handleDefaultProjectLoaded:() => {
-        //默认作品加载完毕
-    },
-    assetCDN: '' //素材库地址
-    
-}
-```
+
+见编译后的index.html
 
 ## 项目相关API
 
