@@ -57,9 +57,17 @@ class GUI extends React.Component {
         document.addEventListener("getProjectCover",function(e){    
             that.getProjectCover(e.detail.callback)
         })
+        document.addEventListener("getProjectCoverBlob",function(e){    
+            that.getProjectCoverBlob(e.detail.callback)
+        })
 
         window.scratch.getProjectCover = (callback)=>{
             var event = new CustomEvent('getProjectCover', {"detail": {callback: callback}});
+            document.dispatchEvent(event);
+        }
+
+        window.scratch.getProjectCoverBlob = (callback)=>{
+            var event = new CustomEvent('getProjectCoverBlob', {"detail": {callback: callback}});
             document.dispatchEvent(event);
         }
         
@@ -112,6 +120,13 @@ class GUI extends React.Component {
             callback(dataURI);
         });
         this.props.vm.renderer.draw();
+    }
+    getProjectCoverBlob(callback){
+        this.props.vm.renderer.draw()
+        let canvas = vm.renderer.canvas
+        canvas.toBlob(function(blob) {
+          callback(blob)
+        })
     }
     loadProjectByURL(url, callback){
         console.log("从URL加载项目" + url)
