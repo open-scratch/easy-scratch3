@@ -5,6 +5,7 @@
   "main": "./dist/scratch-gui.js",
   "scripts": {
     "build": "npm run clean && webpack --progress --colors --bail",
+    "build:prod": "npm run clean && webpack -p --define process.env.NODE_ENV='\"production\"' --progress --colors --bail --config webpack.prod.js",
     "clean": "rimraf ./build && mkdirp build && rimraf ./dist && mkdirp dist",
     "deploy": "touch build/.nojekyll && gh-pages -t -d build -m \"Build for $(git log --pretty=format:%H -n1) [skip ci]\"",
     "prune": "./prune-gh-pages.sh",
