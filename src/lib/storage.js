@@ -55,7 +55,7 @@ class Storage extends ScratchStorage {
     }
     getAssetGetConfig (asset) {
         if('assetCDN' in window.scratchConfig){
-            return `${this.assetHost}/internalapi/asset/${asset.assetId}.${asset.dataFormat}`;
+            return `${window.scratchConfig.assetCDN}/internalapi/asset/${asset.assetId}.${asset.dataFormat}`;
         }else{
             return `${this.assetHost}/internalapi/asset/${asset.assetId}.${asset.dataFormat}/get/`;
         }
