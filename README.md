@@ -170,13 +170,19 @@ scratch-vm实例化的对象，可以从外部操作部分vm功能
 |show|是否显示|
 |handleClick|处理按钮点击事件|
 
+### 更换默认项目
+
+`defaultProjectURL: "./static/project.sb3"`
+
+如果要加载默认小米则删除此配置
+
 ### 素材库CDN
 
 `window.scratchConfig.assetCDN`
 
 将官方素材库换成自己的地址，加快国内用户访问速度。建议将素材文件上传至七牛、阿里云OSS等云存储上。
 
-若使用官方素材库请删除本配置项。
+若使用官方素材库请删除本配置项。默认为/static下的素材库，如不需要可删除/static/internalapi文件夹
 
 > 附：[Scratch素材库采集和处理工具](https://github.com/open-scratch/scratch-asset-utils)
 

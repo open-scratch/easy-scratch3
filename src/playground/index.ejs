@@ -65,14 +65,16 @@
       },
       handleDefaultProjectLoaded:() => {
         //默认作品加载完毕，一般在这里控制项目加载
-        window.scratch.setProjectName("默认项目")
+        // window.scratch.setProjectName("默认项目")
         //  window.scratch.loadProject("/project.sb3", () => { 
         //     console.log("项目加载完毕")
         //     window.scratch.setProjectName("默认项目")
         //  })
       },
+      //默认项目地址
+      defaultProjectURL: "./static/project.sb3",
       //若使用官方素材库请删除本配置项
-      assetCDN: '/static' 
+      assetCDN: './static' 
     }
 
 
