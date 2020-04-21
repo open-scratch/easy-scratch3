@@ -87,8 +87,21 @@ const base = {
     },
     optimization: {
         minimizer: [
+            // new UglifyJsPlugin({
+            //     include: /\.min\.js$/
+            // })
             new UglifyJsPlugin({
-                include: /\.min\.js$/
+                include: /\.min\.js$/,
+                uglifyOptions: {
+                    compress: {
+                        warnings: false,
+                        drop_debugger: true, // 去掉debugger
+                        drop_console: true, // 去掉console
+                        pure_funcs: ['console.log']// 移除console
+                    }
+                },
+                sourceMap: true,
+                parallel: true
             })
         ]
     },
@@ -137,7 +150,7 @@ module.exports = [
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': '"' + process.env.NODE_ENV + '"',
                 'process.env.DEBUG': Boolean(process.env.DEBUG),
-                'process.env.GA_ID': '"' + (process.env.GA_ID || 'UA-000000-01') + '"'
+                'process.env.GA_ID': '"' + (process.env.GA_ID || 'UA-155190299-1') + '"'
             }),
             new HtmlWebpackPlugin({
                 chunks: ['lib.min', 'gui'],

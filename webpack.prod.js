@@ -20,7 +20,7 @@ const base = {
     devtool: 'hidden-source-map', // 'cheap-module-source-map',
     devServer: {
         contentBase: path.resolve(__dirname, 'build'),
-        host: '127.0.0.1',
+        host: '0.0.0.0',
         port: process.env.PORT || 8601
     },
     output: {
@@ -140,7 +140,7 @@ module.exports = [
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': '"' + process.env.NODE_ENV + '"',
                 'process.env.DEBUG': Boolean(process.env.DEBUG),
-                'process.env.GA_ID': '"' + (process.env.GA_ID || 'UA-000000-01') + '"'
+                'process.env.GA_ID': '"' + (process.env.GA_ID || 'UA-155190299-1') + '"'
             }),
             new HtmlWebpackPlugin({
                 chunks: ['lib.min', 'gui'],

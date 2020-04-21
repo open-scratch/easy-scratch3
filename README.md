@@ -15,10 +15,20 @@
 - And more……
 
 ## 使用方法
+
 ### 直接使用
-demo见编译的build/index.html文件
+
+demo见编译后的build/index.html文件
 
 ### 二次开发
+
+调试
+npm start
+编译
+npm run build
+编译正式版
+npm run build:prod
+
 建议在Linux环境下编译开发，windows下编译可参见：
 https://www.213.name/archives/1739
 
@@ -28,11 +38,7 @@ https://www.213.name/archives/1739
 
 同时也欢迎提出Issue，BUG建议均可
 
-
-
 # 项目分析
-
-
 
 ## 各个模块
 
@@ -69,7 +75,6 @@ https://www.213.name/archives/1739
 svg文件处理
 
 
-
 ## 项目结构
 
 ```
@@ -98,7 +103,8 @@ svg文件处理
 ├── README.md
 ├── README-RAW.md            # 
 └── package.json
-└── webpack.consig.js
+└── webpack.config.js
+└── webpack.prod.js
 ```
 
 # API参考
