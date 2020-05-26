@@ -176,6 +176,15 @@ scratch-vm实例化的对象，可以从外部操作部分vm功能
 |show|是否显示|
 |handleClick|处理按钮点击事件|
 
+### 播放窗口（仅播放器模式）
+
+`window.scratchConfig.stageArea`
+
+|参数名|描述|
+|----|----|
+|showControl|是否显示舞台区控制按钮|
+|showLoading|是否显示Loading|
+
 ### 更换默认项目
 
 `defaultProjectURL: "./static/project.sb3"`

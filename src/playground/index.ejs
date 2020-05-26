@@ -54,6 +54,10 @@
           //点击profile按钮
         }
       }, 
+      stageArea:{
+        showControl: false, //是否显示舞台区控制按钮
+        showLoading: false, //是否显示Loading
+      },
       handleVmInitialized: (vm) => {
         window.vm = vm
         console.log("VM初始化完毕")
@@ -71,8 +75,8 @@
         //     window.scratch.setProjectName("默认项目")
         //  })
       },
-      //默认项目地址
-      defaultProjectURL: "./static/project.sb3",
+      //默认项目地址,不需要修请删除本配置项
+      // defaultProjectURL: "./static/project.sb3",
       //若使用官方素材库请删除本配置项, 默认为/static下的素材库
       assetCDN: './static' 
     }
