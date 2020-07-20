@@ -70,7 +70,7 @@ https://www.213.name/archives/1739
 
 项目和对应素材的存储加载
 
-### scratch-svg-renderer 
+### scratch-svg-renderer
 
 svg文件处理
 
@@ -81,9 +81,9 @@ svg文件处理
 ├── build                    # 编译后的文件夹
 │   ├── static               # 静态资源
 │   ├── chunks               # scratch核心加载器
-│   ├── index.html           # scratch编辑器     
+│   ├── index.html           # scratch编辑器
 │   ├── player.html          # scratch播放器
-│   ├── lib.min.js           # scratch核心                
+│   ├── lib.min.js           # scratch核心
 ├── src
 │   ├── components           # UI组件
 │   ├── containers           # 容器组件，承载容器组件业务逻辑
@@ -101,7 +101,7 @@ svg文件处理
 ├── test                     # 测试用例
 ├── translations             # 翻译库
 ├── README.md
-├── README-RAW.md            # 
+├── README-RAW.md            #
 └── package.json
 └── webpack.config.js
 └── webpack.prod.js
@@ -111,7 +111,7 @@ svg文件处理
 
 ## 全局对象
 
-### winodow.vm对象
+### window.vm对象
 scratch-vm实例化的对象，可以从外部操作部分vm功能
 
 #### 对象常用API列表：
