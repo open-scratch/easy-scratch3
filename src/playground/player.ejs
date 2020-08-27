@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google" value="notranslate">
+  <link rel="shortcut icon" href="static/favicon.ico">
+  <title><%= htmlWebpackPlugin.options.title %></title>
+  <% if (htmlWebpackPlugin.options.sentryConfig) { %>
+  <!-- Sentry error logging to help with finding bugs -->
+  <script src="https://cdn.ravenjs.com/3.22.1/raven.min.js" crossorigin="anonymous"></script>
+  <script>
+    Raven.config(<%= htmlWebpackPlugin.options.sentryConfig %>).install();
+  </script>
+  <!-- /Sentry -->
+  <% } %>
+  <script>
+    window.scratchConfig = {
+      stageArea:{
+        showControl: false, //是否显示舞台区控制按钮
+        showLoading: false, //是否显示Loading
+      },
+      handleVmInitialized: (vm) => {
+        window.vm = vm
+        console.log("VM初始化完毕")
+        
+      },
+      handleProjectLoaded:() => {
+        console.log("作品载入完毕")
+
+      },
+      handleDefaultProjectLoaded:() => {
+        //默认作品加载完毕，一般在这里控制项目加载
+        // window.scratch.setProjectName("默认项目")
+        //  window.scratch.loadProject("/project.sb3", () => { 
+        //     console.log("项目加载完毕")
+        //     window.scratch.setProjectName("默认项目")
+        //  })
+      },
+      //默认项目地址,不需要修请删除本配置项
+      // defaultProjectURL: "./static/project.sb3",
+    }
+
+
+  </script>
+</head>
+
+<body>
+  <div id="scratch">
+    
+  </div>
+</body>
+<script>
+
+</script>
+
+</html>

@@ -107,6 +107,85 @@ svg文件处理
 └── webpack.prod.js
 ```
 
+# 快速使用
+
+## 直接使用本DEMO
+
+编译后直接修改index.html中的配置即可使用
+
+## 引入到自己的页面
+
+页面引入lib.min.js和chunks/gui.js后，scratch将自动渲染至`<div id="scratch"></div>`内。
+
+
+## 配置示例
+```
+window.scratchConfig = {
+      logo: {
+        show: true
+        , url: "https://scratch.mit.edu/images/logo_sm.png"
+        , handleClickLogo: () => {
+          console.log('点击LOGO')
+        }
+      }, 
+      menuBar: {
+        color: 'hsla(215, 100%, 65%, 1)'
+      }, 
+      shareButton: {
+        show: true,
+        buttonName: "分享",
+        handleClick: () => {
+          //点击分享按钮
+          console.log('分享按钮')
+          window.scratch.getProjectCover(cover => {
+            //TODO 获取到作品截图
+            console.log(cover)
+          })
+          window.scratch.getProjectFile(file => {
+            //TODO 获取到项目文件
+            console.log(file)
+          })
+          // 获取到项目名
+          var projectName = window.scratch.getProjectName()
+          console.log(projectName);
+        }
+      }, 
+      profileButton: {
+        show: true,
+        buttonName: "我的作品",
+        handleClick:()=>{
+          //点击profile按钮
+        }
+      }, 
+      //舞台区配置，仅playerOlny模式生效
+      stageArea:{
+        showControl: false, //是否显示舞台区控制按钮
+        showLoading: false, //是否显示Loading
+      },
+      handleVmInitialized: (vm) => {
+        window.vm = vm
+        console.log("VM初始化完毕")
+        
+      },
+      handleProjectLoaded:() => {
+        console.log("作品载入完毕")
+
+      },
+      handleDefaultProjectLoaded:() => {
+        //默认作品加载完毕，一般在这里控制项目加载
+        // window.scratch.setProjectName("默认项目")
+        //  window.scratch.loadProject("/project.sb3", () => { 
+        //     console.log("项目加载完毕")
+        //     window.scratch.setProjectName("默认项目")
+        //  })
+      },
+      //默认项目地址,不需要修请删除本配置项
+      // defaultProjectURL: "./static/project.sb3",
+      //若使用官方素材库请删除本配置项, 默认为/static下的素材库
+      assetCDN: './static' 
+    }
+```
+
 # API参考
 
 ## 全局对象
