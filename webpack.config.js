@@ -172,7 +172,7 @@ module.exports = [
             }),
             new HtmlWebpackPlugin({
                 chunks: ['lib.min', 'player'],
-                template: 'src/playground/palyer.ejs',
+                template: 'src/playground/player.ejs',
                 filename: 'player.html',
                 title: 'Scratch 3.0 GUI: Player Example'
             }),
