@@ -129,7 +129,36 @@ window.scratchConfig = {
         }
       }, 
       menuBar: {
-        color: 'hsla(215, 100%, 65%, 1)'
+        color: 'hsla(215, 100%, 65%, 1)', //菜单栏颜色
+        //新建按钮
+        newButton:{
+          show: true,
+          handleBefore(){ //执行新建前的操作，返回true则继续执行
+            return true
+          }
+        },
+        //从计算机加载按钮
+        loadFileButton:{
+          show: true,
+          handleBefore(){
+            return false
+          }
+        },
+        //保存到计算机按钮
+        saveFileButton:{
+          show: true,
+          handleBefore(){
+            return true
+          }
+        },
+        //加速模式按钮
+        turboModeButton:{
+          show: true
+        },
+        //教程按钮
+        helpButton:{
+          show: true
+        }
       }, 
       shareButton: {
         show: true,
@@ -230,14 +259,21 @@ scratch-vm实例化的对象，可以从外部操作部分vm功能
 
 ### 菜单栏
 
+#### 菜单栏样式
+
 `window.scratchConfig.menuBar`
 
 |参数名|描述|
 |----|----|
 |color|菜单栏颜色|
 
+#### 原始菜单控制
 
-### 分享按钮
+控制原始菜单的显示隐藏，是否可以执行。
+见完整配置示例
+
+
+#### 分享按钮
 
 `window.scratchConfig.shareButton`
 
@@ -246,7 +282,7 @@ scratch-vm实例化的对象，可以从外部操作部分vm功能
 |show|是否显示|
 |handleClick|处理按钮点击事件|
 
-### 个人中心按钮
+#### 个人中心按钮
 
 `window.scratchConfig.profileButton`
 
@@ -255,7 +291,7 @@ scratch-vm实例化的对象，可以从外部操作部分vm功能
 |show|是否显示|
 |handleClick|处理按钮点击事件|
 
-### 播放窗口（仅播放器模式）
+### 舞台区域（仅播放器模式生效）
 
 `window.scratchConfig.stageArea`
 

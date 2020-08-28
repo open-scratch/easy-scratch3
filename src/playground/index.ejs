@@ -26,7 +26,36 @@
         }
       }, 
       menuBar: {
-        color: 'hsla(215, 100%, 65%, 1)'
+        color: 'hsla(215, 100%, 65%, 1)', //菜单栏颜色
+        //新建按钮
+        newButton:{
+          show: true,
+          handleBefore(){
+            return true
+          }
+        },
+        //从计算机加载按钮
+        loadFileButton:{
+          show: true,
+          handleBefore(){
+            return false
+          }
+        },
+        //保存到计算机按钮
+        saveFileButton:{
+          show: true,
+          handleBefore(){
+            return true
+          }
+        },
+        //加速模式按钮
+        turboModeButton:{
+          show: true
+        },
+        //教程按钮
+        helpButton:{
+          show: true
+        }
       }, 
       shareButton: {
         show: true,
