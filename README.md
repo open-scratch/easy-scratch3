@@ -20,6 +20,14 @@
 
 demo见编译后的build/index.html文件
 
+### 参考系统
+
+开源Teaching在线教学系统便是使用的本项目，可以参考具体示例
+
+官网：http://teaching.vip
+
+开源地址：http://github.com/open-scratch/teaching
+
 ### 二次开发
 
 调试
@@ -30,15 +38,15 @@ npm run build
 npm run build:prod
 
 建议在Linux环境下编译开发，windows下编译可参见：
+
 https://www.213.name/archives/1739
 
 
 ### 参与本项目
-本项目接受PR，如果大佬有更好的实现方法和更好的创意，欢迎提交PR！
+如果大佬有更好的实现方法和更好的创意，欢迎提交PR！
 
-同时也欢迎提出Issue，BUG建议均可
 
-# 项目分析
+# Scratch项目分析
 
 ## 各个模块
 
@@ -111,14 +119,14 @@ svg文件处理
 
 ## 直接使用本DEMO
 
-编译后直接修改index.html中的配置即可使用
+编译后直接修改index.html和player.html中的配置即可使用
 
 ## 引入到自己的页面
 
 页面引入lib.min.js和chunks/gui.js后，scratch将自动渲染至`<div id="scratch"></div>`内。
 
 
-## 配置示例
+## 完整配置示例
 ```
 window.scratchConfig = {
       logo: {
@@ -188,6 +196,9 @@ window.scratchConfig = {
       }, 
       //舞台区配置，仅playerOlny模式生效
       stageArea:{
+        scale: 1, //舞台区比例
+        width: 480, // 舞台宽
+        height: 360, //舞台高
         showControl: false, //是否显示舞台区控制按钮
         showLoading: false, //是否显示Loading
       },
@@ -426,11 +437,9 @@ window.scratch.setFullScreen(isFullScreen)
 window.scratch.setFullScreen(true)
 ```
 
-## 适用于移动端
+## 手机端虚拟按键
 
-### 向Scratch发送按键事件
-
-示例：绑定某个dom为移动端的虚拟键盘，要先引入jQuery
+示例：绑定某个dom为移动端的虚拟键盘，先引入jQuery
 
 ```js
 function regKeyEvent(selector, key, keyCode) {
@@ -453,11 +462,11 @@ function regKeyEvent(selector, key, keyCode) {
       });
   }
 
-//   绑定上下左右空格键
-//   regKeyEvent(".button_space", " ", 32)
-//   regKeyEvent(".button_down", "ArrowDown", 40)
-//   regKeyEvent(".button_up", "ArrowUp", 38)
-//   regKeyEvent(".button_left", "ArrowLeft", 37)
-//   regKeyEvent(".button_right", "ArrowRight", 39)
+  // 配置上下左右空格键
+  regKeyEvent(".button_space", " ", 32)
+  regKeyEvent(".button_down", "ArrowDown", 40)
+  regKeyEvent(".button_up", "ArrowUp", 38)
+  regKeyEvent(".button_left", "ArrowLeft", 37)
+  regKeyEvent(".button_right", "ArrowRight", 39)
 
 ```

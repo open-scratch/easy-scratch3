@@ -38,13 +38,13 @@ const STAGE_DISPLAY_SIZES = keyMirror({
 });
 
 const STAGE_DISPLAY_SCALES = {};
-STAGE_DISPLAY_SCALES[STAGE_DISPLAY_SIZES.large] = 1; // large mode, wide browser (standard)
+STAGE_DISPLAY_SCALES[STAGE_DISPLAY_SIZES.large] = window.scratchConfig && window.scratchConfig.stageArea && window.scratchConfig.stageArea.scale || 1; // large mode, wide browser (standard)
 STAGE_DISPLAY_SCALES[STAGE_DISPLAY_SIZES.largeConstrained] = 0.85; // large mode but narrow browser
 STAGE_DISPLAY_SCALES[STAGE_DISPLAY_SIZES.small] = 0.5; // small mode, regardless of browser size
 
 export default {
-    standardStageWidth: 480,
-    standardStageHeight: 360,
+    standardStageWidth: window.scratchConfig && window.scratchConfig.stageArea && window.scratchConfig.stageArea.width || 480,
+    standardStageHeight: window.scratchConfig && window.scratchConfig.stageArea && window.scratchConfig.stageArea.height || 360,
     fullSizeMinWidth: 1096,
     fullSizePaintMinWidth: 1250
 };
