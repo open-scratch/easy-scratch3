@@ -16,8 +16,10 @@ class GreenFlagOverlay extends React.Component {
     }
 
     handleClick () {
-        this.props.vm.start();
-        this.props.vm.greenFlag();
+        if(window.scratchConfig && window.scratchConfig.stageArea && window.scratchConfig.stageArea.startButton.handleBeforeStart()){
+            this.props.vm.start();
+            this.props.vm.greenFlag();
+        }
     }
 
     render () {

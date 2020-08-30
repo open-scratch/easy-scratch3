@@ -194,13 +194,33 @@ window.scratchConfig = {
           //点击profile按钮
         }
       }, 
-      //舞台区配置，仅playerOlny模式生效
-      stageArea:{
+      stageArea:{ //舞台区配置，仅推荐在player下配置
         scale: 1, //舞台区比例
         width: 480, // 舞台宽
         height: 360, //舞台高
-        showControl: false, //是否显示舞台区控制按钮
+        showControl: true, //是否显示舞台区控制按钮
         showLoading: false, //是否显示Loading
+        fullscreenButton:{ //全屏按钮
+          show: true,
+          handleBeforeSetStageUnFull(){ //退出全屏前的操作
+            return true
+          },
+          handleBeforeSetStageFull(){ //全屏前的操作
+            return true
+          }
+        },
+        startButton:{ //开始按钮
+          show: true,
+          handleBeforeStart(){ //开始前的操作
+            return true
+          }
+        },
+        stopButton:{ // 停止按钮
+          show: true,
+          handleBeforeStop(){ //停止前的操作
+            return true
+          }
+        }
       },
       handleVmInitialized: (vm) => {
         window.vm = vm
@@ -231,7 +251,7 @@ window.scratchConfig = {
 ## 全局对象
 
 ### window.vm对象
-scratch-vm实例化的对象，可以从外部操作部分vm功能
+scratch-vm实例化的对象，可以从外部直接操作部分vm虚拟机功能
 
 #### 对象常用API列表：
 
@@ -302,26 +322,34 @@ scratch-vm实例化的对象，可以从外部操作部分vm功能
 |show|是否显示|
 |handleClick|处理按钮点击事件|
 
-### 舞台区域（仅播放器模式生效）
+### 舞台区域
+
+建议仅在播放器模式下配置
 
 `window.scratchConfig.stageArea`
 
 |参数名|描述|
 |----|----|
+|scale|舞台区比例|
+|width|舞台宽度|
+|height|舞台高度|
 |showControl|是否显示舞台区控制按钮|
 |showLoading|是否显示Loading|
+|fullscreenButton|全屏按钮设置|
+|startButton|小绿旗按钮设置|
+|stopButton|停止按钮设置|
 
 ### 更换默认项目
 
 `defaultProjectURL: "./static/project.sb3"`
 
-如果要加载默认小米则删除此配置
+如果要加载默认小猫则删除此配置
 
 ### 素材库CDN
 
 `window.scratchConfig.assetCDN`
 
-将官方素材库换成自己的地址，加快国内用户访问速度。建议将素材文件上传至七牛、阿里云OSS等云存储上。
+配置此项将官方素材库换成自己的地址，加快国内用户访问速度。建议将素材文件上传至七牛、阿里云OSS等云存储上。
 
 若使用官方素材库请删除本配置项。默认为/static下的素材库，如不需要可删除/static/internalapi文件夹
 
@@ -355,7 +383,7 @@ window.scratchConfig.handleDefaultProjectLoaded
 
 ### 完整配置示例：
 
-见编译后的index.html
+见编译后的index.html和player.html
 
 ## 项目相关API
 

@@ -37,16 +37,25 @@ const Controls = function (props) {
             className={classNames(styles.controlsContainer, className)}
             {...componentProps}
         >
-            <GreenFlag
-                active={active}
-                title={intl.formatMessage(messages.goTitle)}
-                onClick={onGreenFlagClick}
-            />
-            <StopAll
-                active={active}
-                title={intl.formatMessage(messages.stopTitle)}
-                onClick={onStopAllClick}
-            />
+            {
+                (window.scratchConfig && window.scratchConfig.stageArea && window.scratchConfig.stageArea.startButton.show) && (
+                    <GreenFlag
+                        active={active}
+                        title={intl.formatMessage(messages.goTitle)}
+                        onClick={onGreenFlagClick}
+                    />
+                )
+            }
+            {
+                (window.scratchConfig && window.scratchConfig.stageArea && window.scratchConfig.stageArea.stopButton.show) && (
+                    <StopAll
+                        active={active}
+                        title={intl.formatMessage(messages.stopTitle)}
+                        onClick={onStopAllClick}
+                    />
+                )
+            }
+            
             {turbo ? (
                 <TurboMode />
             ) : null}
