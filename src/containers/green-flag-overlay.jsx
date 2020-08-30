@@ -23,8 +23,6 @@ class GreenFlagOverlay extends React.Component {
     }
 
     render () {
-        if (this.props.isStarted) return null;
-
         return (
             <Box
                 className={this.props.wrapperClass}
@@ -44,13 +42,11 @@ class GreenFlagOverlay extends React.Component {
 
 GreenFlagOverlay.propTypes = {
     className: PropTypes.string,
-    isStarted: PropTypes.bool,
     vm: PropTypes.instanceOf(VM),
     wrapperClass: PropTypes.string
 };
 
 const mapStateToProps = state => ({
-    isStarted: state.scratchGui.vmStatus.started,
     vm: state.scratchGui.vm
 });
 

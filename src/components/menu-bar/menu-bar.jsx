@@ -70,6 +70,7 @@ import profileIcon from './icon--profile.png';
 import remixIcon from './icon--remix.svg';
 import dropdownCaret from './dropdown-caret.svg';
 import languageIcon from '../language-selector/language-icon.svg';
+import aboutIcon from './icon--about.svg';
 
 import scratchLogo from './scratch-logo.svg';
 
@@ -142,6 +143,19 @@ MenuItemTooltip.propTypes = {
     isRtl: PropTypes.bool
 };
 
+const AboutButton = props => (
+    <Button
+        className={classNames(styles.menuBarItem, styles.hoverable)}
+        iconClassName={styles.aboutIcon}
+        iconSrc={aboutIcon}
+        onClick={props.onClick}
+    />
+);
+
+AboutButton.propTypes = {
+    onClick: PropTypes.func.isRequired
+};
+
 class MenuBar extends React.Component {
     constructor (props) {
         super(props);
@@ -158,7 +172,6 @@ class MenuBar extends React.Component {
             'getSaveToComputerHandler',
             'restoreOptionMessage'
         ]);
-        window.scratchConfig = window.scratchConfig || {}
     }
     componentDidMount () {
         document.addEventListener('keydown', this.handleKeyPress);
@@ -167,11 +180,6 @@ class MenuBar extends React.Component {
         document.removeEventListener('keydown', this.handleKeyPress);
     }
     handleClickNew () {
-        if(window.scratchConfig && window.scratchConfig.menuBar.newButton){
-            if(!window.scratchConfig.menuBar.newButton.handleBefore()){
-                return
-            }
-        }
         // if the project is dirty, and user owns the project, we will autosave.
         // but if they are not logged in and can't save, user should consider
         // downloading or logging in first.
@@ -233,12 +241,12 @@ class MenuBar extends React.Component {
         }
     }
     getSaveToComputerHandler (downloadProjectCallback) {
-        if(window.scratchConfig && window.scratchConfig.menuBar.saveFileButton){
-            if(!window.scratchConfig.menuBar.saveFileButton.handleBefore()){
-                return
-            }
-        }
         return () => {
+            if(window.scratchConfig && window.scratchConfig.menuBar.saveFileButton){
+                if(!window.scratchConfig.menuBar.saveFileButton.handleBefore()){
+                    return
+                }
+            }
             this.props.onRequestCloseFile();
             downloadProjectCallback();
             if (this.props.onProjectTelemetryEvent) {
@@ -379,20 +387,14 @@ class MenuBar extends React.Component {
                                     place={this.props.isRtl ? 'left' : 'right'}
                                     onRequestClose={this.props.onRequestCloseFile}
                                 >
-                                    {
-                                        (window.scratchConfig && window.scratchConfig.menuBar && window.scratchConfig.menuBar.newButton && 
-                                            window.scratchConfig.menuBar.newButton.show) && (
-                                            <MenuSection>
-                                                <MenuItem
-                                                    isRtl={this.props.isRtl}
-                                                    onClick={this.handleClickNew}
-                                                >
-                                                    {newProjectMessage}
-                                                </MenuItem>
-                                            </MenuSection>
-                                        )
-                                    }
-                                    
+                                    <MenuSection>
+                                        <MenuItem
+                                            isRtl={this.props.isRtl}
+                                            onClick={this.handleClickNew}
+                                        >
+                                            {newProjectMessage}
+                                        </MenuItem>
+                                    </MenuSection>
                                     {(this.props.canSave || this.props.canCreateCopy || this.props.canRemix) && (
                                         <MenuSection>
                                             {this.props.canSave && (
@@ -413,9 +415,8 @@ class MenuBar extends React.Component {
                                         </MenuSection>
                                     )}
                                     <MenuSection>
-                                        {
-                                            (window.scratchConfig && window.scratchConfig.menuBar && window.scratchConfig.menuBar.loadFileButton && 
-                                                window.scratchConfig.menuBar.loadFileButton.show) && (
+                                        {(window.scratchConfig && window.scratchConfig.menuBar && window.scratchConfig.menuBar.loadFileButton && 
+                                        window.scratchConfig.menuBar.loadFileButton.show) && (
                                             <SBFileUploader
                                                 canSave={this.props.canSave}
                                                 userOwnsProject={this.props.userOwnsProject}
@@ -768,6 +769,7 @@ MenuBar.propTypes = {
     locale: PropTypes.string.isRequired,
     loginMenuOpen: PropTypes.bool,
     logo: PropTypes.string,
+    onClickAbout: PropTypes.func,
     onClickAccount: PropTypes.func,
     onClickEdit: PropTypes.func,
     onClickFile: PropTypes.func,
