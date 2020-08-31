@@ -16,13 +16,13 @@ class GreenFlagOverlay extends React.Component {
     }
 
     handleClick () {
-        this.props.vm.start();
-        this.props.vm.greenFlag();
+        if(window.scratchConfig && window.scratchConfig.stageArea && window.scratchConfig.stageArea.startButton.handleBeforeStart()){
+            this.props.vm.start();
+            this.props.vm.greenFlag();
+        }
     }
 
     render () {
-        if (this.props.isStarted) return null;
-
         return (
             <Box
                 className={this.props.wrapperClass}
@@ -42,13 +42,11 @@ class GreenFlagOverlay extends React.Component {
 
 GreenFlagOverlay.propTypes = {
     className: PropTypes.string,
-    isStarted: PropTypes.bool,
     vm: PropTypes.instanceOf(VM),
     wrapperClass: PropTypes.string
 };
 
 const mapStateToProps = state => ({
-    isStarted: state.scratchGui.vmStatus.started,
     vm: state.scratchGui.vm
 });
 

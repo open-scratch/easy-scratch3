@@ -15,19 +15,23 @@ class Controls extends React.Component {
         ]);
     }
     handleGreenFlagClick (e) {
-        e.preventDefault();
-        if (e.shiftKey) {
-            this.props.vm.setTurboMode(!this.props.turbo);
-        } else {
-            if (!this.props.isStarted) {
-                this.props.vm.start();
+        if(window.scratchConfig && window.scratchConfig.stageArea && window.scratchConfig.stageArea.startButton.handleBeforeStart()){           
+            e.preventDefault();
+            if (e.shiftKey) {
+                this.props.vm.setTurboMode(!this.props.turbo);
+            } else {
+                if (!this.props.isStarted) {
+                    this.props.vm.start();
+                }
+                this.props.vm.greenFlag();
             }
-            this.props.vm.greenFlag();
         }
     }
     handleStopAllClick (e) {
-        e.preventDefault();
-        this.props.vm.stopAll();
+        if(window.scratchConfig && window.scratchConfig.stageArea && window.scratchConfig.stageArea.stopButton.handleBeforeStop()){
+            e.preventDefault();
+            this.props.vm.stopAll();
+        }
     }
     render () {
         const {

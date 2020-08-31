@@ -56,7 +56,6 @@ const StageHeaderComponent = function (props) {
         onSetStageSmall,
         onSetStageFull,
         onSetStageUnFull,
-        showBranding,
         stageSizeMode,
         vm
     } = props;
@@ -65,20 +64,7 @@ const StageHeaderComponent = function (props) {
 
     if (isFullScreen) {
         const stageDimensions = getStageDimensions(null, true);
-        const stageButton = showBranding ? (
-            <div className={styles.embedScratchLogo}>
-                <a
-                    href="https://scratch.mit.edu"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                >
-                    <img
-                        alt="Scratch"
-                        src={scratchLogo}
-                    />
-                </a>
-            </div>
-        ) : (
+        const stageButton = 
             <Button
                 className={styles.stageButton}
                 onClick={onSetStageUnFull}
@@ -92,7 +78,6 @@ const StageHeaderComponent = function (props) {
                     title={props.intl.formatMessage(messages.fullscreenControl)}
                 />
             </Button>
-        );
         header = (
             <Box className={styles.stageHeaderWrapperOverlay}>
                 <Box
@@ -147,25 +132,29 @@ const StageHeaderComponent = function (props) {
                 </div>
             );
         header = (!isPlayerOnly || (window.scratchConfig && window.scratchConfig.stageArea && window.scratchConfig.stageArea.showControl)) && (
-            <Box className={styles.stageHeaderWrapper}>
+            <Box className={isPlayerOnly?styles.stageHeaderWrapperOverlay:styles.stageHeaderWrapper}>
                 <Box className={styles.stageMenuWrapper}>
                     <Controls vm={vm} />
                     <div className={styles.stageSizeRow}>
                         {stageControls}
-                        <div>
-                            <Button
-                                className={styles.stageButton}
-                                onClick={onSetStageFull}
-                            >
-                                <img
-                                    alt={props.intl.formatMessage(messages.fullStageSizeMessage)}
-                                    className={styles.stageButtonIcon}
-                                    draggable={false}
-                                    src={fullScreenIcon}
-                                    title={props.intl.formatMessage(messages.fullscreenControl)}
-                                />
-                            </Button>
-                        </div>
+                        {
+                            (!isPlayerOnly || (window.scratchConfig && window.scratchConfig.stageArea && window.scratchConfig.stageArea.fullscreenButton.show)) && (
+                                <div>
+                                    <Button
+                                        className={styles.stageButton}
+                                        onClick={onSetStageFull}
+                                    >
+                                        <img
+                                            alt={props.intl.formatMessage(messages.fullStageSizeMessage)}
+                                            className={styles.stageButtonIcon}
+                                            draggable={false}
+                                            src={fullScreenIcon}
+                                            title={props.intl.formatMessage(messages.fullscreenControl)}
+                                        />
+                                    </Button>
+                                </div>
+                            )
+                        }
                     </div>
                 </Box>
             </Box>
@@ -189,7 +178,6 @@ StageHeaderComponent.propTypes = {
     onSetStageLarge: PropTypes.func.isRequired,
     onSetStageSmall: PropTypes.func.isRequired,
     onSetStageUnFull: PropTypes.func.isRequired,
-    showBranding: PropTypes.bool.isRequired,
     stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),
     vm: PropTypes.instanceOf(VM).isRequired
 };

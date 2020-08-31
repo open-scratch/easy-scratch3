@@ -46,14 +46,12 @@ StageHeader.propTypes = {
     isFullScreen: PropTypes.bool,
     isPlayerOnly: PropTypes.bool,
     onSetStageUnFull: PropTypes.func.isRequired,
-    showBranding: PropTypes.bool,
     stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
 const mapStateToProps = state => ({
     stageSizeMode: state.scratchGui.stageSize.stageSize,
-    showBranding: state.scratchGui.mode.showBranding,
     isFullScreen: state.scratchGui.mode.isFullScreen,
     isPlayerOnly: state.scratchGui.mode.isPlayerOnly
 });
@@ -61,8 +59,16 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     onSetStageLarge: () => dispatch(setStageSize(STAGE_SIZE_MODES.large)),
     onSetStageSmall: () => dispatch(setStageSize(STAGE_SIZE_MODES.small)),
-    onSetStageFull: () => dispatch(setFullScreen(true)),
-    onSetStageUnFull: () => dispatch(setFullScreen(false))
+    onSetStageFull: () => {
+        if(window.scratchConfig && window.scratchConfig.stageArea && window.scratchConfig.stageArea.fullscreenButton.handleBeforeSetStageFull()){
+            dispatch(setFullScreen(true))
+        }
+    },
+    onSetStageUnFull: () => {
+        if(window.scratchConfig && window.scratchConfig.stageArea && window.scratchConfig.stageArea.fullscreenButton.handleBeforeSetStageUnFull()){
+            dispatch(setFullScreen(false))
+        }
+    }
 });
 
 export default connect(

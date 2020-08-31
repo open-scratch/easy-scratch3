@@ -20,6 +20,14 @@
 
 demo见编译后的build/index.html文件
 
+### 参考系统
+
+开源Teaching在线教学系统便是使用的本项目，可以参考具体示例
+
+官网：http://teaching.vip
+
+开源地址：http://github.com/open-scratch/teaching
+
 ### 二次开发
 
 调试
@@ -30,15 +38,15 @@ npm run build
 npm run build:prod
 
 建议在Linux环境下编译开发，windows下编译可参见：
+
 https://www.213.name/archives/1739
 
 
 ### 参与本项目
-本项目接受PR，如果大佬有更好的实现方法和更好的创意，欢迎提交PR！
+如果大佬有更好的实现方法和更好的创意，欢迎提交PR！
 
-同时也欢迎提出Issue，BUG建议均可
 
-# 项目分析
+# Scratch项目分析
 
 ## 各个模块
 
@@ -111,14 +119,14 @@ svg文件处理
 
 ## 直接使用本DEMO
 
-编译后直接修改index.html中的配置即可使用
+编译后直接修改index.html和player.html中的配置即可使用
 
 ## 引入到自己的页面
 
 页面引入lib.min.js和chunks/gui.js后，scratch将自动渲染至`<div id="scratch"></div>`内。
 
 
-## 配置示例
+## 完整配置示例
 ```
 window.scratchConfig = {
       logo: {
@@ -186,10 +194,33 @@ window.scratchConfig = {
           //点击profile按钮
         }
       }, 
-      //舞台区配置，仅playerOlny模式生效
-      stageArea:{
-        showControl: false, //是否显示舞台区控制按钮
+      stageArea:{ //舞台区配置，仅推荐在player下配置
+        scale: 1, //舞台区比例
+        width: 480, // 舞台宽
+        height: 360, //舞台高
+        showControl: true, //是否显示舞台区控制按钮
         showLoading: false, //是否显示Loading
+        fullscreenButton:{ //全屏按钮
+          show: true,
+          handleBeforeSetStageUnFull(){ //退出全屏前的操作
+            return true
+          },
+          handleBeforeSetStageFull(){ //全屏前的操作
+            return true
+          }
+        },
+        startButton:{ //开始按钮
+          show: true,
+          handleBeforeStart(){ //开始前的操作
+            return true
+          }
+        },
+        stopButton:{ // 停止按钮
+          show: true,
+          handleBeforeStop(){ //停止前的操作
+            return true
+          }
+        }
       },
       handleVmInitialized: (vm) => {
         window.vm = vm
@@ -220,7 +251,7 @@ window.scratchConfig = {
 ## 全局对象
 
 ### window.vm对象
-scratch-vm实例化的对象，可以从外部操作部分vm功能
+scratch-vm实例化的对象，可以从外部直接操作部分vm虚拟机功能
 
 #### 对象常用API列表：
 
@@ -291,26 +322,34 @@ scratch-vm实例化的对象，可以从外部操作部分vm功能
 |show|是否显示|
 |handleClick|处理按钮点击事件|
 
-### 舞台区域（仅播放器模式生效）
+### 舞台区域
+
+建议仅在播放器模式下配置
 
 `window.scratchConfig.stageArea`
 
 |参数名|描述|
 |----|----|
+|scale|舞台区比例|
+|width|舞台宽度|
+|height|舞台高度|
 |showControl|是否显示舞台区控制按钮|
 |showLoading|是否显示Loading|
+|fullscreenButton|全屏按钮设置|
+|startButton|小绿旗按钮设置|
+|stopButton|停止按钮设置|
 
 ### 更换默认项目
 
 `defaultProjectURL: "./static/project.sb3"`
 
-如果要加载默认小米则删除此配置
+如果要加载默认小猫则删除此配置
 
 ### 素材库CDN
 
 `window.scratchConfig.assetCDN`
 
-将官方素材库换成自己的地址，加快国内用户访问速度。建议将素材文件上传至七牛、阿里云OSS等云存储上。
+配置此项将官方素材库换成自己的地址，加快国内用户访问速度。建议将素材文件上传至七牛、阿里云OSS等云存储上。
 
 若使用官方素材库请删除本配置项。默认为/static下的素材库，如不需要可删除/static/internalapi文件夹
 
@@ -344,7 +383,7 @@ window.scratchConfig.handleDefaultProjectLoaded
 
 ### 完整配置示例：
 
-见编译后的index.html
+见编译后的index.html和player.html
 
 ## 项目相关API
 
@@ -426,11 +465,9 @@ window.scratch.setFullScreen(isFullScreen)
 window.scratch.setFullScreen(true)
 ```
 
-## 适用于移动端
+## 手机端虚拟按键
 
-### 向Scratch发送按键事件
-
-示例：绑定某个dom为移动端的虚拟键盘，要先引入jQuery
+示例：绑定某个dom为移动端的虚拟键盘，先引入jQuery
 
 ```js
 function regKeyEvent(selector, key, keyCode) {
@@ -453,11 +490,11 @@ function regKeyEvent(selector, key, keyCode) {
       });
   }
 
-//   绑定上下左右空格键
-//   regKeyEvent(".button_space", " ", 32)
-//   regKeyEvent(".button_down", "ArrowDown", 40)
-//   regKeyEvent(".button_up", "ArrowUp", 38)
-//   regKeyEvent(".button_left", "ArrowLeft", 37)
-//   regKeyEvent(".button_right", "ArrowRight", 39)
+  // 配置上下左右空格键
+  regKeyEvent(".button_space", " ", 32)
+  regKeyEvent(".button_down", "ArrowDown", 40)
+  regKeyEvent(".button_up", "ArrowUp", 38)
+  regKeyEvent(".button_left", "ArrowLeft", 37)
+  regKeyEvent(".button_right", "ArrowRight", 39)
 
 ```

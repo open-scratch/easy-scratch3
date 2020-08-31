@@ -84,6 +84,7 @@ class GUI extends React.Component {
         if(window.scratchConfig && 'handleVmInitialized' in window.scratchConfig){
             window.scratchConfig.handleVmInitialized(this.props.vm)
         }
+        console.log("OpenScratch https://github.com/open-scratch")
     }
     componentDidUpdate (prevProps) {
         if (this.props.projectId !== prevProps.projectId && this.props.projectId !== null) {
