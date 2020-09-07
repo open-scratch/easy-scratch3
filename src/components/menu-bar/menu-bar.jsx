@@ -180,6 +180,11 @@ class MenuBar extends React.Component {
         document.removeEventListener('keydown', this.handleKeyPress);
     }
     handleClickNew () {
+        if(window.scratchConfig && window.scratchConfig.menuBar.newButton){
+            if(!window.scratchConfig.menuBar.newButton.handleBefore()){
+                return;
+            }
+        }
         // if the project is dirty, and user owns the project, we will autosave.
         // but if they are not logged in and can't save, user should consider
         // downloading or logging in first.
@@ -388,12 +393,15 @@ class MenuBar extends React.Component {
                                     onRequestClose={this.props.onRequestCloseFile}
                                 >
                                     <MenuSection>
-                                        <MenuItem
-                                            isRtl={this.props.isRtl}
-                                            onClick={this.handleClickNew}
-                                        >
-                                            {newProjectMessage}
-                                        </MenuItem>
+                                        {(window.scratchConfig && window.scratchConfig.menuBar && window.scratchConfig.menuBar.newButton && 
+                                            window.scratchConfig.menuBar.newButton.show) && (
+                                            <MenuItem
+                                                isRtl={this.props.isRtl}
+                                                onClick={this.handleClickNew}
+                                            >
+                                                {newProjectMessage}
+                                            </MenuItem>
+                                        )}
                                     </MenuSection>
                                     {(this.props.canSave || this.props.canCreateCopy || this.props.canRemix) && (
                                         <MenuSection>
