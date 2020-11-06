@@ -38,7 +38,7 @@ const STAGE_DISPLAY_SIZES = keyMirror({
 });
 
 // zoom level to start with
-const BLOCKS_DEFAULT_SCALE = 0.675;
+const BLOCKS_DEFAULT_SCALE = window.scratchConfig && window.scratchConfig.blocks && window.scratchConfig.blocks.scale || 0.675;
 
 const STAGE_DISPLAY_SCALES = {};
 STAGE_DISPLAY_SCALES[STAGE_DISPLAY_SIZES.large] = window.scratchConfig && window.scratchConfig.stageArea && window.scratchConfig.stageArea.scale || 1; // large mode, wide browser (standard)

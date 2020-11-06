@@ -37,7 +37,7 @@
         loadFileButton:{
           show: true,
           handleBefore(){
-            return false
+            return true
           }
         },
         //保存到计算机按钮
@@ -81,6 +81,9 @@
         handleClick:()=>{
           //点击profile按钮
         }
+      },
+      blocks:{
+        scale: 0.8, // 积木大小
       },
       stageArea:{ //舞台设置
         scale: 1,

@@ -88,6 +88,8 @@
     Shrink category font to fit "My Blocks" for now.
     Probably will need different solutions for language support later, so
     make the change here instead of in scratch-blocks.
+
+    积木分类字体大小
 */
 .blocks :global(.scratchCategoryMenuItemLabel) {
     font-size: 0.65rem;
