@@ -132,7 +132,7 @@ const StageHeaderComponent = function (props) {
                 </div>
             );
         header = (!isPlayerOnly || (window.scratchConfig && window.scratchConfig.stageArea && window.scratchConfig.stageArea.showControl)) && (
-            <Box className={isPlayerOnly?styles.stageHeaderWrapperOverlay:styles.stageHeaderWrapper}>
+            <Box className={styles.stageHeaderWrapper}>
                 <Box className={styles.stageMenuWrapper}>
                     <Controls vm={vm} />
                     <div className={styles.stageSizeRow}>
