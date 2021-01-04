@@ -54,6 +54,21 @@
         //教程按钮
         helpButton:{
           show: true
+        },
+        //我的物品按钮
+        myStuff:{
+          show: true,
+          url: '/myProject'
+        },
+        //用户头像按钮
+        userAvatar:{
+          show: true,
+          username: '未登录',
+          avatar: './static/avatar.png',
+          handleClick(){
+            //弹出登录框等操作
+            console.log("点击头像")
+          }
         }
       }, 
       shareButton: {
@@ -83,10 +98,10 @@
         }
       },
       blocks:{
-        scale: 0.8, // 积木大小
+        scale: 0.8, // 积木缩放比例
       },
       stageArea:{ //舞台设置
-        scale: 1,
+        scale: 1, //舞台缩放比例
         width: 480,
         height: 360,
         showControl: false, //是否显示舞台区控制按钮

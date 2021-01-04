@@ -39,10 +39,8 @@ const mapStateToProps = state => ({
     isStudent: state.session && state.session.permissions && state.session.permissions.student,
     profileUrl: state.session && state.session.session && state.session.session.user ?
         `/users/${state.session.session.user.username}` : '',
-    thumbnailUrl: state.session && state.session.session && state.session.session.user ?
-        state.session.session.user.thumbnailUrl : null,
-    username: state.session && state.session.session && state.session.session.user ?
-        state.session.session.user.username : ''
+    // thumbnailUrl: window.scratchConfig.menuBar.userAvatar.avatar || null,
+    // username: window.scratchConfig.menuBar.userAvatar.username || ''
 });
 
 const mapDispatchToProps = () => ({});

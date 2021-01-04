@@ -26,18 +26,23 @@ demo见编译后的build/index.html文件
 
 官网：http://teaching.vip
 
-开源地址：http://github.com/open-scratch/teaching
+开源地址：http://github.com/open-scratch/teaching-open
 
 ### 二次开发
 
-调试
+- 安装依赖
+npm install
+
+- 调试
 npm start
-编译
+
+- 编译
 npm run build
-编译正式版
+
+- 编译正式版
 npm run build:prod
 
-建议在Linux环境下编译开发，windows下编译可参见：
+建议在Linux环境下编译开发，若windows下编译遇到问题可参见：
 
 https://www.213.name/archives/1739
 
@@ -166,6 +171,21 @@ window.scratchConfig = {
         //教程按钮
         helpButton:{
           show: true
+        },
+        //我的物品按钮
+        myStuff:{
+          show: true,
+          url: '/myProject'
+        },
+        //用户头像按钮
+        userAvatar:{
+          show: true,
+          username: '未登录',
+          avatar: './static/avatar.png',
+          handleClick(){
+            //弹出登录框等操作
+            console.log("点击头像")
+          }
         }
       }, 
       shareButton: {
@@ -251,9 +271,9 @@ window.scratchConfig = {
 ## 全局对象
 
 ### window.vm对象
-scratch-vm实例化的对象，可以从外部直接操作部分vm虚拟机功能
+scratch-vm实例化的对象，可以从外部直接操作部分scratch-vm虚拟机功能
 
-#### 对象常用API列表：
+#### scratch-vm对象常用API列表：
 
 - vm.saveProjectSb3() 获取SB3格式项目
 - vm.loadProject(file) 加载SB3项目
@@ -274,7 +294,10 @@ scratch-vm实例化的对象，可以从外部直接操作部分vm虚拟机功�
 
 需要注意的是，需要在引入lib.min.js之前就加入该代码
 
-### LOGO
+
+### 菜单栏相关
+
+#### LOGO
 
 属性：
 `window.scratchConfig.logo`
@@ -286,9 +309,6 @@ scratch-vm实例化的对象，可以从外部直接操作部分vm虚拟机功�
 |handleClickShare|处理LOGO点击事件|
 
 支持图片URL和base64，建议使用PNG半透明图片
-
-
-### 菜单栏
 
 #### 菜单栏样式
 
@@ -322,9 +342,21 @@ scratch-vm实例化的对象，可以从外部直接操作部分vm虚拟机功�
 |show|是否显示|
 |handleClick|处理按钮点击事件|
 
+#### 用户名和头像
+
+`window.scratchConfig.menuBar.userAvatar`
+
+|参数名|描述|
+|----|----|
+|show|是否显示|
+|username|用户名|
+|avatar|用户头像|
+|handleClick|点击事件|
+
+
 ### 舞台区域
 
-建议仅在播放器模式下配置
+ 注意：建议仅在播放器模式下配置
 
 `window.scratchConfig.stageArea`
 
@@ -339,7 +371,7 @@ scratch-vm实例化的对象，可以从外部直接操作部分vm虚拟机功�
 |startButton|小绿旗按钮设置|
 |stopButton|停止按钮设置|
 
-### 更换默认项目
+### 默认加载的项目
 
 `defaultProjectURL: "./static/project.sb3"`
 

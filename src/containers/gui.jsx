@@ -78,7 +78,7 @@ class GUI extends React.Component {
 
         window.scratch.loadProject = (url, callback)=>{
             var event = new CustomEvent('loadProject', {"detail": {url: url,callback:callback }});
-                document.dispatchEvent(event);
+            document.dispatchEvent(event);
         }
 
         if(window.scratchConfig && 'handleVmInitialized' in window.scratchConfig){
