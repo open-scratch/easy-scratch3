@@ -1,3 +1,5 @@
+[English](./README-EN.md) | 简体中文
+
 # 项目介绍
 
 使用本项目，不需要关注Scratch3.0功能的具体实现，只需要简单的js基础即可调用Scratch的相关功能，助力项目快速开发。
@@ -227,13 +229,14 @@ scratch-vm实例化的对象，可以从外部直接操作部分scratch-vm虚拟
 
 
 ### VM初始换完毕回调
-window.scratchConfig.handleVmInitialized
+`window.scratchConfig.handleVmInitialized`
 
 |参数名|描述|
 |----|----|
 |vm|scratch virtual machine|
 
 示例
+
 ```
 window.scratchConfig.handleVmInitialized = (vm)=>{
     //scratch vm初始换完毕后的代码
@@ -241,12 +244,12 @@ window.scratchConfig.handleVmInitialized = (vm)=>{
 ```
 
 ### 作品加载完毕的回调
-window.scratchConfig.handleProjectLoaded
+`window.scratchConfig.handleProjectLoaded`
 
 每当新建项目或载入项目完毕后调用此方法。
 
 ### 默认项目加载完毕的回调
-window.scratchConfig.handleDefaultProjectLoaded
+`window.scratchConfig.handleDefaultProjectLoaded`
 
 默认小猫项目加载完毕后调用此方法。
 
@@ -411,7 +414,10 @@ window.scratchConfig = {
         }
       }, 
       menuBar: {
-        color: 'hsla(215, 100%, 65%, 1)', //菜单栏颜色
+        //菜单栏样式
+        style: {
+          background: 'hsla(215, 100%, 65%, 1)',
+        },
         //新建按钮
         newButton:{
           show: true,
@@ -437,9 +443,12 @@ window.scratchConfig = {
         turboModeButton:{
           show: true
         },
-        //教程按钮
         helpButton:{
-          show: true
+          show: true,
+          handleBefore:()=>{
+            console.log("显示自己的教程")
+            return true
+          }
         },
         //我的物品按钮
         myStuff:{
@@ -454,33 +463,44 @@ window.scratchConfig = {
           handleClick(){
             //弹出登录框等操作
           }
-        }
+        },
+        customButtons: [
+          {
+            show: true,
+            buttonName: '分享',
+            style:{
+              color: 'white',
+              background: 'hsla(30, 100%, 55%, 1)',
+            },
+            handleClick:()=>{
+              console.log('分享按钮')
+              window.scratch.getProjectCover(cover => {
+                //TODO 获取到作品截图
+                console.log(cover)
+              })
+              window.scratch.getProjectFile(file => {
+                //TODO 获取到项目文件
+                console.log(file)
+              })
+              // 获取到项目名
+              var projectName = window.scratch.getProjectName()
+              console.log(projectName);
+            }
+          },
+          {
+            show: true,
+            buttonName: '自定义按钮2',
+            style: {
+              color: 'white',
+              background: 'hsl(271deg 89% 70%)',
+            },
+            handleClick:()=>{
+              console.log("自定义按钮2");
+            }
+          },
+          //可继续新增按钮
+        ]
       }, 
-      shareButton: {
-        show: true,
-        buttonName: "分享",
-        handleClick: () => {
-          //点击分享按钮
-          window.scratch.getProjectCover(cover => {
-            //TODO 获取到作品截图
-            console.log(cover)
-          })
-          window.scratch.getProjectFile(file => {
-            //TODO 获取到项目文件
-            console.log(file)
-          })
-          // 获取到项目名
-          var projectName = window.scratch.getProjectName()
-          console.log(projectName);
-        }
-      }, 
-      profileButton: {
-        show: true,
-        buttonName: "我的作品",
-        handleClick:()=>{
-          //点击profile按钮
-        }
-      },
       blocks:{
         scale: 0.8, // 积木缩放比例
         // 如需动态隐藏显示分类或积木，修改此配置后需手动执行 window.vm.emitWorkspaceUpdate()
@@ -542,15 +562,7 @@ window.scratchConfig = {
 
 ## 积木分类代码
 
-motion:运动
-looks: 外观
-sound: 声音
-events: 事件
-controls: 控制
-sensing: 侦测
-operators: 运算
-variables: 变量
-myBlocks: 自制积木
+motion  looks  sound  events  controls  sensing  operators  variables  myBlocks
 
 ## 积木代码
 
