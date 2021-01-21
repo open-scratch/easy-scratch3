@@ -753,7 +753,7 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
         }
         // return `undefined`
     };
-    const motionXML = moveCategory('motion') || motion(isInitialSetup, isStage, targetId);
+    const motionXML =  moveCategory('motion') || motion(isInitialSetup, isStage, targetId);
     const looksXML = moveCategory('looks') || looks(isInitialSetup, isStage, targetId, costumeName, backdropName);
     const soundXML = moveCategory('sound') || sound(isInitialSetup, isStage, targetId, soundName);
     const eventsXML = moveCategory('event') || events(isInitialSetup, isStage, targetId);
@@ -765,23 +765,41 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
 
     const everything = [
         xmlOpen,
-        motionXML, gap,
-        looksXML, gap,
-        soundXML, gap,
-        eventsXML, gap,
-        controlXML, gap,
-        sensingXML, gap,
-        operatorsXML, gap,
-        variablesXML, gap,
-        myBlocksXML
     ];
+
+    let hideCatagorys = window.scratchConfig && window.scratchConfig.blocks && window.scratchConfig.blocks.hideCatagorys || [];
+    let hideBlocks = window.scratchConfig && window.scratchConfig.blocks && window.scratchConfig.blocks.hideBlocks || [];
+
+    if (!hideCatagorys.includes('motion'))
+    {everything.push(motionXML, gap)}
+    if (!hideCatagorys.includes('looks'))
+    {everything.push(looksXML, gap)}
+    if (!hideCatagorys.includes('sound'))
+    {everything.push(soundXML, gap)}
+    if (!hideCatagorys.includes('events'))
+    everything.push(eventsXML, gap)
+    if (!hideCatagorys.includes('control'))
+    everything.push(controlXML, gap)
+    if (!hideCatagorys.includes('sensing'))
+    everything.push(sensingXML, gap)
+    if (!hideCatagorys.includes('operators'))
+    everything.push(operatorsXML, gap)
+    if (!hideCatagorys.includes('variables'))
+    everything.push(variablesXML, gap)
+    if (!hideCatagorys.includes('myBlocks'))
+    everything.push(myBlocksXML)
 
     for (const extensionCategory of categoriesXML) {
         everything.push(gap, extensionCategory.xml);
     }
 
     everything.push(xmlClose);
-    return everything.join('\n');
+    let xml = everything.join('\n')
+    hideBlocks.forEach(block=>{
+        let reg = new RegExp('<block type="'+block+'">([\\s\\S]*?)<\/block>', 'g')
+        xml = xml.replace(reg, "");
+    })
+    return xml;
 };
 
 export default makeToolboxXML;
