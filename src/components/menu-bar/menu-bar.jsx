@@ -342,7 +342,7 @@ class MenuBar extends React.Component {
                     this.props.className,
                     styles.menuBar
                 )}
-                style={(window.scratchConfig && window.scratchConfig.menuBar && window.scratchConfig.menuBar.color) && {backgroundColor: window.scratchConfig.menuBar.color}}
+                style={window.scratchConfig && window.scratchConfig.menuBar && window.scratchConfig.menuBar.style}
             >
                 <div className={styles.mainMenu}>
                     <div className={styles.fileGroup}>
@@ -587,7 +587,19 @@ class MenuBar extends React.Component {
                         }
                         buttonName = {window.scratchConfig.profileButton.buttonName}
                     />
-                    )}   
+                    )}
+                    {
+                        (window.scratchConfig && window.scratchConfig.menuBar && window.scratchConfig.menuBar.customButtons && window.scratchConfig.menuBar.customButtons.length>0) && (
+                            window.scratchConfig.menuBar.customButtons.map(item=> {
+                                   return <ProfileButton
+                                        className={styles.menuBarButton}
+                                        style={item.style || {}}
+                                        onClick = {() => {item.handleClick();}}
+                                        buttonName = {item.buttonName}
+                                    />
+                             })
+                        )
+                    }
                     </div>
                     <div className={classNames(styles.menuBarItem, styles.communityButtonWrapper)}>
                         {/*this.props.enableCommunity ? (
@@ -762,7 +774,11 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => ({
     autoUpdateProject: () => dispatch(autoUpdateProject()),
-    onOpenTipLibrary: () => dispatch(openTipsLibrary()),
+    onOpenTipLibrary: () => {
+        if(window.scratchConfig.menuBar.helpButton.handleBefore()){
+            dispatch(openTipsLibrary())
+        }
+    },
     onClickAccount: () => dispatch(openAccountMenu()),
     onRequestCloseAccount: () => dispatch(closeAccountMenu()),
     onClickFile: () => dispatch(openFileMenu()),

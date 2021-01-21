@@ -1,5 +1,6 @@
 @import "../../css/colors.css";
 
 .profile-button {
-    background: $data-primary;
+    /* background: $data-primary; */
+    margin: 0 10px;
 }

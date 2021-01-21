@@ -110,31 +110,28 @@ scratch-vm实例化的对象，可以从外部直接操作部分scratch-vm虚拟
 
 |参数名|描述|
 |----|----|
-|color|菜单栏颜色|
+|color|菜单栏颜色，弃用|
+|style|菜单栏样式|
 
-#### 原始菜单控制
+#### 原始菜单和按钮控制
 
-控制原始菜单的显示隐藏，是否可以执行。
-见完整配置示例
+控制原始菜单的显示隐藏，以及是否执行前的hook。
 
+|按钮|描述|
+|----|----|
+|newButton|新建按钮|
+|loadFileButton|从计算机加载按钮|
+|saveFileButton|保存到计算机按钮|
+|turboModeButton|加速模式按钮|
+|helpButton|教程按钮|
+|myStuff|我的物品按钮|
 
-#### 分享按钮
-
-`window.scratchConfig.shareButton`
+按钮属性
 
 |参数名|描述|
 |----|----|
 |show|是否显示|
-|handleClick|处理按钮点击事件|
-
-#### 个人中心按钮
-
-`window.scratchConfig.profileButton`
-
-|参数名|描述|
-|----|----|
-|show|是否显示|
-|handleClick|处理按钮点击事件|
+|handleBefore|处理按钮点击前事件，返回true继续执行|
 
 #### 用户名和头像
 
@@ -147,6 +144,43 @@ scratch-vm实例化的对象，可以从外部直接操作部分scratch-vm虚拟
 |avatar|用户头像|
 |handleClick|点击事件|
 
+#### 自定义按钮
+
+`window.scratchConfig.menuBar.customButtons`
+
+可无限添加按钮
+
+按钮属性：
+
+|参数名|描述|
+|----|----|
+|show|是否显示|
+|buttonName|按钮名|
+|style|按钮样式|
+|handleClick|点击事件|
+
+
+#### 分享按钮 (弃用)
+
+`window.scratchConfig.shareButton`
+
+弃用，建议直接使用自定义按钮
+
+|参数名|描述|
+|----|----|
+|show|是否显示|
+|handleClick|处理按钮点击事件|
+
+#### 个人中心按钮 (弃用)
+
+`window.scratchConfig.profileButton`
+
+弃用，建议直接使用自定义按钮
+
+|参数名|描述|
+|----|----|
+|show|是否显示|
+|handleClick|处理按钮点击事件|
 
 ### 舞台区域
 
@@ -455,12 +489,11 @@ window.scratchConfig = {
         //隐藏积木（积木代码见附录）
         hideBlocks:[],
       },
-      stageArea:{ //舞台区配置，仅推荐在player下配置
+      stageArea:{ //舞台区配置，仅推荐在player模式下配置
         scale: 1, //舞台区比例
         width: 480, // 舞台宽
         height: 360, //舞台高
         showControl: true, //是否显示舞台区控制按钮
-        showLoading: false, //是否显示Loading
         fullscreenButton:{ //全屏按钮
           show: true,
           handleBeforeSetStageUnFull(){ //退出全屏前的操作

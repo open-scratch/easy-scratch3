@@ -8,6 +8,7 @@ import styles from './profile-button.css';
 
 const ProfileButton = ({
     className,
+    style,
     onClick,
     buttonName
 }) => (
@@ -16,6 +17,7 @@ const ProfileButton = ({
             className,
             styles.profileButton
         )}
+        style={style}
         onClick={onClick}
     >
         {buttonName ? buttonName: "个人中心"}

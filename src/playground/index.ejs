@@ -25,7 +25,10 @@
         }
       },
       menuBar: {
-        color: 'hsla(215, 100%, 65%, 1)', //菜单栏颜色
+        //菜单栏样式
+        style: {
+          background: 'hsla(215, 100%, 65%, 1)',
+        },
         //新建按钮
         newButton:{
           show: true,
@@ -53,7 +56,11 @@
         },
         //教程按钮
         helpButton:{
-          show: true
+          show: true,
+          handleBefore:()=>{
+            console.log("显示自己的教程")
+            return true
+          }
         },
         //我的物品按钮
         myStuff:{
@@ -69,29 +76,56 @@
             //弹出登录框等操作
             console.log("点击头像")
           }
-        }
+        },
+        customButtons: [
+          {
+            show: true,
+            buttonName: '分享',
+            style:{
+              color: 'white',
+              background: 'hsla(30, 100%, 55%, 1)',
+            },
+            handleClick:()=>{
+              console.log("自定义按钮1");
+              console.log('分享按钮')
+              window.scratch.getProjectCover(cover => {
+                //TODO 获取到作品截图
+                console.log(cover)
+              })
+              window.scratch.getProjectFile(file => {
+                //TODO 获取到项目文件
+                console.log(file)
+              })
+              // 获取到项目名
+              var projectName = window.scratch.getProjectName()
+              console.log(projectName);
+            }
+          },
+          {
+            show: true,
+            buttonName: '自定义按钮2',
+            style: {
+              color: 'white',
+              background: 'hsl(271deg 89% 70%)',
+            },
+            handleClick:()=>{
+              console.log("自定义按钮2");
+            }
+          },
+          //可继续新增按钮
+        ]
       }, 
+      //弃用
       shareButton: {
-        show: true,
+        show: false,
         buttonName: "分享",
         handleClick: () => {
           //点击分享按钮
-          console.log('分享按钮')
-          window.scratch.getProjectCover(cover => {
-            //TODO 获取到作品截图
-            console.log(cover)
-          })
-          window.scratch.getProjectFile(file => {
-            //TODO 获取到项目文件
-            console.log(file)
-          })
-          // 获取到项目名
-          var projectName = window.scratch.getProjectName()
-          console.log(projectName);
         }
       },
-      profileButton: {
-        show: true,
+      //弃用
+      profileButton: { 
+        show: false,
         buttonName: "我的作品",
         handleClick:()=>{
           //点击profile按钮
@@ -133,11 +167,6 @@
         hideBlocks:[],
       },
       stageArea:{ //舞台设置
-        scale: 1, //舞台缩放比例
-        width: 480,
-        height: 360,
-        showControl: false, //是否显示舞台区控制按钮
-        showLoading: false, //是否显示Loading
         fullscreenButton:{ //全屏按钮
           show: true,
           handleBeforeSetStageUnFull(){ //退出全屏前的操作
