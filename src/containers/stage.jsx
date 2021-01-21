@@ -304,31 +304,25 @@ class Stage extends React.Component {
         }
         this.setState({mouseDownTimeoutId: null});
     }
-    /**
-     * Initialize the position of the "dragged sprite" canvas
-     * @param {DrawableExtraction} drawableData The data returned from renderer.extractDrawableScreenSpace
-     * @param {number} x The x position of the initial drag event
-     * @param {number} y The y position of the initial drag event
-     */
-    drawDragCanvas (drawableData, x, y) {
+    drawDragCanvas (drawableData) {
         const {
-            imageData,
-            x: boundsX,
-            y: boundsY,
-            width: boundsWidth,
-            height: boundsHeight
+            data,
+            width,
+            height,
+            x,
+            y
         } = drawableData;
-        this.dragCanvas.width = imageData.width;
-        this.dragCanvas.height = imageData.height;
-        // On high-DPI devices, the canvas size in layout-pixels is not equal to the size of the extracted data.
-        this.dragCanvas.style.width = `${boundsWidth}px`;
-        this.dragCanvas.style.height = `${boundsHeight}px`;
-
+        this.dragCanvas.width = width;
+        this.dragCanvas.height = height;
+        // Need to convert uint8array from WebGL readPixels into Uint8ClampedArray
+        // for ImageData constructor. Shares underlying buffer, so it is fast.
+        const imageData = new ImageData(
+            new Uint8ClampedArray(data.buffer), width, height);
         this.dragCanvas.getContext('2d').putImageData(imageData, 0, 0);
         // Position so that pick location is at (0, 0) so that  positionDragCanvas()
         // can use translation to move to mouse position smoothly.
-        this.dragCanvas.style.left = `${boundsX - x}px`;
-        this.dragCanvas.style.top = `${boundsY - y}px`;
+        this.dragCanvas.style.left = `${-x}px`;
+        this.dragCanvas.style.top = `${-y}px`;
         this.dragCanvas.style.display = 'block';
     }
     clearDragCanvas () {
@@ -355,23 +349,19 @@ class Stage extends React.Component {
         // Dragging always brings the target to the front
         target.goToFront();
 
-        const [scratchMouseX, scratchMouseY] = this.getScratchCoords(x, y);
-        const offsetX = target.x - scratchMouseX;
-        const offsetY = -(target.y + scratchMouseY);
+        // Extract the drawable art
+        const drawableData = this.renderer.extractDrawable(drawableId, x, y);
 
         this.props.vm.startDrag(targetId);
         this.setState({
             isDragging: true,
             dragId: targetId,
-            dragOffset: [offsetX, offsetY]
+            dragOffset: drawableData.scratchOffset
         });
         if (this.props.useEditorDragStyle) {
-            // Extract the drawable art
-            const drawableData = this.renderer.extractDrawableScreenSpace(drawableId);
-            this.drawDragCanvas(drawableData, x, y);
+            this.drawDragCanvas(drawableData);
             this.positionDragCanvas(x, y);
             this.props.vm.postSpriteInfo({visible: false});
-            this.props.vm.renderer.draw();
         }
     }
     onStopDrag (mouseX, mouseY) {
@@ -397,9 +387,12 @@ class Stage extends React.Component {
             }
             this.props.vm.postSpriteInfo(spriteInfo);
             // Then clear the dragging canvas and stop drag (potentially slow if selecting sprite)
-            this.clearDragCanvas();
-            commonStopDragActions();
-            this.props.vm.renderer.draw();
+            setTimeout(() => {
+                this.clearDragCanvas();
+                setTimeout(() => {
+                    commonStopDragActions();
+                }, 30);
+            }, 30);
         } else {
             commonStopDragActions();
         }
