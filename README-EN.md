@@ -440,7 +440,7 @@ window.scratchConfig = {
 
 ## block catagory code
 
-motion  looks  sound  events  controls  sensing  operators  variables  myBlocks
+motion  looks  sound  events  control  sensing  operators  variables  myBlocks
 
 ## block code
 

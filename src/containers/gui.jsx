@@ -144,9 +144,14 @@ class GUI extends React.Component {
                     //     setTimeout(() => this.props.vm.renderer.draw());    
                     //   }
                       callback()
+                  }).catch(e=>{
+                    callback(e)
                   })
               };
               reader.readAsArrayBuffer(blob);
+        })
+        .catch(e=>{
+            callback(e)
         });
     }
     render () {

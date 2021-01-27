@@ -480,7 +480,7 @@ const sensing = function (isInitialSetup, isStage) {
         <block type="sensing_mousey"/>
         ${isStage ? '' : `
             ${blockSeparator}
-            '<block type="sensing_setdragmode" id="sensing_setdragmode"></block>'+
+            '<block type="sensing_setdragmode" id="sensing_setdragmode"></block>
             ${blockSeparator}
         `}
         ${blockSeparator}
@@ -794,9 +794,14 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
     }
 
     everything.push(xmlClose);
+    
     let xml = everything.join('\n')
     hideBlocks.forEach(block=>{
-        let reg = new RegExp('<block type="'+block+'">([\\s\\S]*?)<\/block>', 'g')
+        let reg2 = new RegExp(`<block(.+?)type="${block}"(.*?)\/>`, 'g')
+        xml = xml.replace(reg2, "");
+    })
+    hideBlocks.forEach(block=>{
+        let reg = new RegExp(`<block(.+?)type="${block}"(.*?)>([\\s\\S]*?)<\/block>`, 'g')
         xml = xml.replace(reg, "");
     })
     return xml;

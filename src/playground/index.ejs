@@ -79,7 +79,6 @@
         },
         customButtons: [
           {
-            show: true,
             buttonName: '分享',
             style:{
               color: 'white',
@@ -102,7 +101,6 @@
             }
           },
           {
-            show: true,
             buttonName: '自定义按钮2',
             style: {
               color: 'white',
@@ -134,7 +132,7 @@
       blocks:{
         scale: 0.8, // 积木缩放比例
         // 隐藏分类
-        // 分类代码:motion、looks、sound、events、controls、sensing、operators、variables、myBlocks
+        // 分类代码:motion、looks、sound、events、control、sensing、operators、variables、myBlocks
         // 如需动态隐藏显示分类或积木，修改此配置后需手动执行 window.vm.emitWorkspaceUpdate()
         hideCatagorys:[], 
         //隐藏积木
@@ -199,12 +197,16 @@
 
       },
       handleDefaultProjectLoaded:() => {
-        //默认作品加载完毕，一般在这里控制项目加载
-        // window.scratch.setProjectName("默认项目")
-        //  window.scratch.loadProject("/project.sb3", () => {
-        //     console.log("项目加载完毕")
-        //     window.scratch.setProjectName("默认项目")
-        //  })
+        //默认作品加载完毕，可以在这里控制项目加载
+         window.scratch.loadProject("/project.sb3", (e) => {
+          if(e === undefined){
+            console.log("项目加载完毕")
+            window.scratch.setProjectName("默认项目")
+          }else{
+            console.log("项目加载失败")
+            console.log(e);
+          }  
+         })
       },
       //默认项目地址,不需要修请删除本配置项
       defaultProjectURL: "./static/project.sb3",

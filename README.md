@@ -562,7 +562,7 @@ window.scratchConfig = {
 
 ## 积木分类代码
 
-motion  looks  sound  events  controls  sensing  operators  variables  myBlocks
+motion  looks  sound  events  control  sensing  operators  variables  myBlocks
 
 ## 积木代码
 
