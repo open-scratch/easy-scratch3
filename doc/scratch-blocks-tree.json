@@ -1,0 +1,581 @@
+[
+  {
+    "title": "动作",
+    "value": "motion",
+    "key": "motion",
+    "children": [
+      {
+        "title": "移动 %1 步",
+        "value": "motion_movesteps",
+        "key": "motion_movesteps"
+      },
+      {
+        "title": "右转 %1 度",
+        "value": "motion_turnright",
+        "key": "motion_turnright"
+      },
+      {
+        "title": "左转 %1 度",
+        "value": "motion_turnleft",
+        "key": "motion_turnleft"
+      },
+      {
+        "title": "移到 %1",
+        "value": "motion_goto",
+        "key": "motion_goto"
+      },
+      {
+        "title": "移到 x: %1 y: %2",
+        "value": "motion_gotoxy",
+        "key": "motion_gotoxy"
+      },
+      {
+        "title": "在 %1 秒内滑行到 %2",
+        "value": "motion_glideto",
+        "key": "motion_glideto"
+      },
+      {
+        "title": "在 %1 秒内滑行到 x: %2 y: %3",
+        "value": "motion_glidesecstoxy",
+        "key": "motion_glidesecstoxy"
+      },
+      {
+        "title": "面向 %1 方向",
+        "value": "motion_pointindirection",
+        "key": "motion_pointindirection"
+      },
+      {
+        "title": "面向 %1",
+        "value": "motion_pointtowards",
+        "key": "motion_pointtowards"
+      },
+      {
+        "title": "将x坐标增加 %1",
+        "value": "motion_changexby",
+        "key": "motion_changexby"
+      },
+      {
+        "title": "将x坐标设为 %1",
+        "value": "motion_setx",
+        "key": "motion_setx"
+      },
+      {
+        "title": "将y坐标增加 %1",
+        "value": "motion_changeyby",
+        "key": "motion_changeyby"
+      },
+      {
+        "title": "将y坐标设为 %1",
+        "value": "motion_sety",
+        "key": "motion_sety"
+      },
+      {
+        "title": "碰到边缘就反弹",
+        "value": "motion_ifonedgebounce",
+        "key": "motion_ifonedgebounce"
+      },
+      {
+        "title": "将旋转方式设为 %1",
+        "value": "motion_setrotationstyle",
+        "key": "motion_setrotationstyle"
+      },
+      {
+        "title": "x 坐标",
+        "value": "motion_xposition",
+        "key": "motion_xposition"
+      },
+      {
+        "title": "y 坐标",
+        "value": "motion_yposition",
+        "key": "motion_yposition"
+      },
+      {
+        "title": "方向",
+        "value": "motion_direction",
+        "key": "motion_direction"
+      }
+    ]
+  },
+  {
+    "title": "外观",
+    "value": "looks",
+    "key": "looks",
+    "children": [
+      {
+        "title": "说 %1 %2 秒",
+        "value": "looks_sayforsecs",
+        "key": "looks_sayforsecs"
+      },
+      {
+        "title": "说 %1",
+        "value": "looks_say",
+        "key": "looks_say"
+      },
+      {
+        "title": "思考 %1 %2 秒",
+        "value": "looks_thinkforsecs",
+        "key": "looks_thinkforsecs"
+      },
+      {
+        "title": "思考 %1",
+        "value": "looks_think",
+        "key": "looks_think"
+      },
+      {
+        "title": "换成 %1 背景",
+        "value": "looks_switchbackdropto",
+        "key": "looks_switchbackdropto"
+      },
+      {
+        "title": "换成 %1 背景并等待",
+        "value": "looks_switchbackdroptoandwait",
+        "key": "looks_switchbackdroptoandwait"
+      },
+      {
+        "title": "下一个背景",
+        "value": "looks_nextbackdrop",
+        "key": "looks_nextbackdrop"
+      },
+      {
+        "title": "换成 %1 造型",
+        "value": "looks_switchcostumeto",
+        "key": "looks_switchcostumeto"
+      },
+      {
+        "title": "下一个造型",
+        "value": "looks_nextcostume",
+        "key": "looks_nextcostume"
+      },
+      {
+        "title": "将大小增加 %1",
+        "value": "looks_changesizeby",
+        "key": "looks_changesizeby"
+      },
+      {
+        "title": "将大小设为 %1",
+        "value": "looks_setsizeto",
+        "key": "looks_setsizeto"
+      },
+      {
+        "title": "将 %1 特效增加 %2",
+        "value": "looks_changeeffectby",
+        "key": "looks_changeeffectby"
+      },
+      {
+        "title": "将 %1 特效设定为 %2",
+        "value": "looks_seteffectto",
+        "key": "looks_seteffectto"
+      },
+      {
+        "title": "清除图形特效",
+        "value": "looks_cleargraphiceffects",
+        "key": "looks_cleargraphiceffects"
+      },
+      {
+        "title": "显示",
+        "value": "looks_show",
+        "key": "looks_show"
+      },
+      {
+        "title": "隐藏",
+        "value": "looks_hide",
+        "key": "looks_hide"
+      },
+      {
+        "title": "移到最 前面|后面",
+        "value": "looks_gotofrontback",
+        "key": "looks_gotofrontback"
+      },
+      {
+        "title": "前移|后移 %1 层",
+        "value": "looks_goforwardbackwardlayers",
+        "key": "looks_goforwardbackwardlayers"
+      },
+      {
+        "title": "造型 编号|名称",
+        "value": "looks_costumenumbername",
+        "key": "looks_costumenumbername"
+      },
+      {
+        "title": "背景 编号|名称",
+        "value": "looks_backdropnumbername",
+        "key": "looks_backdropnumbername"
+      },
+      {
+        "title": "大小",
+        "value": "looks_size",
+        "key": "looks_size"
+      }
+    ]
+  },
+  {
+    "title": "声音",
+    "value": "sound",
+    "key": "sound",
+    "children": [
+      {
+        "title": "播放声音 %1 等待播完",
+        "value": "sound_playuntildone",
+        "key": "sound_playuntildone"
+      },
+      {
+        "title": "播放声音 %1",
+        "value": "sound_play",
+        "key": "sound_play"
+      },
+      {
+        "title": "停止所有声音",
+        "value": "sound_stopallsounds",
+        "key": "sound_stopallsounds"
+      },
+      {
+        "title": "将 %1 音效增加 %2",
+        "value": "sound_changeeffectby",
+        "key": "sound_changeeffectby"
+      },
+      {
+        "title": "将 %1 音效设为 %2",
+        "value": "sound_seteffectto",
+        "key": "sound_seteffectto"
+      },
+      {
+        "title": "清除音效",
+        "value": "sound_cleareffects",
+        "key": "sound_cleareffects"
+      },
+      {
+        "title": "将音量增加 %1",
+        "value": "sound_changevolumeby",
+        "key": "sound_changevolumeby"
+      },
+      {
+        "title": "将音量设为 %1",
+        "value": "sound_setvolumeto",
+        "key": "sound_setvolumeto"
+      },
+      {
+        "title": "音量",
+        "value": "sound_volume",
+        "key": "sound_volume"
+      }
+    ]
+  },
+  {
+    "title": "事件",
+    "value": "events",
+    "key": "events",
+    "children": [
+      {
+        "title": "当小绿旗被点击",
+        "value": "event_whenflagclicked",
+        "key": "event_whenflagclicked"
+      },
+      {
+        "title": "当按下 %1 键",
+        "value": "event_whenkeypressed",
+        "key": "event_whenkeypressed"
+      },
+      {
+        "title": "当舞台被点击",
+        "value": "event_whenstageclicked",
+        "key": "event_whenstageclicked"
+      },
+      {
+        "title": "当角色被点击",
+        "value": "event_whenthisspriteclicked",
+        "key": "event_whenthisspriteclicked"
+      },
+      {
+        "title": "当背景换成 %1",
+        "value": "event_whenbackdropswitchesto",
+        "key": "event_whenbackdropswitchesto"
+      },
+      {
+        "title": "当 %1 > %2",
+        "value": "event_whengreaterthan",
+        "key": "event_whengreaterthan"
+      },
+      {
+        "title": "当接收到 %1",
+        "value": "event_whenbroadcastreceived",
+        "key": "event_whenbroadcastreceived"
+      },
+      {
+        "title": "广播 %1",
+        "value": "event_broadcast",
+        "key": "event_broadcast"
+      },
+      {
+        "title": "广播 %1 并等待",
+        "value": "event_broadcastandwait",
+        "key": "event_broadcastandwait"
+      }
+    ]
+  },
+  {
+    "title": "控制",
+    "value": "controls",
+    "key": "controls",
+    "children": [
+      {
+        "title": "等待 %1 秒",
+        "value": "control_wait",
+        "key": "control_wait"
+      },
+      {
+        "title": "重复执行 %1 次",
+        "value": "control_repeat",
+        "key": "control_repeat"
+      },
+      {
+        "title": "重复执行",
+        "value": "control_forever",
+        "key": "control_forever"
+      },
+      {
+        "title": "如果 %1 那么",
+        "value": "control_if",
+        "key": "control_if"
+      },
+      {
+        "title": "如果 %1 那么 否则",
+        "value": "control_if_else",
+        "key": "control_if_else"
+      },
+      {
+        "title": "等待 %1",
+        "value": "control_wait_until",
+        "key": "control_wait_until"
+      },
+      {
+        "title": "重复执行直到 %1",
+        "value": "control_repeat_until",
+        "key": "control_repeat_until"
+      },
+      {
+        "title": "停止 1%",
+        "value": "control_stop",
+        "key": "control_stop"
+      },
+      {
+        "title": "克隆 %1",
+        "value": "control_create_clone_of",
+        "key": "control_create_clone_of"
+      },
+      {
+        "title": "删除此克隆体",
+        "value": "control_delete_this_clone",
+        "key": "control_delete_this_clone"
+      },
+      {
+        "title": "当作为克隆体启动时",
+        "value": "control_start_as_clone",
+        "key": "control_start_as_clone"
+      }
+    ]
+  },
+  {
+    "title": "侦测",
+    "value": "sensing",
+    "key": "sensing",
+    "children": [
+      {
+        "title": "碰到 %1 ?",
+        "value": "sensing_touchingobject",
+        "key": "sensing_touchingobject"
+      },
+      {
+        "title": "碰到颜色 %1 ?",
+        "value": "sensing_touchingcolor",
+        "key": "sensing_touchingcolor"
+      },
+      {
+        "title": "颜色 %1 碰到 %2 ?",
+        "value": "sensing_coloristouchingcolor",
+        "key": "sensing_coloristouchingcolor"
+      },
+      {
+        "title": "到 %1 的距离",
+        "value": "sensing_distanceto",
+        "key": "sensing_distanceto"
+      },
+      {
+        "title": "询问 %1 并等待",
+        "value": "sensing_askandwait",
+        "key": "sensing_askandwait"
+      },
+      {
+        "title": "回答",
+        "value": "sensing_answer",
+        "key": "sensing_answer"
+      },
+      {
+        "title": "按下 %1 键?",
+        "value": "sensing_keypressed",
+        "key": "sensing_keypressed"
+      },
+      {
+        "title": "按下鼠标?",
+        "value": "sensing_mousedown",
+        "key": "sensing_mousedown"
+      },
+      {
+        "title": "鼠标的x坐标",
+        "value": "sensing_mousex",
+        "key": "sensing_mousex"
+      },
+      {
+        "title": "鼠标的y坐标",
+        "value": "sensing_mousey",
+        "key": "sensing_mousey"
+      },
+      {
+        "title": "将拖动模式设为 %1",
+        "value": "sensing_setdragmode",
+        "key": "sensing_setdragmode"
+      },
+      {
+        "title": "响度",
+        "value": "sensing_loudness",
+        "key": "sensing_loudness"
+      },
+      {
+        "title": "计时器",
+        "value": "sensing_timer",
+        "key": "sensing_timer"
+      },
+      {
+        "title": "计时器归零",
+        "value": "sensing_resettimer",
+        "key": "sensing_resettimer"
+      },
+      {
+        "title": "%2 的 %1",
+        "value": "sensing_of",
+        "key": "sensing_of"
+      },
+      {
+        "title": "当前时间的 %1",
+        "value": "sensing_current",
+        "key": "sensing_current"
+      },
+      {
+        "title": "2000年至今的天数",
+        "value": "sensing_dayssince2000",
+        "key": "sensing_dayssince2000"
+      },
+      {
+        "title": "用户名",
+        "value": "sensing_username",
+        "key": "sensing_username"
+      }
+    ]
+  },
+  {
+    "title": "运算",
+    "value": "operators",
+    "key": "operators",
+    "children": [
+      {
+        "title": "+",
+        "value": "operator_add",
+        "key": "operator_add"
+      },
+      {
+        "title": "-",
+        "value": "operator_subtract",
+        "key": "operator_subtract"
+      },
+      {
+        "title": "*",
+        "value": "operator_multiply",
+        "key": "operator_multiply"
+      },
+      {
+        "title": "/",
+        "value": "operator_divide",
+        "key": "operator_divide"
+      },
+      {
+        "title": "在 %1 和 %2 之间取随机数",
+        "value": "operator_random",
+        "key": "operator_random"
+      },
+      {
+        "title": ">",
+        "value": "operator_gt",
+        "key": "operator_gt"
+      },
+      {
+        "title": "<",
+        "value": "operator_lt",
+        "key": "operator_lt"
+      },
+      {
+        "title": "=",
+        "value": "operator_equals",
+        "key": "operator_equals"
+      },
+      {
+        "title": "与",
+        "value": "operator_and",
+        "key": "operator_and"
+      },
+      {
+        "title": "或",
+        "value": "operator_or",
+        "key": "operator_or"
+      },
+      {
+        "title": "%1 不成立",
+        "value": "operator_not",
+        "key": "operator_not"
+      },
+      {
+        "title": "连接 %1 和 %2",
+        "value": "operator_join",
+        "key": "operator_join"
+      },
+      {
+        "title": "%2 的第 %1 个字符",
+        "value": "operator_letter_of",
+        "key": "operator_letter_of"
+      },
+      {
+        "title": "%1 的字符数",
+        "value": "operator_length",
+        "key": "operator_length"
+      },
+      {
+        "title": "%1 包含 %2 ?",
+        "value": "operator_contains",
+        "key": "operator_contains"
+      },
+      {
+        "title": "%1 除以 %2 的余数",
+        "value": "operator_mod",
+        "key": "operator_mod"
+      },
+      {
+        "title": "四舍五入 %1",
+        "value": "operator_round",
+        "key": "operator_round"
+      },
+      {
+        "title": "科学计算",
+        "value": "operator_mathop",
+        "key": "operator_mathop"
+      }
+    ]
+  },
+  {
+    "title": "变量",
+    "value": "variables",
+    "key": "variables"
+  },
+  {
+    "title": "自定义积木",
+    "value": "myBlocks",
+    "key": "myBlocks"
+  }
+]
