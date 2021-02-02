@@ -314,8 +314,8 @@
   },
   {
     "title": "控制",
-    "value": "controls",
-    "key": "controls",
+    "value": "control",
+    "key": "control",
     "children": [
       {
         "title": "等待 %1 秒",
