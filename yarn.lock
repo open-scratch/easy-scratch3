@@ -3045,6 +3045,11 @@ domhandler@^2.3.0:
   dependencies:
     domelementtype "1"
 
+dompurify@2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-2.1.1.tgz#b5aa988676b093a9c836d8b855680a8598af25fe"
+  integrity sha512-NijiNVkS/OL8mdQL1hUbCD6uty/cgFpmNiuFxrmJ5YPH2cXrPKIewoixoji56rbZ6XBPmtM8GA8/sf9unlSuwg==
+
 domutils@1.5.1:
   version "1.5.1"
   resolved "https://registry.npm.taobao.org/domutils/download/domutils-1.5.1.tgz#dcd8488a26f563d61079e48c9f7b7e32373682cf"
@@ -8392,6 +8397,13 @@ scratch-render-fonts@1.0.0-prerelease.20180906193204:
   dependencies:
     base64-loader "1.0.0"
 
+scratch-render-fonts@1.0.0-prerelease.20200507182347:
+  version "1.0.0-prerelease.20200507182347"
+  resolved "https://registry.yarnpkg.com/scratch-render-fonts/-/scratch-render-fonts-1.0.0-prerelease.20200507182347.tgz#a4d67bdc0c2b05b56b159df350a1ba3803dc0e80"
+  integrity sha512-tVt2s7lxsBhme9WKIZTnluMerdJVGEc80QSrDdIIzUvHXGCIYkLh6j7ytwXcyq2UsA34d93op9+I9Bh1SPkQkA==
+  dependencies:
+    base64-loader "1.0.0"
+
 scratch-render@0.1.0-prerelease.20200228152431:
   version "0.1.0-prerelease.20200228152431"
   resolved "https://registry.npm.taobao.org/scratch-render/download/scratch-render-0.1.0-prerelease.20200228152431.tgz#22b4a8b5e945cafcace993cfd29fcab3c87a6a73"
@@ -8438,6 +8450,18 @@ scratch-svg-renderer@0.2.0-prerelease.20200205003400:
     base64-loader "1.0.0"
     minilog "3.1.0"
     scratch-render-fonts "1.0.0-prerelease.20180906193204"
+    transformation-matrix "1.15.0"
+
+scratch-svg-renderer@0.2.0-prerelease.20201019174008:
+  version "0.2.0-prerelease.20201019174008"
+  resolved "https://registry.yarnpkg.com/scratch-svg-renderer/-/scratch-svg-renderer-0.2.0-prerelease.20201019174008.tgz#d99b9500b9cf11f84cda38133ead7fbd4a57228e"
+  integrity sha512-RF3Zx09Nl+uLTrPD7K4tR6Sqq/JqRTsLVRugohEJ8pGHXshvBh/A4zWx7XmMZHOdEDHunPxpCDHkW2LoMCFioQ==
+  dependencies:
+    base64-js "1.2.1"
+    base64-loader "1.0.0"
+    dompurify "2.1.1"
+    minilog "3.1.0"
+    scratch-render-fonts "1.0.0-prerelease.20200507182347"
     transformation-matrix "1.15.0"
 
 scratch-translate-extension-languages@0.0.20191118205314:
