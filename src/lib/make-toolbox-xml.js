@@ -480,7 +480,7 @@ const sensing = function (isInitialSetup, isStage) {
         <block type="sensing_mousey"/>
         ${isStage ? '' : `
             ${blockSeparator}
-            '<block type="sensing_setdragmode" id="sensing_setdragmode"></block>
+            '<block type="sensing_setdragmode" id="sensing_setdragmode"></block>'+
             ${blockSeparator}
         `}
         ${blockSeparator}

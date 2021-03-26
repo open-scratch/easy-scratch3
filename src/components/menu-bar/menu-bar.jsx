@@ -591,12 +591,15 @@ class MenuBar extends React.Component {
                     {
                         (window.scratchConfig && window.scratchConfig.menuBar && window.scratchConfig.menuBar.customButtons && window.scratchConfig.menuBar.customButtons.length>0) && (
                             window.scratchConfig.menuBar.customButtons.map(item=> {
-                                   return <ProfileButton
+                                if(item.show){
+                                    return <ProfileButton
+                                        key={item.buttonName}
                                         className={styles.menuBarButton}
                                         style={item.style || {}}
                                         onClick = {() => {item.handleClick();}}
                                         buttonName = {item.buttonName}
                                     />
+                                }
                              })
                         )
                     }
