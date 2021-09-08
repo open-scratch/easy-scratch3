@@ -1,8 +1,7 @@
 import {addLocaleData} from 'react-intl';
 
-import {localeData} from 'easy-scratch-l10n';
+import {localeData, isRtl} from 'easy-scratch-l10n';
 import editorMessages from 'easy-scratch-l10n/locales/editor-msgs';
-import {isRtl} from 'easy-scratch-l10n';
 
 addLocaleData(localeData);
 
