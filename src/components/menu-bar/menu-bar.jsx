@@ -478,22 +478,11 @@ class MenuBar extends React.Component {
                                     <MenuSection>
                                         {(window.scratchConfig && window.scratchConfig.menuBar && window.scratchConfig.menuBar.loadFileButton && 
                                         window.scratchConfig.menuBar.loadFileButton.show) && (
-                                            <SBFileUploader
-                                                canSave={this.props.canSave}
-                                                userOwnsProject={this.props.userOwnsProject}
+                                            <MenuItem
+                                                onClick={this.props.onStartSelectingFileUpload}
                                             >
-                                                {(className, renderFileInput, handleLoadProject) => (
-                                                    <MenuItem
-                                                        className={className}
-                                                        onClick={handleLoadProject}
-                                                    >
-                                                        {/* eslint-disable max-len */}
-                                                        {this.props.intl.formatMessage(sharedMessages.loadFromComputerTitle)}
-                                                        {/* eslint-enable max-len */}
-                                                        {renderFileInput()}
-                                                    </MenuItem>
-                                                )}
-                                            </SBFileUploader>
+                                                {this.props.intl.formatMessage(sharedMessages.loadFromComputerTitle)}
+                                            </MenuItem>
                                         )}
                                         {
                                             (window.scratchConfig && window.scratchConfig.menuBar && window.scratchConfig.menuBar.saveFileButton && 

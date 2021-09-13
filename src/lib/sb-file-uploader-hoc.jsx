@@ -63,7 +63,9 @@ const SBFileUploaderHOC = function (WrappedComponent) {
         }
         // step 1: this is where the upload process begins
         handleStartSelectingFileUpload () {
-            this.createFileObjects(); // go to step 2
+            if(window.scratchConfig && window.scratchConfig.menuBar.loadFileButton && window.scratchConfig.menuBar.loadFileButton.handleBefore()){
+                this.createFileObjects(); // go to step 2
+            }
         }
         // step 2: create a FileReader and an <input> element, and issue a
         // pseudo-click to it. That will open the file chooser dialog.
