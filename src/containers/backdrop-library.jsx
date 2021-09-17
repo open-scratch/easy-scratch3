@@ -4,9 +4,9 @@ import React from 'react';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
 import VM from 'scratch-vm';
 
-import backdropLibraryContent from '../lib/libraries/backdrops.json';
 import backdropTags from '../lib/libraries/backdrop-tags';
 import LibraryComponent from '../components/library/library.jsx';
+import {getBackdropLibrary} from '../lib/assets-api';
 
 const messages = defineMessages({
     libraryTitle: {
@@ -23,6 +23,38 @@ class BackdropLibrary extends React.Component {
         bindAll(this, [
             'handleItemSelect'
         ]);
+        this.state = {
+            data: [],
+            haveData:false
+        };
+    }
+    componentWillMount (){
+        let that = this
+        document.addEventListener("pushBackdropsLibrary",function(e){
+            console.log("pushBackdropsLibrary");
+            let data = e.detail.data.concat(that.state.data)
+            that.setState({
+                data:data,
+                haveData:true
+            })
+        })
+        window.scratch.pushBackdropsLibrary = (data)=>{
+            var event = new CustomEvent('pushBackdropsLibrary', {"detail": {data: data}});
+            document.dispatchEvent(event);
+        };
+
+        if(window.scratchConfig && window.scratchConfig.assets && window.scratchConfig.assets.handleBeforeBackdropsLibraryOpen){
+           if(!window.scratchConfig.assets.handleBeforeBackdropsLibraryOpen()){
+                return;
+           }
+        }
+        getBackdropLibrary().then(data=>{
+            data = data.concat(this.state.data)
+            this.setState({
+                data:data,
+                haveData:true
+            })
+        })
     }
     handleItemSelect (item) {
         const vmBackdrop = {
@@ -36,9 +68,9 @@ class BackdropLibrary extends React.Component {
         this.props.vm.addBackdrop(item.md5ext, vmBackdrop);
     }
     render () {
-        return (
+        return !this.state.haveData?"": (
             <LibraryComponent
-                data={backdropLibraryContent}
+                data={this.state.data}
                 id="backdropLibrary"
                 tags={backdropTags}
                 title={this.props.intl.formatMessage(messages.libraryTitle)}

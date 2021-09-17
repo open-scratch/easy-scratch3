@@ -4,11 +4,12 @@ import React from 'react';
 import {injectIntl, intlShape, defineMessages} from 'react-intl';
 import VM from 'scratch-vm';
 
-import spriteLibraryContent from '../lib/libraries/sprites.json';
 import randomizeSpritePosition from '../lib/randomize-sprite-position';
 import spriteTags from '../lib/libraries/sprite-tags';
 
 import LibraryComponent from '../components/library/library.jsx';
+
+import {getSpriteLibrary} from '../lib/assets-api';
 
 const messages = defineMessages({
     libraryTitle: {
@@ -24,6 +25,38 @@ class SpriteLibrary extends React.PureComponent {
         bindAll(this, [
             'handleItemSelect'
         ]);
+        this.state = {
+            data: [],
+            haveData:false
+        };
+    }
+    componentWillMount (){
+        let that = this
+        document.addEventListener("pushSpriteLibrary",function(e){
+            console.log("pushSpriteLibrary");
+            let data = e.detail.data.concat(that.state.data)
+            that.setState({
+                data:data,
+                haveData:true
+            })
+        })
+        window.scratch.pushSpriteLibrary = (data)=>{
+            var event = new CustomEvent('pushSpriteLibrary', {"detail": {data: data}});
+            document.dispatchEvent(event);
+        };
+
+        if(window.scratchConfig && window.scratchConfig.assets && window.scratchConfig.assets.handleBeforeSpriteLibraryOpen){
+           if(!window.scratchConfig.assets.handleBeforeSpriteLibraryOpen()){
+                return;
+           }
+        }
+        getSpriteLibrary().then(data=>{
+            data = data.concat(this.state.data)
+            this.setState({
+                data:data,
+                haveData:true
+            })
+        })
     }
     handleItemSelect (item) {
         // Randomize position of library sprite
@@ -33,9 +66,9 @@ class SpriteLibrary extends React.PureComponent {
         });
     }
     render () {
-        return (
+        return !this.state.haveData?"": (
             <LibraryComponent
-                data={spriteLibraryContent}
+                data={this.state.data}
                 id="spriteLibrary"
                 tags={spriteTags}
                 title={this.props.intl.formatMessage(messages.libraryTitle)}

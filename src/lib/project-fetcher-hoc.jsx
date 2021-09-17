@@ -141,7 +141,9 @@ const ProjectFetcherHOC = function (WrappedComponent) {
         setProjectId: PropTypes.func
     };
     ProjectFetcherComponent.defaultProps = {
-        assetHost: "assetCDN" in window.scratchConfig ? window.scratchConfig.assetCDN : 'https://assets.scratch.mit.edu',
+        assetHost: (window.scratchConfig && window.scratchConfig.assets.assetHost)
+                    || (window.scratchConfig && window.scratchConfig.assetCDN) 
+                    ||'https://assets.scratch.mit.edu',
         projectHost: 'https://projects.scratch.mit.edu'
     };
 

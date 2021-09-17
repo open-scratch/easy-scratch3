@@ -10,10 +10,11 @@ import LibraryComponent from '../components/library/library.jsx';
 import soundIcon from '../components/library-item/lib-icon--sound.svg';
 import soundIconRtl from '../components/library-item/lib-icon--sound-rtl.svg';
 
-import soundLibraryContent from '../lib/libraries/sounds.json';
 import soundTags from '../lib/libraries/sound-tags';
 
 import {connect} from 'react-redux';
+
+import {getSoundLibrary} from '../lib/assets-api';
 
 const messages = defineMessages({
     libraryTitle: {
@@ -50,6 +51,38 @@ class SoundLibrary extends React.PureComponent {
          * function to call when the sound ends
          */
         this.handleStop = null;
+        this.state = {
+            data: [],
+            haveData:false
+        };
+    }
+    componentWillMount(){
+        let that = this
+        document.addEventListener("pushSoundLibrary",function(e){
+            console.log("pushSoundLibrary");
+            let data = e.detail.data.concat(that.state.data)
+            that.setState({
+                data:data,
+                haveData:true
+            })
+        })
+        window.scratch.pushSoundLibrary = (data)=>{
+            var event = new CustomEvent('pushSoundLibrary', {"detail": {data: data}});
+            document.dispatchEvent(event);
+        };
+
+        if(window.scratchConfig && window.scratchConfig.assets && window.scratchConfig.assets.handleBeforeSoundLibraryOpen){
+           if(!window.scratchConfig.assets.handleBeforeSoundLibraryOpen()){
+                return;
+           }
+        }
+        getSoundLibrary().then(data=>{
+            data = data.concat(this.state.data)
+            this.setState({
+                data:data,
+                haveData:true
+            })
+        })
     }
     componentDidMount () {
         this.audioEngine = new AudioEngine();
@@ -145,9 +178,9 @@ class SoundLibrary extends React.PureComponent {
             this.props.onNewSound();
         });
     }
-    render () {
+    getSoundLibraryThumbnailData(data){
         // @todo need to use this hack to avoid library using md5 for image
-        const soundLibraryThumbnailData = soundLibraryContent.map(sound => {
+        return data.map(sound => {
             const {
                 md5ext,
                 ...otherData
@@ -158,11 +191,12 @@ class SoundLibrary extends React.PureComponent {
                 ...otherData
             };
         });
-
-        return (
+    }
+    render () {
+        return !this.state.haveData ? "": (
             <LibraryComponent
                 showPlayButton
-                data={soundLibraryThumbnailData}
+                data={this.getSoundLibraryThumbnailData(this.state.data)}
                 id="soundLibrary"
                 setStopHandler={this.setStopHandler}
                 tags={soundTags}

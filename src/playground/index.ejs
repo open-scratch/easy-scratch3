@@ -18,10 +18,9 @@
   <script>
     window.scratchConfig = {
       logo: {
-        show: true
-        , url: "./static/logo.png" //logo地址，支持base64图片
-        , handleClickLogo: () => {
-          console.log('点击LOGO')
+        show: true, //是否显示
+        url: "./static/logo.png", //logo地址，支持base64图片
+        handleClickLogo: () => { //处理LOGO点击事件
         }
       },
       menuBar: {
@@ -31,189 +30,155 @@
         },
         //新建按钮
         newButton:{
-          show: true,
+          show: true, //是否显示
           handleBefore(){
+            //拦截点击事件，返回true继续执行
             return true
           }
         },
         //从计算机加载按钮
         loadFileButton:{
-          show: true,
+          show: true, //是否显示
           handleBefore(){
+            //拦截点击事件，返回true继续执行
             return true
           }
         },
         //保存到计算机按钮
         saveFileButton:{
-          show: true,
+          show: true, //是否显示
           handleBefore(){
+            //拦截点击事件，返回true继续执行
             return true
           }
         },
         //加速模式按钮
         turboModeButton:{
-          show: true
+          show: true //是否显示
         },
         //教程按钮
         helpButton:{
-          show: true,
+          show: true, //是否显示
           handleBefore:()=>{
-            console.log("显示自己的教程")
+            //拦截点击事件，返回true继续执行
             return true
           }
         },
         //我的物品按钮
         myStuff:{
-          show: true,
-          url: '/myProject'
+          show: true, //是否显示
+          url: '/myProject' //跳转的连接
         },
         //用户头像按钮
         userAvatar:{
-          show: true,
-          username: '未登录',
-          avatar: './static/avatar.png',
+          show: true, //是否显示
+          username: '未登录', //用户名
+          avatar: './static/avatar.png', //用户头像
           handleClick(){
-            //弹出登录框等操作
-            console.log("点击头像")
+            //点击头像，可以弹出登录框等操作
           }
         },
+        //自定义按钮
         customButtons: [
           {
-            show: true,
-            buttonName: '分享',
-            style:{
+            show: true, //是否显示
+            buttonName: '分享', //按钮名
+            style:{ //按钮样式
               color: 'white',
               background: 'hsla(30, 100%, 55%, 1)',
             },
-            handleClick:()=>{
+            handleClick:()=>{ //按钮事件
               console.log("自定义按钮1");
               console.log('分享按钮')
               window.scratch.getProjectCover(cover => {
                 //TODO 获取到作品截图
-                console.log(cover)
               })
               window.scratch.getProjectFile(file => {
                 //TODO 获取到项目文件
-                console.log(file)
               })
               // 获取到项目名
               var projectName = window.scratch.getProjectName()
               console.log(projectName);
             }
           },
-          {
-            show: false,
-            buttonName: '自定义按钮2',
-            style: {
-              color: 'white',
-              background: 'hsl(271deg 89% 70%)',
-            },
-            handleClick:()=>{
-              console.log("自定义按钮2");
-            }
-          },
           //可继续新增按钮
         ]
       }, 
-      //弃用
-      shareButton: {
-        show: false,
-        buttonName: "分享",
-        handleClick: () => {
-          //点击分享按钮
-        }
-      },
-      //弃用
-      profileButton: { 
-        show: false,
-        buttonName: "我的作品",
-        handleClick:()=>{
-          //点击profile按钮
-        }
-      },
       blocks:{
-        scale: 0.8, // 积木缩放比例
-        // 隐藏分类
-        // 分类代码:motion、looks、sound、events、control、sensing、operators、variables、myBlocks
+         // 积木缩放比例
+        scale: 0.8,
+        // 隐藏分类 费雷见README附录：
         // 如需动态隐藏显示分类或积木，修改此配置后需手动执行 window.vm.emitWorkspaceUpdate()
         hideCatagorys:[], 
-        //隐藏积木
-        /**积木代码：
-          motion_movesteps  motion_turnright  motion_turnleft  motion_goto  motion_gotoxy  motion_glideto
-          motion_glidesecstoxy  motion_pointindirection  motion_pointtowards  motion_changexby  motion_setx
-          motion_changeyby  motion_sety  motion_ifonedgebounce  motion_setrotationstyle  motion_xposition  motion_yposition  motion_direction
-
-          looks_sayforsecs  looks_say  looks_thinkforsecs  looks_think  looks_switchbackdropto  looks_switchbackdroptoandwait  looks_nextbackdrop
-          looks_switchcostumeto  looks_nextcostume  looks_switchbackdropto  looks_nextbackdrop  looks_changesizeby  looks_setsizeto  looks_changeeffectby
-          looks_seteffectto  looks_cleargraphiceffects  looks_show  looks_hide  looks_gotofrontback  looks_goforwardbackwardlayers  looks_backdropnumbername
-          looks_costumenumbername  looks_backdropnumbername  looks_size
-
-          sound_playuntildone  sound_play  sound_stopallsounds  sound_changeeffectby  sound_seteffectto  sound_cleareffects
-          sound_changevolumeby  sound_setvolumeto  sound_volume
-
-          event_whenflagclicked  event_whenkeypressed  event_whenstageclicked  event_whenthisspriteclicked  event_whenbackdropswitchesto
-          event_whengreaterthan  event_whenbroadcastreceived  event_broadcast  event_broadcastandwait
-
-          control_wait  control_repeat  control_forever  control_if  control_if_else  control_wait_until  control_repeat_until  control_stop
-          control_create_clone_of  control_start_as_clone  control_create_clone_of  control_delete_this_clone  
-
-          sensing_touchingobject  sensing_touchingcolor  sensing_coloristouchingcolor  sensing_distanceto  sensing_askandwait  sensing_answer
-          sensing_keypressed  sensing_mousedown  sensing_mousex  sensing_mousey  sensing_setdragmode  sensing_loudness  sensing_timer  sensing_resettimer
-          sensing_of  sensing_current  sensing_dayssince2000  sensing_username
-
-          operator_add  operator_subtract  operator_multiply  operator_divide  operator_random  operator_gt  operator_lt  operator_equals  operator_and
-          operator_or   operator_not  operator_join  operator_letter_of  operator_length  operator_contains  operator_mod  operator_round  operator_mathop
-        */
+        //隐藏积木 积木代码见README附录：
         hideBlocks:[],
       },
       stageArea:{ //舞台设置
         fullscreenButton:{ //全屏按钮
           show: true,
-          handleBeforeSetStageUnFull(){ //退出全屏前的操作
+          handleBeforeSetStageUnFull(){ //拦截退出全屏，返回true继续执行
             return true
           },
-          handleBeforeSetStageFull(){ //全屏前的操作
+          handleBeforeSetStageFull(){ //拦截全屏，返回true继续执行
             return true
           }
         },
         startButton:{ //开始按钮
           show: true,
-          handleBeforeStart(){ //开始前的操作
+          handleBeforeStart(){ //拦截开始按钮，返回true继续执行
             return true
           }
         },
         stopButton:{ // 停止按钮
           show: true,
-          handleBeforeStop(){ //停止前的操作
+          handleBeforeStop(){ //拦截停止按钮，，返回true继续执行
             return true
           }
         }
       },
+      //scratch vm初始化完毕
       handleVmInitialized: (vm) => {
         window.vm = vm
-        console.log("VM初始化完毕")
-
       },
+      //作品加载完毕
       handleProjectLoaded:() => {
-        console.log("作品载入完毕")
-
       },
+      //默认作品加载完毕
       handleDefaultProjectLoaded:() => {
-        //默认作品加载完毕，可以在这里控制项目加载
-         window.scratch.loadProject("/project.sb3", (e) => {
-          if(e === undefined){
-            console.log("项目加载完毕")
-            window.scratch.setProjectName("默认项目")
-          }else{
-            console.log("项目加载失败")
-            console.log(e);
-          }  
-         })
       },
       //默认项目地址,不需要修请删除本配置项
-      // defaultProjectURL: "./static/project.sb3",
-      //若使用官方素材库请删除本配置项, 默认为/static下的素材库
-      assetCDN: './static'
+      defaultProjectURL: "./static/project.sb3",
+      //素材库配置
+      assets:{
+        //素材库地址，默认为/static下的素材库
+        assetHost: './static',
+        //素材库索引地址
+        defaultIndex:{
+          sprites: "./static/json_index/sprites.json",
+          costumes: "./static/json_index/costumes.json",
+          backdrops: "./static/json_index/backdrops.json",
+          sounds: "./static/json_index/sounds.json"
+        },
+        //拦截角色库打开
+        handleBeforeSpriteLibraryOpen(){
+          console.log("角色库打开")
+          //追加素材库
+          // window.scratch.pushSpriteLibrary(Arrays)
+          return true;
+        },
+        //拦截造型库打开
+        handleBeforeCostumesLibraryOpen(){
+          return true;
+        },
+        //拦截背景库打开
+        handleBeforeBackdropsLibraryOpen(){
+          return true;
+        },
+        //拦截声音库打开
+        handleBeforeSoundLibraryOpen(){
+          return true;
+        }
+      },
     }
 
 
@@ -222,7 +187,7 @@
 
 <body>
   <div id="scratch">
-
+    <p>Loading……</p>
   </div>
 </body>
 <script>

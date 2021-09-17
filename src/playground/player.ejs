@@ -18,7 +18,7 @@
   <script>
     window.scratchConfig = {
       stageArea:{
-        scale: window.innerWidth / 480,
+        scale: window.innerWidth / 480, //自适应屏幕尺寸
         width: 480,
         height: 360,
         showControl: true, //是否显示舞台区控制按钮
@@ -45,33 +45,21 @@
         }
       },
       handleVmInitialized: (vm) => {
-        window.vm = vm
-        console.log("VM初始化完毕")
-        
+        window.vm = vm        
       },
       handleProjectLoaded:() => {
-        console.log("作品载入完毕")
-
       },
       handleDefaultProjectLoaded:() => {
-        //默认作品加载完毕，一般在这里控制项目加载
-        // window.scratch.setProjectName("默认项目")
-        //  window.scratch.loadProject("/project.sb3", () => { 
-        //     console.log("项目加载完毕")
-        //     window.scratch.setProjectName("默认项目")
-        //  })
       },
       //默认项目地址,不需要修请删除本配置项
       defaultProjectURL: "./static/project.sb3",
     }
-
-
   </script>
 </head>
 
 <body>
   <div id="scratch">
-    
+    <p>Loading……</p>
   </div>
 </body>
 <script>

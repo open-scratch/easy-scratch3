@@ -15,7 +15,7 @@ import {setRestore} from '../reducers/restore-deletion';
 import DragConstants from '../lib/drag-constants';
 import TargetPaneComponent from '../components/target-pane/target-pane.jsx';
 import {BLOCKS_DEFAULT_SCALE} from '../lib/layout-constants';
-import spriteLibraryContent from '../lib/libraries/sprites.json';
+import {getSpriteLibrary} from '../lib/assets-api';
 import {handleFileUpload, spriteUpload} from '../lib/file-uploader.js';
 import sharedMessages from '../lib/shared-messages';
 import {emptySprite} from '../lib/empty-assets';
@@ -106,13 +106,15 @@ class TargetPane extends React.Component {
         }
     }
     handleSurpriseSpriteClick () {
-        const surpriseSprites = spriteLibraryContent.filter(sprite =>
-            (sprite.tags.indexOf('letters') === -1) && (sprite.tags.indexOf('numbers') === -1)
-        );
-        const item = surpriseSprites[Math.floor(Math.random() * surpriseSprites.length)];
-        randomizeSpritePosition(item);
-        this.props.vm.addSprite(JSON.stringify(item))
-            .then(this.handleActivateBlocksTab);
+        getSpriteLibrary().then(data=>{
+            const surpriseSprites = data.filter(sprite =>
+                (sprite.tags.indexOf('letters') === -1) && (sprite.tags.indexOf('numbers') === -1)
+            );
+            const item = surpriseSprites[Math.floor(Math.random() * surpriseSprites.length)];
+            randomizeSpritePosition(item);
+            this.props.vm.addSprite(JSON.stringify(item))
+                .then(this.handleActivateBlocksTab);
+        }) 
     }
     handlePaintSpriteClick () {
         const formatMessage = this.props.intl.formatMessage;

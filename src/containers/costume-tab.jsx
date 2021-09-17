@@ -34,8 +34,7 @@ import paintIcon from '../components/action-menu/icon--paint.svg';
 import surpriseIcon from '../components/action-menu/icon--surprise.svg';
 import searchIcon from '../components/action-menu/icon--search.svg';
 
-import costumeLibraryContent from '../lib/libraries/costumes.json';
-import backdropLibraryContent from '../lib/libraries/backdrops.json';
+import {getBackdropLibrary,getCostumeLibrary} from '../lib/assets-api';
 
 let messages = defineMessages({
     addLibraryBackdropMsg: {
@@ -168,28 +167,32 @@ class CostumeTab extends React.Component {
         this.handleNewCostume(emptyCostume(name));
     }
     handleSurpriseCostume () {
-        const item = costumeLibraryContent[Math.floor(Math.random() * costumeLibraryContent.length)];
-        const vmCostume = {
-            name: item.name,
-            md5: item.md5ext,
-            rotationCenterX: item.rotationCenterX,
-            rotationCenterY: item.rotationCenterY,
-            bitmapResolution: item.bitmapResolution,
-            skinId: null
-        };
-        this.handleNewCostume(vmCostume, true /* fromCostumeLibrary */);
+        getCostumeLibrary().then(data=>{
+            const item = data[Math.floor(Math.random() * data.length)];
+            const vmCostume = {
+                name: item.name,
+                md5: item.md5ext,
+                rotationCenterX: item.rotationCenterX,
+                rotationCenterY: item.rotationCenterY,
+                bitmapResolution: item.bitmapResolution,
+                skinId: null
+            };
+            this.handleNewCostume(vmCostume, true /* fromCostumeLibrary */);
+        })
     }
     handleSurpriseBackdrop () {
-        const item = backdropLibraryContent[Math.floor(Math.random() * backdropLibraryContent.length)];
-        const vmCostume = {
-            name: item.name,
-            md5: item.md5ext,
-            rotationCenterX: item.rotationCenterX,
-            rotationCenterY: item.rotationCenterY,
-            bitmapResolution: item.bitmapResolution,
-            skinId: null
-        };
-        this.handleNewCostume(vmCostume);
+        getBackdropLibrary().then(data=>{
+            const item = data[Math.floor(Math.random() * data.length)];
+            const vmCostume = {
+                name: item.name,
+                md5: item.md5ext,
+                rotationCenterX: item.rotationCenterX,
+                rotationCenterY: item.rotationCenterY,
+                bitmapResolution: item.bitmapResolution,
+                skinId: null
+            };
+            this.handleNewCostume(vmCostume);
+        })
     }
     handleCostumeUpload (e) {
         const storage = this.props.vm.runtime.storage;

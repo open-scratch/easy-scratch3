@@ -4,23 +4,20 @@ English | [简体中文](./README.md)
 
  You don't need to focus on implementation of Scratch3.0 functionality. Only use simple JavaScript language to call Scratch functions. 
 
-- Implement API with minimal modify. It's can be easy to merge official latest version Scratch
 
-- The functionality encapsulates and provides the calling interface to the outside world without changing the Scratch code itself
-
-## Functions that can be implemented
+## That can be implemented
 
 - load project
 - upload project
-- change logo and style
+- change style
 - mobile scratch player
 - virtual keyboard 
-- custom media library
 - change block size
 - hidden block category or specific block
+- custom assets library
 - and more……
 
-### Case
+### The case
 
 The Teaching system is embed this project.
 
@@ -28,7 +25,7 @@ website：https://teaching.vip
 
 source：http://github.com/open-scratch/teaching-open
 
-### Devolopment
+### Secondary development
 
 - install dependencies
 npm install
@@ -54,15 +51,187 @@ import `lib.min.js` and `chunks/gui.js`, scratch will render into`<div id="scrat
 Do not forget to edit `window.scratchConfig`
 
 
-# API
+# Document
 
-## Global object
+## initial config
 
-### window.vm
+Notice: The window.scratchConfig object need created before import `lib.min.js`
+
+This is a complete configuration example
+
+```js
+window.scratchConfig = {
+      logo: {
+        show: true, //is visible
+        url: "./static/logo.png", //logo url, support base64 images
+        handleClickLogo: () => { //handle logo click event
+        }
+      },
+      menuBar: {
+        //menu bar style
+        style: {
+          background: 'hsla(215, 100%, 65%, 1)',
+        },
+        //new project button
+        newButton:{
+          show: true, //is visible
+          handleBefore(){
+            //handle before click button event, return 'true' to continue
+            return true
+          }
+        },
+        //load project from computer button
+        loadFileButton:{
+          show: true, //is visible
+          handleBefore(){
+            //handle before click button event, return 'true' to continue
+            return true
+          }
+        },
+        //save project to computer button
+        saveFileButton:{
+          show: true, //is visible
+          handleBefore(){
+            //handle before click button event, return 'true' to continue
+            return true
+          }
+        },
+        //turbo mode button
+        turboModeButton:{
+          show: true //is visible
+        },
+        //help button
+        helpButton:{
+          show: true, //is visible
+          handleBefore:()=>{
+            //handle before click button event, return 'true' to continue
+            return true
+          }
+        },
+        //my stuff button
+        myStuff:{
+          show: true, //is visible
+          url: '/myProject' //my project href
+        },
+        //user avatar button
+        userAvatar:{
+          show: true, //is visible
+          username: '未登录', //user name
+          avatar: './static/avatar.png', //avatar image url
+          handleClick(){
+            //handle click avatar button
+          }
+        },
+        //custom buttons
+        customButtons: [
+          {
+            show: true, //is visible
+            buttonName: 'Share', //button label name
+            style:{ //button style
+              color: 'white',
+              background: 'hsla(30, 100%, 55%, 1)',
+            },
+            handleClick:()=>{ //button click event
+              window.scratch.getProjectCover(cover => {
+                //TODO got project cover
+              })
+              window.scratch.getProjectFile(file => {
+                //TODO got project file
+              })
+              // got project name
+              var projectName = window.scratch.getProjectName()
+              console.log(projectName);
+            }
+          },
+          //You can add more buttons
+        ]
+      }, 
+      blocks:{
+         // block scale
+        scale: 0.8,
+        // hide block catagorys (catagory code see appendix)
+        // window.vm.emitWorkspaceUpdate()
+        hideCatagorys:[], 
+        //hide some blocks (block code see appendix)
+        hideBlocks:[],
+      },
+      stageArea:{ //stage setting
+        fullscreenButton:{ //fullscreen button
+          show: true,
+          handleBeforeSetStageUnFull(){ //拦截退出全屏，返回true继续执行
+            return true
+          },
+          handleBeforeSetStageFull(){ //拦截全屏，返回true继续执行
+            return true
+          }
+        },
+        startButton:{ //stat button
+          show: true,
+          handleBeforeStart(){ 
+            //handle before click button event, return 'true' to continue
+            return true
+          }
+        },
+        stopButton:{ // stop button
+          show: true,
+          handleBeforeStop(){
+            //handle before click button event, return 'true' to continue
+            return true
+          }
+        }
+      },
+      //scratch vm initialized
+      handleVmInitialized: (vm) => {
+        window.vm = vm
+      },
+      //when create project or loaded project will call this function
+      handleProjectLoaded:() => {
+      },
+      //when default project loaded will call this function
+      handleDefaultProjectLoaded:() => {
+      },
+      //default project url
+      defaultProjectURL: "./static/project.sb3",
+      //assets library setting
+      assets:{
+        //asset host
+        assetHost: './static',
+        //asset index url
+        defaultIndex:{
+          sprites: "./static/json_index/sprites.json",
+          costumes: "./static/json_index/costumes.json",
+          backdrops: "./static/json_index/backdrops.json",
+          sounds: "./static/json_index/sounds.json"
+        },
+        //handle before sprites library open
+        handleBeforeSpriteLibraryOpen(){
+          // append assets
+          // window.scratch.pushSpriteLibrary(Arrays)
+          return true;
+        },
+        //handle before costumes library open
+        handleBeforeCostumesLibraryOpen(){
+          return true;
+        },
+        //handle before backdrops library open
+        handleBeforeBackdropsLibraryOpen(){
+          return true;
+        },
+        //handle before sounds library open
+        handleBeforeSoundLibraryOpen(){
+          return true;
+        }
+      },
+    }
+```
+
+## API
+
+### ScratchVm Object
 
 It's scratch-vm instance object, You can call scratch virtual machine API from outside.
 
-#### scratch-vm APIs：
+scratch-vm APIs：
 
 - vm.saveProjectSb3()
 - vm.loadProject(file)
@@ -73,155 +242,15 @@ It's scratch-vm instance object, You can call scratch virtual machine API from o
 
 [Scratch-vm document](./doc/scratch-vm/index.html)
 
-
-## scratch initial config
-
-Notice: This object need created before import `lib.min.js`
-
-### About menu bar
-
-#### LOGO
-
-`window.scratchConfig.logo`
-
-|paramenter|description|
-|----|----|
-|show|is show log|
-|url|logo url|
-|handleClickShare|handle logo click event|
-
-The support base64
-
-#### menu bar style
-
-`window.scratchConfig.menuBar`
-
-|paramenter|description|
-|----|----|
-|style|menu bar style|
-
-#### Original menu config
-
-
-|button|description|
-|----|----|
-|newButton|new project button|
-|loadFileButton|load project from computer button|
-|saveFileButton|save project to computer button|
-|turboModeButton|turbo mode button|
-|helpButton|help button|
-|myStuff|my stuff button|
-
-Button properties
-
-|paramenter|description|
-|----|----|
-|show|is show button|
-|handleBefore|handle before click button event, return 'true' to continue|
-
-#### User name and avatar
-
-`window.scratchConfig.menuBar.userAvatar`
-
-|button|description|
-|----|----|
-|show|is show avatar|
-|username| user name|
-|avatar| user avatar|
-|handleClick|handle click event|
-
-#### Custom buttons
-
-`window.scratchConfig.menuBar.customButtons`
-
-Allow unlimit add button
-
-Button properties:
-
-|paramenter|description|
-|----|----|
-|show|is show button|
-|buttonName|button label name|
-|style|button style|
-|handleClick|button click event|
-
-### Stage area
-
- Notict: Is recommended to configure in player mode
-
-`window.scratchConfig.stageArea`
-
-|paramenter|description|
-|----|----|
-|scale|stage scale|
-|width|stage width|
-|height|stage height|
-|showControl|show stage area control bar|
-|fullscreenButton|fullscreen button config|
-|startButton|greenflag button config|
-|stopButton|stop button config|
-
-### Block config
-
-`window.scratchConfig.blocks`
-|paramenter|description|
-|----|----|
-|scale|block scale|
-|hideCatagorys|hide block catagory (catagory codesee appendix)|
-|hideBlocks|hide block (block code see appendix)|
-
-### Default project
-
-`defaultProjectURL: "./static/project.sb3"`
-
-If you want to load default cat please remove this config
-
-### asset library
-
-`window.scratchConfig.assetCDN`
-
-
-> [Scratch asset library util](https://github.com/open-scratch/scratch-asset-utils)
-
-
-
-### VM initialized callback
-window.scratchConfig.handleVmInitialized
-
-|paramenter|description|
-|----|----|
-|vm|scratch virtual machine|
-
-example
-```
-window.scratchConfig.handleVmInitialized = (vm)=>{
-    window.vm = vm // export vm to window
-}
-```
-
-### project loaded callback
-
-`window.scratchConfig.handleProjectLoaded`
-
-when create project or loaded project will call this function
-
-### default project loaded
-
-`window.scratchConfig.handleDefaultProjectLoaded`
-
-when default project loaded will call this function
-
-## Project API
-
 ### load project
 
-`window.scratch.loadPorject(url, callback)`
+`window.scratch.loadProject(url, callback)`
 
 You can also use vm.loadProject
 
-#### example
+example
 ```
-window.scratch.loadPorject(url, ()=>{
+window.scratch.loadProject(url, ()=>{
   console.log("load project finished")
 })
 
@@ -233,7 +262,7 @@ window.scratch.loadPorject(url, ()=>{
 
 You can also use vm.saveProjectSb3
 
-#### example
+example
 ```
 window.scratch.getProjectFile((file)=>{
     console.log(file)
@@ -245,7 +274,7 @@ window.scratch.getProjectFile((file)=>{
 
 `window.scratch.getProjectCover(callback)`
 
-#### example
+example
 ```
 window.scratch.getProjectCover((file)=>{
     console.log(file)
@@ -261,182 +290,57 @@ window.scratch.getProjectCover((file)=>{
 
 `window.scratch.setProjectName(projectName)`
 
-## UI API
-
 ### set player only mode
 
-window.scratch.setPlayerOnly(isPlayerOnly)
-
-#### parameter
-
-|paramenter|description|
-|----|----|
-|isPlayerOnly|is player mode|
-
-#### example
-```
+example
+```js
 window.scratch.setPlayerOnly(true)
 ```
 
 ### fullscreen mode
-window.scratch.setFullScreen(isFullScreen)
 
-|paramenter|description|
-|----|----|
-|isFullScreen|is fullscreen mode|
-
-#### example
-```
+example
+```js
 window.scratch.setFullScreen(true)
 ```
 
+### append assets library
+
+You can dynamically add the asset index to the library. You need to await user to open the asset library and then call this method.
+
+The parameter is an array of assets indexes. See the files in 'josn_index' folder.
+
+
+#### append sprite assets
+`window.scratch.pushSpritesLibrary(Arrays)`
+
+#### append costumes assets
+`window.scratch.pushCostumesLibrary(Arrays)`
+
+#### append backdrops assets
+`window.scratch.pushBackdropsLibrary(Arrays)`
+
+#### append sounds assets
+`window.scratch.pushSoundLibrary(Arrays)`
+
+example
+```js
+window.scratch.pushSoundLibrary(
+  [{
+        "name": "My Custom Sound",
+        "tags": [
+            "music",
+        ],
+        "assetId": "5cb46ddd903fc2c9976ff881df9273c9",
+        "dataFormat": "",
+        "md5ext": "5cb46ddd903fc2c9976ff881df9273c9.wav",
+        "sampleCount": 11840,
+        "rate": 44100
+    }]
+)
+```
+
 # Appendix
-
-## full configuration example
-```
-window.scratchConfig = {
-      logo: {
-        show: true
-        , url: "./static/logo.png"
-        , handleClickLogo: () => {
-        }
-      }, 
-      menuBar: {
-        //menu bar style
-        style: {
-          background: 'hsla(215, 100%, 65%, 1)',
-        },
-        newButton:{
-          show: true,
-          handleBefore(){ //handle before click button event, return 'true' to continue
-            return true
-          }
-        },
-        //load project from computer button
-        loadFileButton:{
-          show: true,
-          handleBefore(){
-            return false
-          }
-        },
-        //save project to computer button
-        saveFileButton:{
-          show: true,
-          handleBefore(){
-            return true
-          }
-        },
-        //turbo mode button
-        turboModeButton:{
-          show: true
-        },
-        //help button
-        helpButton:{
-          show: true
-        },
-        //my stuff button
-        myStuff:{
-          show: true,
-          url: '/myProject'
-        },
-        //user avatar button
-        userAvatar:{
-          show: true,
-          username: 'Login',
-          avatar: './static/avatar.png',
-          handleClick(){
-          }
-        },
-        customButtons: [
-          {
-            show: true,
-            buttonName: 'Share',
-            style:{
-              color: 'white',
-              background: 'hsla(30, 100%, 55%, 1)',
-            },
-            handleClick:()=>{
-              console.log("custom button1 click");
-              window.scratch.getProjectCover(cover => {
-                //TODO upload
-                console.log(cover)
-              })
-              window.scratch.getProjectFile(file => {
-                //TODO upload
-                console.log(file)
-              })
-              var projectName = window.scratch.getProjectName()
-              console.log(projectName);
-            }
-          },
-          {
-            show: true,
-            buttonName: 'Button1',
-            style: {
-              color: 'white',
-              background: 'hsl(271deg 89% 70%)',
-            },
-            handleClick:()=>{
-              console.log("custom button click");
-            }
-          },
-          //You can add more button
-        ]
-      }, 
-      blocks:{
-        scale: 0.8, // block scale
-        // to update workspace you need call window.vm.emitWorkspaceUpdate()
-        // hide block catagory (catagory codesee appendix)
-        hideCatagorys:[], 
-        //hide block (block code see appendix)
-        hideBlocks:[],
-      },
-      stageArea:{ // Notict: Is recommended to configure in player mode
-        scale: 1, // stage scale
-        width: 480, // stage width
-        height: 360, // stage height
-        showControl: true, //show stage area control bar
-        fullscreenButton:{ //fullscreen button
-          show: true,
-          handleBeforeSetStageUnFull(){
-            return true
-          },
-          handleBeforeSetStageFull(){
-            return true
-          }
-        },
-        startButton:{ // greenflag button
-          show: true,
-          handleBeforeStart(){
-            return true
-          }
-        },
-        stopButton:{ // stop button
-          show: true,
-          handleBeforeStop(){
-            return true
-          }
-        }
-      },
-      handleVmInitialized: (vm) => {
-        window.vm = vm
-        console.log("VM initialized")
-        
-      },
-      handleProjectLoaded:() => {
-        console.log("Project Loaded")
-
-      },
-      handleDefaultProjectLoaded:() => {
-        //  window.scratch.loadProject("/project.sb3", () => { 
-        //     window.scratch.setProjectName("untitle")
-        //  })
-      },
-      // If you want to load default cat please remove this config
-      defaultProjectURL: "./static/project.sb3",
-      assetCDN: './static' 
-    }
-```
 
 ## block catagory code
 

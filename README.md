@@ -4,18 +4,14 @@
 
 使用本项目，不需要关注Scratch3.0功能的具体实现，只需要简单的js基础即可调用Scratch的相关功能，助力项目快速开发。
 
-- 以最小的改动量实现功能，方便合并官方最新scratch
-
-- 功能封装并对外提供调用接口， 不需要改动scratch本身代码
-
 ## 可以实现的功能
 - 加载项目
 - 上传项目
-- 修改Logo等外观
-- 移动端虚拟键盘
-- 使用自己的素材库
+- 修改外观
+- 移动端播放器
 - 修改积木大小
 - 显示隐藏积木
+- 自定义素材库
 - And more……
 
 ### 使用案例
@@ -61,209 +57,213 @@ https://www.213.name/archives/1739
 别忘了配置 `window.scratchConfig`
 
 
+# 项目文档
 
-# API参考
+## 初始化配置
 
-## 全局对象
+初始化配置均通过`window.scratchConfig`对象完成
 
-### window.vm对象
+需要注意的是，需要在引入lib.min.js之前就加入该代码，即Scratch主程序加载前就需要定义该配置
 
-scratch-vm实例化的对象，可以从外部直接操作部分scratch-vm虚拟机功能
+以下是完整示例：
 
-#### scratch-vm对象常用API列表：
+```js
+    window.scratchConfig = {
+      logo: {
+        show: true, //是否显示
+        url: "./static/logo.png", //logo地址，支持base64图片
+        handleClickLogo: () => { //处理LOGO点击事件
+        }
+      },
+      menuBar: {
+        //菜单栏样式
+        style: {
+          background: 'hsla(215, 100%, 65%, 1)',
+        },
+        //新建按钮
+        newButton:{
+          show: true, //是否显示
+          handleBefore(){
+            //拦截点击事件，返回true继续执行
+            return true
+          }
+        },
+        //从计算机加载按钮
+        loadFileButton:{
+          show: true, //是否显示
+          handleBefore(){
+            //拦截点击事件，返回true继续执行
+            return true
+          }
+        },
+        //保存到计算机按钮
+        saveFileButton:{
+          show: true, //是否显示
+          handleBefore(){
+            //拦截点击事件，返回true继续执行
+            return true
+          }
+        },
+        //加速模式按钮
+        turboModeButton:{
+          show: true //是否显示
+        },
+        //教程按钮
+        helpButton:{
+          show: true, //是否显示
+          handleBefore:()=>{
+            //拦截点击事件，返回true继续执行
+            return true
+          }
+        },
+        //我的物品按钮
+        myStuff:{
+          show: true, //是否显示
+          url: '/myProject' //跳转的连接
+        },
+        //用户头像按钮
+        userAvatar:{
+          show: true, //是否显示
+          username: '未登录', //用户名
+          avatar: './static/avatar.png', //用户头像
+          handleClick(){
+            //点击头像，可以弹出登录框等操作
+          }
+        },
+        //自定义按钮
+        customButtons: [
+          {
+            show: true, //是否显示
+            buttonName: '分享', //按钮名
+            style:{ //按钮样式
+              color: 'white',
+              background: 'hsla(30, 100%, 55%, 1)',
+            },
+            handleClick:()=>{ //按钮事件
+              console.log("自定义按钮1");
+              console.log('分享按钮')
+              window.scratch.getProjectCover(cover => {
+                //TODO 获取到作品截图
+              })
+              window.scratch.getProjectFile(file => {
+                //TODO 获取到项目文件
+              })
+              // 获取到项目名
+              var projectName = window.scratch.getProjectName()
+              console.log(projectName);
+            }
+          },
+          //可继续新增按钮
+        ]
+      }, 
+      blocks:{
+         // 积木缩放比例
+        scale: 0.8,
+        // 隐藏分类 费雷见README附录：
+        // 如需动态隐藏显示分类或积木，修改此配置后需手动执行 window.vm.emitWorkspaceUpdate()
+        hideCatagorys:[], 
+        //隐藏积木 积木代码见README附录：
+        hideBlocks:[],
+      },
+      stageArea:{ //舞台设置
+        fullscreenButton:{ //全屏按钮
+          show: true,
+          handleBeforeSetStageUnFull(){ //拦截退出全屏，返回true继续执行
+            return true
+          },
+          handleBeforeSetStageFull(){ //拦截全屏，返回true继续执行
+            return true
+          }
+        },
+        startButton:{ //开始按钮
+          show: true,
+          handleBeforeStart(){ //拦截开始按钮，返回true继续执行
+            return true
+          }
+        },
+        stopButton:{ // 停止按钮
+          show: true,
+          handleBeforeStop(){ //拦截停止按钮，，返回true继续执行
+            return true
+          }
+        }
+      },
+      //scratch vm初始化完毕
+      handleVmInitialized: (vm) => {
+        window.vm = vm
+      },
+      //作品加载完毕
+      handleProjectLoaded:() => {
+      },
+      //默认作品加载完毕
+      handleDefaultProjectLoaded:() => {
+      },
+      //默认项目地址,不需要修请删除本配置项
+      defaultProjectURL: "./static/project.sb3",
+      //素材库配置
+      assets:{
+        //附：Scratch素材库采集和处理工具 https://github.com/open-scratch/scratch-asset-utils
+        //素材库地址，默认为/static下的素材库
+        assetHost: './static',
+        //素材库索引地址
+        defaultIndex:{
+          sprites: "./static/json_index/sprites.json",
+          costumes: "./static/json_index/costumes.json",
+          backdrops: "./static/json_index/backdrops.json",
+          sounds: "./static/json_index/sounds.json"
+        },
+        //拦截角色库打开
+        handleBeforeSpriteLibraryOpen(){
+          console.log("角色库打开")
+          //追加素材库
+          // window.scratch.pushSpriteLibrary(Arrays)
+          return true;
+        },
+        //拦截造型库打开
+        handleBeforeCostumesLibraryOpen(){
+          return true;
+        },
+        //拦截背景库打开
+        handleBeforeBackdropsLibraryOpen(){
+          return true;
+        },
+        //拦截声音库打开
+        handleBeforeSoundLibraryOpen(){
+          return true;
+        }
+      },
+    }
 
-- vm.saveProjectSb3() 获取SB3格式项目
-- vm.loadProject(file) 加载SB3项目
-- vm.greenFlag() 点击小绿旗
-- vm.stopAll() 停止运行项目
-- vm.emitWorkspaceUpdate() 刷新工作区
+```
+
+## API
+
+### ScratchVm对象
+
+scratch-vm实例化的对象，可以从外部直接操作部分scratch-vm虚拟机功能，
+
+该对象常用API列表：
+
+- vm.saveProjectSb3() //获取SB3格式项目
+- vm.loadProject(file) //加载SB3项目
+- vm.greenFlag() //点击小绿旗
+- vm.stopAll() //停止运行项目
+- vm.emitWorkspaceUpdate() //刷新工作区
 - ……
 
 [Scratch-vm介绍](./doc/scratch-vm.md)
 
 [Scratch-vm官方文档](./doc/scratch-vm/index.html)
 
-
-## scratch初始化配置
-
-初始化配置均通过`window.scratchConfig`对象完成
-
-需要注意的是，需要在引入lib.min.js之前就加入该代码
-
-
-### 菜单栏相关
-
-#### LOGO
-
-属性：
-`window.scratchConfig.logo`
-
-|参数名|描述|
-|----|----|
-|show|是否显示|
-|url|logo地址|
-|handleClickShare|处理LOGO点击事件|
-
-支持图片URL和base64，建议使用PNG半透明图片
-
-#### 菜单栏样式
-
-`window.scratchConfig.menuBar`
-
-|参数名|描述|
-|----|----|
-|color|菜单栏颜色，弃用|
-|style|菜单栏样式|
-
-#### 原始菜单和按钮控制
-
-控制原始菜单的显示隐藏，以及是否执行前的hook。
-
-|按钮|描述|
-|----|----|
-|newButton|新建按钮|
-|loadFileButton|从计算机加载按钮|
-|saveFileButton|保存到计算机按钮|
-|turboModeButton|加速模式按钮|
-|helpButton|教程按钮|
-|myStuff|我的物品按钮|
-
-按钮属性
-
-|参数名|描述|
-|----|----|
-|show|是否显示|
-|handleBefore|处理按钮点击前事件，返回true继续执行|
-
-#### 用户名和头像
-
-`window.scratchConfig.menuBar.userAvatar`
-
-|参数名|描述|
-|----|----|
-|show|是否显示|
-|username|用户名|
-|avatar|用户头像|
-|handleClick|点击事件|
-
-#### 自定义按钮
-
-`window.scratchConfig.menuBar.customButtons`
-
-可无限添加按钮
-
-按钮属性：
-
-|参数名|描述|
-|----|----|
-|show|是否显示|
-|buttonName|按钮名|
-|style|按钮样式|
-|handleClick|点击事件|
-
-
-#### 分享按钮 (弃用)
-
-`window.scratchConfig.shareButton`
-
-弃用，建议直接使用自定义按钮
-
-|参数名|描述|
-|----|----|
-|show|是否显示|
-|handleClick|处理按钮点击事件|
-
-#### 个人中心按钮 (弃用)
-
-`window.scratchConfig.profileButton`
-
-弃用，建议直接使用自定义按钮
-
-|参数名|描述|
-|----|----|
-|show|是否显示|
-|handleClick|处理按钮点击事件|
-
-### 舞台区域
-
- 注意：建议仅在播放器模式下配置
-
-`window.scratchConfig.stageArea`
-
-|参数名|描述|
-|----|----|
-|scale|舞台区比例|
-|width|舞台宽度|
-|height|舞台高度|
-|showControl|是否显示舞台区控制按钮|
-|showLoading|是否显示Loading|
-|fullscreenButton|全屏按钮设置|
-|startButton|小绿旗按钮设置|
-|stopButton|停止按钮设置|
-
-### 积木配置
-
-`window.scratchConfig.blocks`
-|参数名|描述|
-|----|----|
-|scale|积木缩放比例|
-|hideCatagorys|隐藏分类 （积木分类代码见附录）|
-|hideBlocks|隐藏积木（积木代码见附录）|
-
-### 默认加载的项目
-
-`defaultProjectURL: "./static/project.sb3"`
-
-如果要加载默认小猫则删除此配置
-
-### 素材库CDN
-
-`window.scratchConfig.assetCDN`
-
-配置此项将官方素材库换成自己的地址，加快国内用户访问速度。建议将素材文件上传至七牛、阿里云OSS等云存储上。
-
-若使用官方素材库请删除本配置项。默认为/static下的素材库，如不需要可删除/static/internalapi文件夹
-
-> 附：[Scratch素材库采集和处理工具](https://github.com/open-scratch/scratch-asset-utils)
-
-
-
-### VM初始换完毕回调
-`window.scratchConfig.handleVmInitialized`
-
-|参数名|描述|
-|----|----|
-|vm|scratch virtual machine|
-
-示例
-
-```
-window.scratchConfig.handleVmInitialized = (vm)=>{
-    //scratch vm初始换完毕后的代码
-}
-```
-
-### 作品加载完毕的回调
-`window.scratchConfig.handleProjectLoaded`
-
-每当新建项目或载入项目完毕后调用此方法。
-
-### 默认项目加载完毕的回调
-`window.scratchConfig.handleDefaultProjectLoaded`
-
-默认小猫项目加载完毕后调用此方法。
-
-## 项目相关API
-
 ### 加载项目
 
-`window.scratch.loadPorject(url, callback)`
+`window.scratch.loadProject(url, callback)`
 
 也可以使用vm对象的loadProject方法载入scratch项目
 
-#### 示例
+示例
 ```
-window.scratch.loadPorject(url, ()=>{
+window.scratch.loadProject(url, ()=>{
     //加载文件完成后的操作
 })
 
@@ -275,7 +275,7 @@ window.scratch.loadPorject(url, ()=>{
 
 也可以使用vm对象的saveProjectSb3方法
 
-#### 示例
+示例
 ```
 window.scratch.getProjectFile((file)=>{
     console.log(file)
@@ -287,7 +287,7 @@ window.scratch.getProjectFile((file)=>{
 
 `window.scratch.getProjectCover(callback)`
 
-#### 示例
+示例
 ```
 window.scratch.getProjectCover((file)=>{
     console.log(file)
@@ -303,34 +303,54 @@ window.scratch.getProjectCover((file)=>{
 
 `window.scratch.setProjectName(projectName)`
 
-## UI相关API
+### 设置为仅播放模式
 
-### 设置为播放模式
-
-window.scratch.setPlayerOnly(isPlayerOnly)
-
-#### 参数
-
-|参数名|描述|
-|----|----|
-|isPlayerOnly|是否播放模式|
-
-#### 示例
-```
+示例
+```js
 window.scratch.setPlayerOnly(true)
 ```
 
 ### 设置为全屏
-window.scratch.setFullScreen(isFullScreen)
 
-#### 参数
-|参数名|描述|
-|----|----|
-|isFullScreen|是否全屏|
-
-#### 示例
-```
+示例
+```js
 window.scratch.setFullScreen(true)
+```
+
+### 追加素材库
+
+可以动态新增素材库索引，需要等待用户打开素材库后再调用本方法，否则无法追加成功。
+增加索引后还需要assetHost中增加对应的素材文件。
+
+参数为素材索引的数组，具体格式参见json_index下文件的内容。
+
+#### 追加角色库
+`window.scratch.pushSpritesLibrary(Arrays)`
+
+#### 追加造型库
+`window.scratch.pushCostumesLibrary(Arrays)`
+
+#### 追加背景库
+`window.scratch.pushBackdropsLibrary(Arrays)`
+
+#### 追加声音库
+`window.scratch.pushSoundLibrary(Arrays)`
+
+示例
+```js
+window.scratch.pushSoundLibrary(
+  [{
+        "name": "自定义声音",
+        "tags": [
+            "music",
+        ],
+        "assetId": "5cb46ddd903fc2c9976ff881df9273c9",
+        "dataFormat": "",
+        "md5ext": "5cb46ddd903fc2c9976ff881df9273c9.wav",
+        "sampleCount": 11840,
+        "rate": 44100
+    }]
+)
 ```
 
 # 附录
@@ -402,162 +422,6 @@ svg文件处理
 └── package.json
 └── webpack.config.js
 └── webpack.prod.js
-```
-
-## 完整配置示例
-```
-window.scratchConfig = {
-      logo: {
-        show: true
-        , url: "./static/logo.png"
-        , handleClickLogo: () => {
-        }
-      }, 
-      menuBar: {
-        //菜单栏样式
-        style: {
-          background: 'hsla(215, 100%, 65%, 1)',
-        },
-        //新建按钮
-        newButton:{
-          show: true,
-          handleBefore(){ //执行新建前的操作，返回true则继续执行
-            return true
-          }
-        },
-        //从计算机加载按钮
-        loadFileButton:{
-          show: true,
-          handleBefore(){
-            return false
-          }
-        },
-        //保存到计算机按钮
-        saveFileButton:{
-          show: true,
-          handleBefore(){
-            return true
-          }
-        },
-        //加速模式按钮
-        turboModeButton:{
-          show: true
-        },
-        helpButton:{
-          show: true,
-          handleBefore:()=>{
-            console.log("显示自己的教程")
-            return true
-          }
-        },
-        //我的物品按钮
-        myStuff:{
-          show: true,
-          url: '/myProject'
-        },
-        //用户头像按钮
-        userAvatar:{
-          show: true,
-          username: '未登录',
-          avatar: './static/avatar.png',
-          handleClick(){
-            //弹出登录框等操作
-          }
-        },
-        customButtons: [
-          {
-            show: true,
-            buttonName: '分享',
-            style:{
-              color: 'white',
-              background: 'hsla(30, 100%, 55%, 1)',
-            },
-            handleClick:()=>{
-              console.log('分享按钮')
-              window.scratch.getProjectCover(cover => {
-                //TODO 获取到作品截图
-                console.log(cover)
-              })
-              window.scratch.getProjectFile(file => {
-                //TODO 获取到项目文件
-                console.log(file)
-              })
-              // 获取到项目名
-              var projectName = window.scratch.getProjectName()
-              console.log(projectName);
-            }
-          },
-          {
-            show: true,
-            buttonName: '自定义按钮2',
-            style: {
-              color: 'white',
-              background: 'hsl(271deg 89% 70%)',
-            },
-            handleClick:()=>{
-              console.log("自定义按钮2");
-            }
-          },
-          //可继续新增按钮
-        ]
-      }, 
-      blocks:{
-        scale: 0.8, // 积木缩放比例
-        // 如需动态隐藏显示分类或积木，修改此配置后需手动执行 window.vm.emitWorkspaceUpdate()
-        // 隐藏分类 （积木分类代码见附录）
-        hideCatagorys:[], 
-        //隐藏积木（积木代码见附录）
-        hideBlocks:[],
-      },
-      stageArea:{ //舞台区配置，仅推荐在player模式下配置
-        scale: 1, //舞台区比例
-        width: 480, // 舞台宽
-        height: 360, //舞台高
-        showControl: true, //是否显示舞台区控制按钮
-        fullscreenButton:{ //全屏按钮
-          show: true,
-          handleBeforeSetStageUnFull(){ //退出全屏前的操作
-            return true
-          },
-          handleBeforeSetStageFull(){ //全屏前的操作
-            return true
-          }
-        },
-        startButton:{ //开始按钮
-          show: true,
-          handleBeforeStart(){ //开始前的操作
-            return true
-          }
-        },
-        stopButton:{ // 停止按钮
-          show: true,
-          handleBeforeStop(){ //停止前的操作
-            return true
-          }
-        }
-      },
-      handleVmInitialized: (vm) => {
-        window.vm = vm
-        console.log("VM初始化完毕")
-        
-      },
-      handleProjectLoaded:() => {
-        console.log("作品载入完毕")
-
-      },
-      handleDefaultProjectLoaded:() => {
-        //默认作品加载完毕，一般在这里控制项目加载
-        // window.scratch.setProjectName("默认项目")
-        //  window.scratch.loadProject("/project.sb3", () => { 
-        //     console.log("项目加载完毕")
-        //     window.scratch.setProjectName("默认项目")
-        //  })
-      },
-      //默认项目地址,不需要修请删除本配置项
-      // defaultProjectURL: "./static/project.sb3",
-      //若使用官方素材库请删除本配置项, 默认为/static下的素材库
-      assetCDN: './static' 
-    }
 ```
 
 ## 积木分类代码
