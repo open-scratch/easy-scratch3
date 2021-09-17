@@ -3269,7 +3269,7 @@ duplexify@^3.4.2, duplexify@^3.6.0:
     readable-stream "^2.0.0"
     stream-shift "^1.0.0"
 
-"easy-scratch-l10n@github:open-scratch/easy-scratch-l10n#simplify":
+"scratch-l10n@github:open-scratch/easy-scratch-l10n#simplify":
   version "3.14.0"
   resolved "https://codeload.github.com/open-scratch/easy-scratch-l10n/tar.gz/7f4c97e8ac32122f17ee9a0e6a70b246d2b9f4eb"
   dependencies:
