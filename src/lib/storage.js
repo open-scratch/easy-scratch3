@@ -54,7 +54,7 @@ class Storage extends ScratchStorage {
         this.assetHost = assetHost;
     }
     getAssetGetConfig (asset) {
-        let assetHost = (window.scratchConfig && window.scratchConfig.assets.assetHost)
+        let assetHost = (window.scratchConfig && window.scratchConfig.assets && window.scratchConfig.assets.assetHost)
         || (window.scratchConfig && window.scratchConfig.assetCDN) || false
                      
         if(assetHost){
