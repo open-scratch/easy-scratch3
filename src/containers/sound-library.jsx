@@ -58,16 +58,16 @@ class SoundLibrary extends React.PureComponent {
     }
     componentWillMount(){
         let that = this
-        document.addEventListener("pushSoundLibrary",function(e){
-            console.log("pushSoundLibrary");
+        document.addEventListener("pushSoundsLibrary",function(e){
+            console.log("pushSoundsLibrary");
             let data = e.detail.data.concat(that.state.data)
             that.setState({
                 data:data,
                 haveData:true
             })
         })
-        window.scratch.pushSoundLibrary = (data)=>{
-            var event = new CustomEvent('pushSoundLibrary', {"detail": {data: data}});
+        window.scratch.pushSoundsLibrary = (data)=>{
+            var event = new CustomEvent('pushSoundsLibrary', {"detail": {data: data}});
             document.dispatchEvent(event);
         };
 

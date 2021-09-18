@@ -334,11 +334,11 @@ window.scratch.setFullScreen(true)
 `window.scratch.pushBackdropsLibrary(Arrays)`
 
 #### 追加声音库
-`window.scratch.pushSoundLibrary(Arrays)`
+`window.scratch.pushSoundsLibrary(Arrays)`
 
 示例
 ```js
-window.scratch.pushSoundLibrary(
+window.scratch.pushSoundsLibrary(
   [{
         "name": "自定义声音",
         "tags": [
