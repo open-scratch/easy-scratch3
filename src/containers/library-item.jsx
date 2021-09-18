@@ -105,11 +105,10 @@ class LibraryItem extends React.PureComponent {
     }
     render () {
         const iconMd5 = this.curIconMd5();
-        let isSetAssetCDN = 'assetCDN' in window.scratchConfig
-        const iconURL = iconMd5 ? 
-                (isSetAssetCDN ? window.scratchConfig.assetCDN : "https://cdn.assets.scratch.mit.edu") +
-                `/internalapi/asset/${iconMd5}` + 
-                (isSetAssetCDN ? "":"/get/"):
+        let assetHost = (window.scratchConfig && window.scratchConfig.assets && window.scratchConfig.assets.assetHost)
+                        || (window.scratchConfig && window.scratchConfig.assetCDN) || "https://cdn.assets.scratch.mit.edu"
+        let isSetAssetCDN = assetHost == "https://cdn.assets.scratch.mit.edu"?false:true;
+        const iconURL = iconMd5 ? assetHost + `/internalapi/asset/${iconMd5}` +  (isSetAssetCDN ? "":"/get/"):
             this.props.iconRawURL;
         return (
             <LibraryItemComponent
