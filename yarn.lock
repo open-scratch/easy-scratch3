@@ -3269,15 +3269,6 @@ duplexify@^3.4.2, duplexify@^3.6.0:
     readable-stream "^2.0.0"
     stream-shift "^1.0.0"
 
-"scratch-l10n@github:open-scratch/easy-scratch-l10n#simplify":
-  version "3.14.0"
-  resolved "https://codeload.github.com/open-scratch/easy-scratch-l10n/tar.gz/7f4c97e8ac32122f17ee9a0e6a70b246d2b9f4eb"
-  dependencies:
-    "@babel/cli" "^7.1.2"
-    "@babel/core" "^7.1.2"
-    babel-plugin-react-intl "^3.0.1"
-    transifex "1.6.6"
-
 ecc-jsbn@~0.1.1:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/ecc-jsbn/-/ecc-jsbn-0.1.2.tgz#3a83a904e54353287874c564b7549386849a98c9"
@@ -8647,6 +8638,16 @@ scratch-l10n@3.14.20210829031508:
   version "3.14.20210829031508"
   resolved "https://registry.yarnpkg.com/scratch-l10n/-/scratch-l10n-3.14.20210829031508.tgz#5d5ebe763116fe8cb28fc6c9fc08b1c101222e14"
   integrity sha512-IRCu17tpoBXM3qYstVPmvtx1DCCcdlXjwQ9JOablEoBCFj4l4IvM1FRdgbmkTaygK5cBChpx+3zvqFbKHVEC4w==
+  dependencies:
+    "@babel/cli" "^7.1.2"
+    "@babel/core" "^7.1.2"
+    babel-plugin-react-intl "^3.0.1"
+    transifex "1.6.6"
+
+scratch-l10n@3.14.20210922031532:
+  version "3.14.20210922031532"
+  resolved "https://registry.yarnpkg.com/scratch-l10n/-/scratch-l10n-3.14.20210922031532.tgz#8c41da4170ec2c91c455688ba80926fbc9dbb81f"
+  integrity sha512-LxwHhsxkZR5veFpDMC8wAItGMKVj8+Q33B5RiqWhH/zzx5Qq7/ON9AyGOZ0NF736U70TqjWvV1ZX4lP+GsEjBg==
   dependencies:
     "@babel/cli" "^7.1.2"
     "@babel/core" "^7.1.2"
