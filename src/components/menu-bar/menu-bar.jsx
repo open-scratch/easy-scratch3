@@ -13,7 +13,7 @@ import Box from '../box/box.jsx';
 import Button from '../button/button.jsx';
 import CommunityButton from './community-button.jsx';
 import ShareButton from './share-button.jsx';
-import ProfileButton from './profile-button.jsx';
+import CustomButton from './custom-button.jsx';
 import {ComingSoonTooltip} from '../coming-soon/coming-soon.jsx';
 import Divider from '../divider/divider.jsx';
 import LanguageSelector from '../../containers/language-selector.jsx';
@@ -620,7 +620,7 @@ class MenuBar extends React.Component {
                     
                     <div className={classNames(styles.menuBarItem)}>
                     {
-                    (window.scratchConfig && window.scratchConfig.profileButton && window.scratchConfig.profileButton.show) && (<ProfileButton
+                    (window.scratchConfig && window.scratchConfig.profileButton && window.scratchConfig.profileButton.show) && (<CustomButton
                         className={styles.menuBarButton}
                         onClick = {
                             () => {
@@ -634,13 +634,15 @@ class MenuBar extends React.Component {
                         (window.scratchConfig && window.scratchConfig.menuBar && window.scratchConfig.menuBar.customButtons && window.scratchConfig.menuBar.customButtons.length>0) && (
                             window.scratchConfig.menuBar.customButtons.map(item=> {
                                 if(item.show){
-                                    return <ProfileButton
+                                    return <CustomButton
                                         key={item.buttonName}
                                         className={styles.menuBarButton}
                                         style={item.style || {}}
-                                        onClick = {() => {item.handleClick();}}
+                                        onClick = {item.handleClick}
                                         buttonName = {item.buttonName}
                                     />
+                                }else{
+                                    return ""
                                 }
                              })
                         )
