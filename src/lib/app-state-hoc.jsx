@@ -31,7 +31,15 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
             let enhancer;
 
             let initializedLocales = localesInitialState;
-            const locale = detectLocale(Object.keys(locales));
+            let locale;
+            if(window.scratchConfig && window.scratchConfig.menuBar && window.scratchConfig.menuBar.languageButton && 
+                window.scratchConfig.menuBar.languageButton.defaultLanguage){
+                window.scratchConfig.menuBar.languageButton.defaultLanguage
+                locale = window.scratchConfig.menuBar.languageButton.defaultLanguage
+            }else{
+                locale = detectLocale(Object.keys(locales));
+            }
+            
             if (locale !== 'en') {
                 initializedLocales = initLocale(initializedLocales, locale);
             }
@@ -103,6 +111,8 @@ const AppStateHOC = function (WrappedComponent, localesOnly) {
                 var event = new CustomEvent('setFullScreen', {"detail": {isFullScreen: isFullScreen}});
                 document.dispatchEvent(event);
             }
+
+            
         }
         componentDidUpdate (prevProps) {
             if (localesOnly) return;

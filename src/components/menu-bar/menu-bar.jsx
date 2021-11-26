@@ -412,7 +412,9 @@ class MenuBar extends React.Component {
                             />
                         </div>
                         )}
-                        {(this.props.canChangeLanguage) && (<div
+                        {(this.props.canChangeLanguage && 
+                        (window.scratchConfig && window.scratchConfig.menuBar && window.scratchConfig.menuBar.languageButton && 
+                                        window.scratchConfig.menuBar.languageButton.show)) && (<div
                             className={classNames(styles.menuBarItem, styles.hoverable, styles.languageMenu)}
                         >
                             <div>
