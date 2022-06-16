@@ -19,7 +19,7 @@
     window.scratchConfig = {
       logo: {
         show: true, //是否显示
-        url: "./static/logo.png", //logo地址，支持base64图片
+        url:  window.location.protocol+"//"+window.location.host + "/static/logo.png", //logo地址，支持base64图片
         handleClickLogo: () => { //处理LOGO点击事件
         }
       },
@@ -78,7 +78,7 @@
         userAvatar:{
           show: true, //是否显示
           username: '未登录', //用户名
-          avatar: './static/avatar.png', //用户头像
+          avatar:  window.location.protocol+"//"+window.location.host + '/static/avatar.png', //用户头像
           handleClick(){
             //点击头像，可以弹出登录框等操作
           }
@@ -152,17 +152,17 @@
       handleDefaultProjectLoaded:() => {
       },
       //默认项目地址,不需要修请删除本配置项
-      defaultProjectURL: "./static/project.sb3",
+      defaultProjectURL:  window.location.protocol+"//"+window.location.host +  "/static/project.sb3",
       //素材库配置
       assets:{
         //素材库地址，默认为/static下的素材库
-        assetHost: './static',
+        assetHost: window.location.protocol+"//"+window.location.host + '/static',
         //素材库索引地址
         defaultIndex:{
-          sprites: "./static/json_index/sprites.json",
-          costumes: "./static/json_index/costumes.json",
-          backdrops: "./static/json_index/backdrops.json",
-          sounds: "./static/json_index/sounds.json"
+          sprites:  window.location.protocol+"//"+window.location.host +  "/static/json_index/sprites.json",
+          costumes:  window.location.protocol+"//"+window.location.host +  "/static/json_index/costumes.json",
+          backdrops:  window.location.protocol+"//"+window.location.host +  "/static/json_index/backdrops.json",
+          sounds:  window.location.protocol+"//"+window.location.host +  "/static/json_index/sounds.json"
         },
         //拦截角色库打开
         handleBeforeSpriteLibraryOpen(){
