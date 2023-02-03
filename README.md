@@ -80,6 +80,11 @@ https://www.213.name/archives/1739
         style: {
           background: 'hsla(215, 100%, 65%, 1)',
         },
+        //切换语言按钮
+        languageButton:{
+          show: true, //是否显示
+          defaultLanguage: 'zh-cn' //默认语言 en zh-cn zh-tw
+        },
         //新建按钮
         newButton:{
           show: true, //是否显示
