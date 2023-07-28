@@ -52,13 +52,13 @@ class Backpack extends React.Component {
 
         // If a host is given, add it as a web source to the storage module
         // TODO remove the hacky flag that prevents double adding
-        if (props.host && !storage._hasAddedBackpackSource) {
-            storage.addWebSource(
-                [storage.AssetType.ImageVector, storage.AssetType.ImageBitmap, storage.AssetType.Sound],
-                this.getBackpackAssetURL
-            );
-            storage._hasAddedBackpackSource = true;
-        }
+        // if (props.host && !storage._hasAddedBackpackSource) {
+        //     storage.addWebSource(
+        //         [storage.AssetType.ImageVector, storage.AssetType.ImageBitmap, storage.AssetType.Sound],
+        //         this.getBackpackAssetURL
+        //     );
+        //     storage._hasAddedBackpackSource = true;
+        // }
     }
     componentDidMount () {
         this.props.vm.addListener('BLOCK_DRAG_END', this.handleBlockDragEnd);
@@ -249,6 +249,22 @@ const getTokenAndUsername = state => {
             token: state.session.session.user.token,
             username: state.session.session.user.username
         };
+    }
+    //从配置文件读取session
+    if(window.scratchConfig && window.scratchConfig.session){
+        return {
+            token: window.scratchConfig.session.token,
+            username: window.scratchConfig.session.username
+        }
+    }
+    //从localstorage读取session
+    var token = localStorage.getItem('pro__Access-Token')
+    var userInfo = localStorage.getItem('pro__Login_Userinfo')
+    if(userInfo && token){
+        return {
+            token: JSON.parse(token).value,
+            username: JSON.parse(userInfo).value.username
+        }
     }
     // Otherwise try to pull testing params out of the URL, or return nulls
     // TODO a hack for testing the backpack

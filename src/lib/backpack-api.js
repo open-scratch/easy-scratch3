@@ -8,8 +8,8 @@ import codePayload from './backpack/code-payload';
 // Also include a full body url for loading sprite zips
 // TODO retreiving the images through storage would allow us to remove this.
 const includeFullUrls = (item, host) => Object.assign({}, item, {
-    thumbnailUrl: `${host}/${item.thumbnail}`,
-    bodyUrl: `${host}/${item.body}`
+    thumbnailUrl: `${item.thumbnail}`,
+    bodyUrl: `${item.body}`
 });
 
 const getBackpackContents = ({
@@ -21,14 +21,14 @@ const getBackpackContents = ({
 }) => new Promise((resolve, reject) => {
     xhr({
         method: 'GET',
-        uri: `${host}/${username}?limit=${limit}&offset=${offset}`,
-        headers: {'x-token': token},
+        uri: `${host}/content?limit=${limit}&offset=${offset}`,
+        headers: {'X-Access-Token': token},
         json: true
     }, (error, response) => {
         if (error || response.statusCode !== 200) {
             return reject(new Error(response.status));
         }
-        return resolve(response.body.map(item => includeFullUrls(item, host)));
+        return resolve(response.body.result.map(item => includeFullUrls(item, host)));
     });
 });
 
@@ -44,14 +44,14 @@ const saveBackpackObject = ({
 }) => new Promise((resolve, reject) => {
     xhr({
         method: 'POST',
-        uri: `${host}/${username}`,
-        headers: {'x-token': token},
+        uri: `${host}/save`,
+        headers: {'X-Access-Token': token},
         json: {type, mime, name, body, thumbnail}
     }, (error, response) => {
         if (error || response.statusCode !== 200) {
             return reject(new Error(response.status));
         }
-        return resolve(includeFullUrls(response.body, host));
+        return resolve(includeFullUrls(response.body.result, host));
     });
 });
 
@@ -63,8 +63,8 @@ const deleteBackpackObject = ({
 }) => new Promise((resolve, reject) => {
     xhr({
         method: 'DELETE',
-        uri: `${host}/${username}/${id}`,
-        headers: {'x-token': token}
+        uri: `${host}/delete?id=${id}`,
+        headers: {'X-Access-Token': token}
     }, (error, response) => {
         if (error || response.statusCode !== 200) {
             return reject(new Error(response.status));

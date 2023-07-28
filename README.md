@@ -12,6 +12,7 @@
 - 修改积木大小
 - 显示隐藏积木
 - 自定义素材库
+- 对接背包API
 - And more……
 
 ### 使用案例
@@ -69,6 +70,14 @@ https://www.213.name/archives/1739
 
 ```js
     window.scratchConfig = {
+      session: {
+        token: "", // 用户Token
+        username: "Username" //用户名
+      },
+      backpack:{
+        enable: true, // 是否启用背包
+        api: "/api/teaching/scratch/backpack", //背包API接口
+      },
       logo: {
         show: true, //是否显示
         url: "./static/logo.png", //logo地址，支持base64图片

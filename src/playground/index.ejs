@@ -17,6 +17,14 @@
   <% } %>
   <script>
     window.scratchConfig = {
+      session: {
+        token: "", // 用户Token
+        username: "Username" //用户名
+      },
+      backpack:{
+        enable: true, // 是否启用背包
+        api: "/api/teaching/scratch/backpack", //背包API接口
+      },
       logo: {
         show: true, //是否显示
         url:  window.location.protocol+"//"+window.location.host + "/static/logo.png", //logo地址，支持base64图片

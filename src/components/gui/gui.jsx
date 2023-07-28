@@ -62,7 +62,7 @@ const GUIComponent = props => {
         authorUsername,
         basePath,
         backdropLibraryVisible,
-        backpackHost,
+        backpackApi,
         backpackVisible,
         blocksTabVisible,
         cardsVisible,
@@ -335,7 +335,7 @@ const GUIComponent = props => {
                                 </TabPanel>
                             </Tabs>
                             {backpackVisible ? (
-                                <Backpack host={backpackHost} />
+                                <Backpack host={backpackApi} />
                             ) : null}
                         </Box>
 
@@ -369,7 +369,7 @@ GUIComponent.propTypes = {
     authorThumbnailUrl: PropTypes.string,
     authorUsername: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]), // can be false
     backdropLibraryVisible: PropTypes.bool,
-    backpackHost: PropTypes.string,
+    backpackApi: PropTypes.string,
     backpackVisible: PropTypes.bool,
     basePath: PropTypes.string,
     blocksTabVisible: PropTypes.bool,
@@ -426,7 +426,7 @@ GUIComponent.propTypes = {
     vm: PropTypes.instanceOf(VM).isRequired
 };
 GUIComponent.defaultProps = {
-    backpackHost: null,
+    backpackApi: null,
     backpackVisible: false,
     basePath: './',
     canChangeLanguage: true,

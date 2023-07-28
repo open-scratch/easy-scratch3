@@ -15,6 +15,7 @@ English | [简体中文](./README.md)
 - change block size
 - hidden block category or specific block
 - custom assets library
+- backpack API
 - and more……
 
 ### The case
@@ -61,6 +62,14 @@ This is a complete configuration example
 
 ```js
 window.scratchConfig = {
+      session: {
+        token: "", // user token
+        username: "Username" // user name
+      },
+      backpack:{
+        enable: true, // enable backpack
+        api: "/api/teaching/scratch/backpack", //backpack API
+      },
       logo: {
         show: true, //is visible
         url: "./static/logo.png", //logo url, support base64 images

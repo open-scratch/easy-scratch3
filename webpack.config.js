@@ -20,7 +20,10 @@ const base = {
     devServer: {
         contentBase: path.resolve(__dirname, 'build'),
         host: '127.0.0.1',
-        port: process.env.PORT || 8601
+        port: process.env.PORT || 8601,
+        proxy: {
+            '/api': 'http://localhost:8081'
+        }
     },
     output: {
         library: 'GUI',
