@@ -25,6 +25,16 @@
         enable: true, // 是否启用背包
         api: "/api/teaching/scratch/backpack", //背包API接口
       },
+      cloudData:{
+        enable: true, //是否开启云变量功能
+        id: "create", //默认云变量ID，可使用window.scratch.setCloudId更换ID
+        api: "127.0.0.1:1234/api/websocket/scratch/cloudData" //云变量API地址
+      },
+      projectInfo: {//作品信息
+        projectName: "",
+        authorUsername: "admin",
+        authorAvatar: './static/avatar.png',
+      },
       logo: {
         show: true, //是否显示
         url:  window.location.protocol+"//"+window.location.host + "/static/logo.png", //logo地址，支持base64图片
@@ -194,6 +204,21 @@
       },
     }
 
+    //api
+    /**
+     * window.scratch.loadPorject(url, callback)
+     * window.scratch.getProjectFile(callback(file))
+     * window.scratch.getProjectCover(callback(file))
+     * window.scratch.getProjectName()
+     * window.scratch.setProjectName(projectName)
+     * window.scratch.setPlayerOnly(isPlayerOnly)
+     * window.scratch.setFullScreen(isFullScreen)
+     * 
+     * window.scratch.setEnableCouldData(isEnable) //设置是否开启云变量（会开启或关闭当前连接）
+     * window.scratch.setCloudId(id) //设置云变量ID（会触发一次重连）
+     * window.scratch.setAuthorUsername(authorUsername) //设置作者用户名
+     * window.vm.runtime.hasCloudData() //是否包含云变量
+     */
 
   </script>
 </head>

@@ -70,6 +70,16 @@ window.scratchConfig = {
         enable: true, // enable backpack
         api: "/api/teaching/scratch/backpack", //backpack API
       },
+      cloudData:{
+        enable: true, //enable cloud data
+        id: "create", //default cloud data ID
+        api: "127.0.0.1:1234/api/websocket/scratch/cloudData" //cloud data API
+      },
+      projectInfo: {//project info
+        projectName: "",
+        authorUsername: "admin",
+        authorAvatar: './static/avatar.png',
+      },
       logo: {
         show: true, //is visible
         url: "./static/logo.png", //logo url, support base64 images
@@ -348,6 +358,9 @@ window.scratch.pushSoundLibrary(
     }]
 )
 ```
+
+#### set cloud data ID
+`window.scratch.setCloudId(id)`
 
 # Appendix
 

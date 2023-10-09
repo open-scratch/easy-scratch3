@@ -28,6 +28,55 @@ const cloudManagerHOC = function (WrappedComponent) {
                 'handleCloudDataUpdate'
             ]);
 
+            this.enable = window.scratchConfig && window.scratchConfig.cloudData && window.scratchConfig.cloudData.enable || false
+            this.token = window.scratchConfig && window.scratchConfig.session && window.scratchConfig.session.token,
+            this.username = window.scratchConfig && window.scratchConfig.session && window.scratchConfig.session.username || '';
+            this.authorUsername = window.scratchConfig && window.scratchConfig.projectInfo && window.scratchConfig.projectInfo.authorUsername,
+            this.cloudId = window.scratchConfig && window.scratchConfig.cloudData && window.scratchConfig.cloudData.id
+            this.cloudHost = window.scratchConfig && window.scratchConfig.cloudData && window.scratchConfig.cloudData.api
+
+
+            //动态设置是否开启云变量
+            let that = this
+            document.addEventListener("setEnableCouldData",function(e){
+                that.enable = e.detail.enable;
+                window.scratchConfig.cloudData.enable = e.detail.enable;
+                that.handleCloudDataUpdate(that.enable)
+            })
+
+            window.scratch.setEnableCouldData = function(enable){
+                var event = new CustomEvent('setEnableCouldData', {"detail": {enable: enable}});
+                document.dispatchEvent(event);
+            }
+
+            //动态设置cloudId
+            document.addEventListener("setCloudId",function(e){
+                if(that.cloudId != e.detail.id){
+                    window.scratchConfig.cloudData.id = e.detail.id;
+                    that.cloudId = e.detail.id;
+                    that.handleCloudDataUpdate(that.enable)
+                }
+            })
+
+            window.scratch.setCloudId = function(id){
+                var event = new CustomEvent('setCloudId', {"detail": {id: id}});
+                document.dispatchEvent(event);
+            }
+
+            //设置authorUsername
+            document.addEventListener("setAuthorUsername",function(e){
+                if(that.authorUsername != e.detail.authorUsername){
+                    window.scratchConfig.projectInfo.authorUsername = e.detail.authorUsername;
+                    that.authorUsername = e.detail.authorUsername;
+                    that.handleCloudDataUpdate(that.enable)
+                }
+            })
+
+            window.scratch.setAuthorUsername = function(authorUsername){
+                var event = new CustomEvent('setAuthorUsername', {"detail": {authorUsername: authorUsername}});
+                document.dispatchEvent(event);
+            }
+
             this.props.vm.on('HAS_CLOUD_DATA_UPDATE', this.handleCloudDataUpdate);
         }
         componentDidMount () {
@@ -52,14 +101,25 @@ const cloudManagerHOC = function (WrappedComponent) {
             this.disconnectFromCloud();
         }
         canUseCloud (props) {
-            return !!(props.cloudHost && props.username && props.vm && props.projectId && props.hasCloudPermission);
+            // return !!(props.cloudHost && props.username && props.vm && props.projectId && props.hasCloudPermission);
+            // console.log(props.vm);
+            // console.log(props.projectId);
+            // console.log(props.hasCloudPermission);
+            return this.enable;
         }
-        shouldConnect (props) {
-            return !this.isConnected() && this.canUseCloud(props) &&
-                props.isShowingWithId && props.vm.runtime.hasCloudData() &&
-                props.canModifyCloudData;
+        shouldConnect (props) { 
+            console.log("should connnet");
+            console.log(this.enable);
+            console.log(props.vm.runtime.hasCloudData());
+            // return !this.isConnected() && this.canUseCloud(props) &&
+            //     props.isShowingWithId && props.vm.runtime.hasCloudData() &&
+            //     props.canModifyCloudData;
+            //如果开启了云变量，且项目包含云变量
+            return this.enable && props.vm.runtime.hasCloudData();
         }
         shouldDisconnect (props, prevProps) {
+            //如果关闭了云变量，且项目不包含云变量
+            return !this.canUseCloud(props)||!props.vm.runtime.hasCloudData();
             return this.isConnected() &&
                 ( // Can no longer use cloud or cloud provider info is now stale
                     !this.canUseCloud(props) ||
@@ -75,10 +135,11 @@ const cloudManagerHOC = function (WrappedComponent) {
         }
         connectToCloud () {
             this.cloudProvider = new CloudProvider(
-                this.props.cloudHost,
+                this.cloudHost,
                 this.props.vm,
-                this.props.username,
-                this.props.projectId);
+                this.authorUsername,
+                this.token,
+                this.cloudId);
             this.props.vm.setCloudProvider(this.cloudProvider);
         }
         disconnectFromCloud () {
@@ -100,9 +161,8 @@ const cloudManagerHOC = function (WrappedComponent) {
             const {
                 /* eslint-disable no-unused-vars */
                 canModifyCloudData,
-                cloudHost,
                 projectId,
-                username,
+                // username,
                 hasCloudPermission,
                 isShowingWithId,
                 onShowCloudInfo,
@@ -112,7 +172,6 @@ const cloudManagerHOC = function (WrappedComponent) {
             } = this.props;
             return (
                 <WrappedComponent
-                    canUseCloud={this.canUseCloud(this.props)}
                     vm={vm}
                     {...componentProps}
                 />
@@ -122,20 +181,16 @@ const cloudManagerHOC = function (WrappedComponent) {
 
     CloudManager.propTypes = {
         canModifyCloudData: PropTypes.bool.isRequired,
-        cloudHost: PropTypes.string,
         hasCloudPermission: PropTypes.bool,
         isShowingWithId: PropTypes.bool.isRequired,
         onShowCloudInfo: PropTypes.func,
         projectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-        username: PropTypes.string,
         vm: PropTypes.instanceOf(VM).isRequired
     };
 
     CloudManager.defaultProps = {
-        cloudHost: null,
         hasCloudPermission: false,
         onShowCloudInfo: () => {},
-        username: null
     };
 
     const mapStateToProps = (state, ownProps) => {
@@ -144,7 +199,7 @@ const cloudManagerHOC = function (WrappedComponent) {
             isShowingWithId: getIsShowingWithId(loadingState),
             projectId: state.scratchGui.projectState.projectId,
             // if you're editing someone else's project, you can't modify cloud data
-            canModifyCloudData: (!state.scratchGui.mode.hasEverEnteredEditor || ownProps.canSave)
+            canModifyCloudData: (!state.scratchGui.mode.hasEverEnteredEditor || ownProps.canSave),
         };
     };
 

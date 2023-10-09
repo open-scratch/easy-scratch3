@@ -164,6 +164,7 @@ class GUI extends React.Component {
             /* eslint-disable no-unused-vars */
             assetHost,
             cloudHost,
+            cloudId,
             error,
             isError,
             isScratchDesktop,
@@ -196,6 +197,7 @@ GUI.propTypes = {
     assetHost: PropTypes.string,
     children: PropTypes.node,
     cloudHost: PropTypes.string,
+    cloudId: PropTypes.string,
     error: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     fetchingProject: PropTypes.bool,
     intl: intlShape,

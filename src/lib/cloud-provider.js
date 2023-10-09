@@ -13,9 +13,10 @@ class CloudProvider {
      * @param {string} projectId The id associated with the project containing
      * cloud data.
      */
-    constructor (cloudHost, vm, username, projectId) {
+    constructor (cloudHost, vm, username, token, projectId) {
         this.vm = vm;
         this.username = username;
+        this.token = token;
         this.projectId = projectId;
         this.cloudHost = cloudHost;
 
@@ -114,6 +115,10 @@ class CloudProvider {
             };
             break;
         }
+        //初始化云变量
+        case 'init': {
+
+        }
         }
         return varData;
     }
@@ -130,6 +135,7 @@ class CloudProvider {
         msg.method = methodName;
         msg.user = this.username;
         msg.project_id = this.projectId;
+        msg.token = this.token
 
         // Optional string params can use simple falsey undefined check
         if (dataName) msg.name = dataName;
@@ -221,6 +227,7 @@ class CloudProvider {
         this.connection = null;
         this.vm = null;
         this.username = null;
+        this.token = null;
         this.projectId = null;
         if (this._connectionTimeout) {
             clearTimeout(this._connectionTimeout);

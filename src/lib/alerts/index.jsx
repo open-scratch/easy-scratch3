@@ -179,19 +179,20 @@ const alerts = [
                 description="Info about cloud variable limitations"
                 id="gui.alerts.cloudInfo"
                 values={{
-                    learnMoreLink: (
-                        <a
-                            href="https://scratch.mit.edu/info/faq/#clouddata"
-                            rel="noopener noreferrer"
-                            target="_blank"
-                        >
-                            <FormattedMessage
-                                defaultMessage="Learn more."
-                                description="Link text to cloud var faq"
-                                id="gui.alerts.cloudInfoLearnMore"
-                            />
-                        </a>
-                    )
+                    learnMoreLink: ""
+                    // (
+                    //     <a
+                    //         href="https://scratch.mit.edu/info/faq/#clouddata"
+                    //         rel="noopener noreferrer"
+                    //         target="_blank"
+                    //     >
+                    //         <FormattedMessage
+                    //             defaultMessage="Learn more."
+                    //             description="Link text to cloud var faq"
+                    //             id="gui.alerts.cloudInfoLearnMore"
+                    //         />
+                    //     </a>
+                    // )
                 }}
             />
         ),

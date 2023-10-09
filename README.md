@@ -78,6 +78,16 @@ https://www.213.name/archives/1739
         enable: true, // 是否启用背包
         api: "/api/teaching/scratch/backpack", //背包API接口
       },
+      cloudData:{
+        enable: true, //是否开启云变量功能
+        id: "create", //默认云变量ID，可使用window.scratch.setCloudId更换ID
+        api: "127.0.0.1:1234/api/websocket/scratch/cloudData" //云变量API地址
+      },
+      projectInfo: {//作品信息
+        projectName: "",
+        authorUsername: "admin",
+        authorAvatar: './static/avatar.png',
+      },
       logo: {
         show: true, //是否显示
         url: "./static/logo.png", //logo地址，支持base64图片
@@ -366,6 +376,9 @@ window.scratch.pushSoundsLibrary(
     }]
 )
 ```
+
+#### 设置云变量ID
+`window.scratch.setCloudId(id)`
 
 # 附录
 

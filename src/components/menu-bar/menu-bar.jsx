@@ -822,8 +822,8 @@ const mapStateToProps = (state, ownProps) => {
         loginMenuOpen: loginMenuOpen(state),
         projectTitle: state.scratchGui.projectTitle,
         sessionExists: state.session && typeof state.session.session !== 'undefined',
-        username: window.scratchConfig.menuBar.userAvatar.username || '',
-        avatar: window.scratchConfig.menuBar.userAvatar.avatar || null,
+        username: window.scratchConfig.session.username || '',
+        avatar: window.scratchConfig.session.avatar || null,
         onAvatarClick: window.scratchConfig.menuBar.userAvatar.handleClick,
         userOwnsProject: ownProps.authorUsername && user &&
             (ownProps.authorUsername === user.username),

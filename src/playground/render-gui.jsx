@@ -23,6 +23,10 @@ const handleTelemetryModalOptOut = () => {
     log('User opted out of telemetry');
 };
 
+const onVmInit = (vm) =>{
+    console.log("scratch vm init");
+    console.log(vm);
+}
 /*
  * Render the GUI playground. This is a separate function because importing anything
  * that instantiates the VM causes unsupported browsers to crash
@@ -46,6 +50,8 @@ export default appTarget => {
     const backpackShow =  window.scratchConfig.session && window.scratchConfig.session.token
                       &&  window.scratchConfig && window.scratchConfig.backpack && window.scratchConfig.backpack.enable
                          || false
+    const cloudHost = window.scratchConfig && window.scratchConfig.cloudData && window.scratchConfig.cloudData.api
+
 
     const scratchDesktopMatches = window.location.href.match(/[?&]isScratchDesktop=([^&]+)/);
     let simulateScratchDesktop;
@@ -82,7 +88,11 @@ export default appTarget => {
                 backpackVisible={backpackShow}
                 // showComingSoon
                 backpackApi={backpackApi}
+                // canUseCloud={canUseCloud}
+                hasCloudPermission={true}
+
                 canSave={false}
+                onVmInit={onVmInit}
                 onClickLogo={onClickLogo}
             />,
         appTarget);
