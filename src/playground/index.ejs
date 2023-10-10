@@ -28,7 +28,7 @@
       cloudData:{
         enable: true, //是否开启云变量功能
         id: "create", //默认云变量ID，可使用window.scratch.setCloudId更换ID
-        api: "127.0.0.1:1234/api/websocket/scratch/cloudData" //云变量API地址
+        api: window.location.hostname + ":8081/api/websocket/scratch/cloudData" //云变量API地址
       },
       projectInfo: {//作品信息
         projectName: "",
@@ -168,6 +168,11 @@
       },
       //默认作品加载完毕
       handleDefaultProjectLoaded:() => {
+        // let url = ''
+        // window.scratch.loadProject(url, () => {
+        //     window.scratch.setCloudId('666')
+        //     vm.runtime.start()
+        // })
       },
       //默认项目地址,不需要修请删除本配置项
       defaultProjectURL:  window.location.protocol+"//"+window.location.host +  "/static/project.sb3",
