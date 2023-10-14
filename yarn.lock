@@ -1589,9 +1589,9 @@ async-limiter@~1.0.0:
   integrity sha512-csOlWGAcRFJaI6m+F2WKdnMKr4HhdhFVBk0H/QbJFMCr+uO2kwohwXQPxw/9OCxp05r5ghVBFSyioixx3gfkNQ==
 
 async@^2.1.4, async@^2.6.2:
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/async/-/async-2.6.3.tgz#d72625e2344a3656e3a3ad4fa749fa83299d82ff"
-  integrity sha512-zflvls11DCy+dQWzTW2dzuilv8Z5X/pjfmZOWba6TNIVDm+2UDaJmXSOXlasHKfNBs8oo3M0aT50fDEWfKZjXg==
+  version "2.6.4"
+  resolved "https://registry.yarnpkg.com/async/-/async-2.6.4.tgz#706b7ff6084664cd7eae713f6f965433b5504221"
+  integrity sha512-mzo5dfJYwAn29PeiJ0zvwTo04zj8HDJj0Mn8TD7sno7q12prdbnasKJHhkm2c1LgrhlJ0teaea8860oxi51mGA==
   dependencies:
     lodash "^4.17.14"
 
@@ -3268,15 +3268,6 @@ duplexify@^3.4.2, duplexify@^3.6.0:
     inherits "^2.0.1"
     readable-stream "^2.0.0"
     stream-shift "^1.0.0"
-
-"scratch-l10n@github:open-scratch/easy-scratch-l10n#simplify":
-  version "3.14.0"
-  resolved "https://codeload.github.com/open-scratch/easy-scratch-l10n/tar.gz/7f4c97e8ac32122f17ee9a0e6a70b246d2b9f4eb"
-  dependencies:
-    "@babel/cli" "^7.1.2"
-    "@babel/core" "^7.1.2"
-    babel-plugin-react-intl "^3.0.1"
-    transifex "1.6.6"
 
 ecc-jsbn@~0.1.1:
   version "0.1.2"
@@ -8647,6 +8638,16 @@ scratch-l10n@3.14.20210829031508:
   version "3.14.20210829031508"
   resolved "https://registry.yarnpkg.com/scratch-l10n/-/scratch-l10n-3.14.20210829031508.tgz#5d5ebe763116fe8cb28fc6c9fc08b1c101222e14"
   integrity sha512-IRCu17tpoBXM3qYstVPmvtx1DCCcdlXjwQ9JOablEoBCFj4l4IvM1FRdgbmkTaygK5cBChpx+3zvqFbKHVEC4w==
+  dependencies:
+    "@babel/cli" "^7.1.2"
+    "@babel/core" "^7.1.2"
+    babel-plugin-react-intl "^3.0.1"
+    transifex "1.6.6"
+
+scratch-l10n@3.14.20210922031532:
+  version "3.14.20210922031532"
+  resolved "https://registry.yarnpkg.com/scratch-l10n/-/scratch-l10n-3.14.20210922031532.tgz#8c41da4170ec2c91c455688ba80926fbc9dbb81f"
+  integrity sha512-LxwHhsxkZR5veFpDMC8wAItGMKVj8+Q33B5RiqWhH/zzx5Qq7/ON9AyGOZ0NF736U70TqjWvV1ZX4lP+GsEjBg==
   dependencies:
     "@babel/cli" "^7.1.2"
     "@babel/core" "^7.1.2"
