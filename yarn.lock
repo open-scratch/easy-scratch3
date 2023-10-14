@@ -3269,15 +3269,6 @@ duplexify@^3.4.2, duplexify@^3.6.0:
     readable-stream "^2.0.0"
     stream-shift "^1.0.0"
 
-"scratch-l10n@github:open-scratch/easy-scratch-l10n#simplify":
-  version "3.14.0"
-  resolved "https://codeload.github.com/open-scratch/easy-scratch-l10n/tar.gz/7f4c97e8ac32122f17ee9a0e6a70b246d2b9f4eb"
-  dependencies:
-    "@babel/cli" "^7.1.2"
-    "@babel/core" "^7.1.2"
-    babel-plugin-react-intl "^3.0.1"
-    transifex "1.6.6"
-
 ecc-jsbn@~0.1.1:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/ecc-jsbn/-/ecc-jsbn-0.1.2.tgz#3a83a904e54353287874c564b7549386849a98c9"
@@ -8653,6 +8644,15 @@ scratch-l10n@3.14.20210829031508:
     babel-plugin-react-intl "^3.0.1"
     transifex "1.6.6"
 
+"scratch-l10n@github:open-scratch/easy-scratch-l10n#simplify":
+  version "3.14.0"
+  resolved "https://codeload.github.com/open-scratch/easy-scratch-l10n/tar.gz/7f4c97e8ac32122f17ee9a0e6a70b246d2b9f4eb"
+  dependencies:
+    "@babel/cli" "^7.1.2"
+    "@babel/core" "^7.1.2"
+    babel-plugin-react-intl "^3.0.1"
+    transifex "1.6.6"
+
 scratch-paint@0.2.0-prerelease.20210907080144:
   version "0.2.0-prerelease.20210907080144"
   resolved "https://registry.yarnpkg.com/scratch-paint/-/scratch-paint-0.2.0-prerelease.20210907080144.tgz#6b14768c5ff9f63ae1a986888f6fec2fb82a99de"
@@ -9752,9 +9752,9 @@ typedarray@^0.0.6:
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
 ua-parser-js@^0.7.18:
-  version "0.7.28"
-  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.28.tgz#8ba04e653f35ce210239c64661685bf9121dec31"
-  integrity sha512-6Gurc1n//gjp9eQNXjD9O3M/sMwVtN5S8Lv9bvOYBfKfDNiIIhqiyi01vMBO45u4zkDE420w/e0se7Vs+sIg+g==
+  version "0.7.33"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.33.tgz#1d04acb4ccef9293df6f70f2c3d22f3030d8b532"
+  integrity sha512-s8ax/CeZdK9R/56Sui0WM6y9OFREJarMRHqLB2EwkovemBxNQ+Bqu8GAsUnVcXKgphb++ghr/B2BZx4mahujPw==
 
 uglify-es@^3.3.4:
   version "3.3.9"
