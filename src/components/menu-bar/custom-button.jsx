@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Button from '../button/button.jsx';
 
-import styles from './profile-button.css';
+import styles from './custom-button.css';
 
-const ProfileButton = ({
+const CustomButton = ({
     className,
     style,
     onClick,
@@ -15,23 +15,23 @@ const ProfileButton = ({
     <Button
         className={classNames(
             className,
-            styles.profileButton
+            styles.customButton
         )}
         style={style}
         onClick={onClick}
     >
-        {buttonName ? buttonName: "个人中心"}
+        {buttonName}
     </Button>
 );
 
-ProfileButton.propTypes = {
+CustomButton.propTypes = {
     className: PropTypes.string,
     onClick: PropTypes.func,
     buttonName: PropTypes.string
 };
 
-ProfileButton.defaultProps = {
+CustomButton.defaultProps = {
     onClick: () => {}
 };
 
-export default ProfileButton;
+export default CustomButton;
